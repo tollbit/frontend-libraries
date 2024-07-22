@@ -5,9 +5,14 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "ci:version": "changeset version && npm install --no-frozen-lockfile",
+    "ci:publish": "npm publish -r && node utils/update-canary-tags.mjs && changeset tag"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.26.1",
     "prettier": "^3.2.5",
     "turbo": "^2.0.6",
     "typescript": "^5.4.5"

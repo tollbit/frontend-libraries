@@ -1,6 +1,6 @@
 {
-  "name": "@tollbit/create-tile",
-  "version": "0.0.0",
+  "name": "@tollbit/react-integrate-tile",
+  "version": "0.0.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -8,8 +8,8 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
+    "@tollbit/eslint-config": "*",
+    "@tollbit/typescript-config": "*",
     "@turbo/gen": "^1.12.4",
     "@types/node": "^20.11.24",
     "@types/eslint": "^8.56.5",
