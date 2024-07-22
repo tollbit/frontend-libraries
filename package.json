@@ -9,7 +9,7 @@
     "changeset": "changeset",
     "version": "changeset version",
     "ci:version": "changeset version && npm install --no-frozen-lockfile",
-    "ci:publish": "npm publish -r && node utils/update-canary-tags.mjs && changeset tag"
+    "ci:publish": "changeset publish -r && changeset tag"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.1",
