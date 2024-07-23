@@ -1,6 +1,6 @@
 "use client";
 import { ReactNode, useRef, useEffect } from "react";
-import init from "../utils/resizeTile";
+import init from "@tollbit/core-integrate-tile/resize";
 
 export default function TileWrapper({ children }: { children: ReactNode }) {
   const tileContentRef = useRef<HTMLDivElement>(null);

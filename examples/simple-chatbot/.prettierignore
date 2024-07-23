@@ -1,0 +1,11 @@
+components.json
+package.json
+**/*.html
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+node_modules
+.vscode
+build
+.next

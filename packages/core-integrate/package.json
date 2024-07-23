@@ -1,8 +1,13 @@
 {
   "name": "@tollbit/core-integrate-tile",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./resize": "./dist/resize/index.js",
+    "./tileListener": "./dist/utils/tileListener.js"
+  },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
     "build": "tsc"
@@ -13,12 +18,13 @@
     "@turbo/gen": "^1.12.4",
     "@types/node": "^20.11.24",
     "@types/eslint": "^8.56.5",
-    "@types/react": "^18.2.61",
-    "@types/react-dom": "^18.2.19",
+    "@types/react": "18.2.8",
     "eslint": "^8.57.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "react": "^18.2.0"
+    "@tollbit/tollbit-node-sdk": "1.2.0",
+    "react": "^18.2.0",
+    "zod": "3.23.4"
   }
 }
