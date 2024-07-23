@@ -7,8 +7,6 @@ import {
   ToolForStreaming,
   RawTool,
 } from "./types";
-import { Tile } from "@tollbit/react-integrate-tile";
-import { Tollbit } from "@tollbit/tollbit-node-sdk";
 
 const formatTileToRawTool = (tile: TileResponse): RawTool => {
   let params: ParsedInputParams = { properties: {} };
@@ -118,7 +116,7 @@ export const formatTilesToStreamTools = (
     params: any;
     apiKey: string;
     agent: string;
-  }) => Promise<ReactElement> = defaultTileGenerator
+  }) => Promise<ReactElement>
 ): { [key: string]: ToolForStreaming } =>
   tiles.reduce((acc, tile) => {
     const tool = formatTileToTool(tile);
@@ -137,25 +135,6 @@ export const formatTilesToStreamTools = (
       },
     };
   }, {});
-
-export const defaultTileGenerator = async function ({
-  tile,
-  params,
-  apiKey,
-  agent,
-  tollbitBaseUrl,
-}: {
-  tile: TileResponse;
-  params: any;
-  apiKey: string;
-  agent: string;
-  tollbitBaseUrl?: string;
-}): Promise<ReactElement> {
-  const client = new Tollbit(apiKey, "", agent, tollbitBaseUrl);
-
-  const data = await client.getTile(tile.cuid, params);
-  return <Tile src={data?.embedUrl || ""} />;
-};
 
 export const formatTilesToTools = (
   tiles: TileResponse[]

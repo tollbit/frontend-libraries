@@ -1,5 +1,11 @@
 # @tollbit/core-integrate-tile
 
+## 0.0.4
+
+### Patch Changes
+
+- Fix dependencies
+
 ## 0.0.3
 
 ### Patch Changes

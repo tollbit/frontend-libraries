@@ -1,6 +1,6 @@
 {
   "name": "@tollbit/react-integrate-tile",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -24,6 +24,7 @@
     "tailwind-merge": "^2.3.0",
     "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss-animate": "^1.0.7",
+    "@tollbit/tollbit-node-sdk": "1.2.0",
     "@tollbit/core-integrate-tile": "*"
   }
 }
