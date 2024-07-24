@@ -27,7 +27,7 @@ export default async function Page() {
   return (
     <main className="max-w-3xl mx-auto px-6">
       <script
-        src="https://cdn.jsdelivr.net/npm/tile-resizer@0.1.1/dist/parent.min.js"
+        src="https://cdn.jsdelivr.net/npm/@tollbit/core-integrate-tile@latest/dist/scripts/parent.min.js"
         type="text/javascript"
       ></script>
       <Chat tiles={tiles} name={randomName} />
