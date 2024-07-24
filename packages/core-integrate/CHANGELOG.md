@@ -1,5 +1,11 @@
 # @tollbit/core-integrate-tile
 
+## 0.0.5
+
+### Patch Changes
+
+- Update build step, output scripts properly in separate ts config
+
 ## 0.0.4
 
 ### Patch Changes
