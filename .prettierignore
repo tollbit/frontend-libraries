@@ -1,5 +1,4 @@
-components.json
-package.json
+**/*.json
 **/*.html
 **/*.css
 dist
