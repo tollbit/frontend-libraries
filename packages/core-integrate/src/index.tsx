@@ -106,12 +106,7 @@ export const formatTilesToStreamTools = (
   agent: string,
   tiles: TileResponse[],
   apiKey: string,
-  generateFunction: ({
-    tile,
-    params,
-    apiKey,
-    agent,
-  }: {
+  generateFunction: (_args: {
     tile: TileResponse;
     params: any;
     apiKey: string;
