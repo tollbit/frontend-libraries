@@ -1,4 +1,4 @@
-import { Tollbit } from "@tollbit/tollbit-node-sdk";
+import { Tollbit } from "@tollbit/client";
 import Chat from "./chat";
 
 export default async function Page() {

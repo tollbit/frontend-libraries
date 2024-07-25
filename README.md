@@ -9,6 +9,7 @@ This repo uses [Turborepo](https://turbo.build/repo) to manage its builds
 - [@tollbit/react-integrate-tile](./packages/react-integrate/README.md)
 - [@tollbit/core-integrate-tile](./packages/core-integrate/README.md)
 - [@tollbit/create-tile](./packages/create/README.md)
+- [@tollbit/client](./packages/client/README.md)
 
 ## Contributing
 
@@ -36,10 +37,4 @@ This repo uses the [@changesets/cli](https://github.com/changesets/changesets/bl
 npm run changeset
 ```
 
-and follow the prompts to update the changelog file with your changes. Once the changelog file has been updated, run
-
-```bash
-npm run version
-```
-
-This will go through and increment each package that should be deployed. Commit these changes and push them to your PR.
+Mark each relevant package that was changed and add a detailed changelog message. Once this is merged to main, all modified libraries will automatically have their version modified and have a new version published to NPM.

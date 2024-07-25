@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { type TileResponse } from "@tollbit/core-integrate-tile";
 import Tile from "../components/Tile";
-import { Tollbit } from "@tollbit/tollbit-node-sdk";
+import { Tollbit } from "@tollbit/client";
 
 export const defaultTileGenerator = async function ({
   tile,

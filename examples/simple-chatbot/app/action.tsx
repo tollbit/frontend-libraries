@@ -4,9 +4,12 @@ import { generateText } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { ReactElement, ReactNode } from "react";
 import { nanoid } from "nanoid";
-import {formatTilesToStreamTools, type TileResponse}from "@tollbit/core-integrate-tile";
+import {
+  formatTilesToStreamTools,
+  type TileResponse,
+} from "@tollbit/core-integrate-tile";
 import TollBitTile from "../lib/TollBitTile";
-import { Tollbit } from "@tollbit/tollbit-node-sdk";
+import { Tollbit } from "@tollbit/client";
 
 export interface ServerMessage {
   role: "user" | "assistant";
@@ -23,7 +26,7 @@ export interface ClientMessage {
 
 export async function continueConversation(
   input: string,
-  tiles: TileResponse[],
+  tiles: TileResponse[]
 ): Promise<ClientMessage> {
   "use server";
   const model = openai("gpt-4o");
