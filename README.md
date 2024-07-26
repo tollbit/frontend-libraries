@@ -37,4 +37,10 @@ This repo uses the [@changesets/cli](https://github.com/changesets/changesets/bl
 npm run changeset
 ```
 
-Mark each relevant package that was changed and add a detailed changelog message. Once this is merged to main, all modified libraries will automatically have their version modified and have a new version published to NPM.
+Mark each relevant package that was changed and add a detailed changelog message. Once the new changeset is created, run
+
+```bash
+npm run version
+```
+
+Commit the result of these two commands. Now your PR will automatically trigger a release to NPM once the PR is merged to main

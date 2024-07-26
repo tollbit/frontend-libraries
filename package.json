@@ -9,7 +9,7 @@
     "changeset": "changeset",
     "type-check": "turbo type-check",
     "format:check": "turbo format:check",
-    "ci:version": "changeset version && npm install --no-frozen-lockfile",
+    "version": "changeset version",
     "ci:publish": "changeset publish -r && changeset tag"
   },
   "devDependencies": {
