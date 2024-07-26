@@ -20,6 +20,7 @@
     "dist"
   ],
   "scripts": {
+    "lint": "eslint .",
     "build": "tsc -p tsconfig.base.json && tsc -p tsconfig.cjs.json",
     "type-check": "tsc --noEmit -p tsconfig.base.json",
     "format:check": "prettier --check .",

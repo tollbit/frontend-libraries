@@ -26,7 +26,7 @@ export interface ClientMessage {
 
 export async function continueConversation(
   input: string,
-  tiles: TileResponse[]
+  tiles: TileResponse[],
 ): Promise<ClientMessage> {
   "use server";
   const model = openai("gpt-4o");
@@ -40,7 +40,7 @@ export async function continueConversation(
         apiKey,
         "",
         agent,
-        process.env.NEXT_PUBLIC_TOLLBIT_BASE_URL
+        process.env.NEXT_PUBLIC_TOLLBIT_BASE_URL,
       );
 
       const data = await client.getTile(tile.cuid, params);
@@ -57,7 +57,7 @@ export async function continueConversation(
       }
 
       return <TollBitTile tile={data} textResponse={textResponse} />;
-    }
+    },
   );
   let generatedText = false;
   const result = await streamUI({

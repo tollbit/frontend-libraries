@@ -7,7 +7,7 @@ export const createListener =
   };
 
 export const listenForTileMessages = (
-  listener: (_event: MessageEvent) => void
+  listener: (_event: MessageEvent) => void,
 ) => {
   if (typeof window === "undefined") return;
 
@@ -15,7 +15,7 @@ export const listenForTileMessages = (
 };
 
 export const cleanUpTileListener = (
-  listener: (_event: MessageEvent) => void
+  listener: (_event: MessageEvent) => void,
 ) => {
   if (typeof window === "undefined") return;
 

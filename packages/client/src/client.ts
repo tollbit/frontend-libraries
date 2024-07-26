@@ -2,16 +2,16 @@ import axios from "axios";
 import { decrypt, encrypt } from "./crypto";
 
 interface Client {
-  generateToken(params: TokenParams): string;
-  getContentWithToken(token: string): Promise<ContentResponse>;
-  getContent(params: TokenParams): Promise<ContentResponse>;
-  getRate(targetUrl: string): Promise<RateResponse>;
+  generateToken(_params: TokenParams): string;
+  getContentWithToken(_token: string): Promise<ContentResponse>;
+  getContent(_params: TokenParams): Promise<ContentResponse>;
+  getRate(_targetUrl: string): Promise<RateResponse>;
   getAllTiles(): Promise<TileResponse[]>;
   getTile(
-    cuid: string,
-    parameters: {
+    _cuid: string,
+    _parameters: {
       [key: string]: string | string[] | undefined | number;
-    }
+    },
   ): Promise<TileResponse | null>;
 }
 
@@ -97,7 +97,7 @@ export class Tollbit implements Client {
     secretKey: string,
     organizationId: string,
     userAgent: string,
-    baseUrl?: string
+    baseUrl?: string,
   ) {
     this.secretKey = secretKey;
     this.userAgent = userAgent;
@@ -229,7 +229,7 @@ export class Tollbit implements Client {
    */
   public async getTile(
     cuid: string,
-    parameters: { [key: string]: string | string[] | undefined | number }
+    parameters: { [key: string]: string | string[] | undefined | number },
   ): Promise<TileResponse | null> {
     if (!this.secretKey) {
       throw new Error("Secret key is not set");

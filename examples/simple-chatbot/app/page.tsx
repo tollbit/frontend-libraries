@@ -6,7 +6,7 @@ export default async function Page() {
     process.env.TOLLBIT_API_KEY || "",
     "",
     process.env.CHAT_AGENT || "",
-    process.env.NEXT_PUBLIC_TOLLBIT_BASE_URL
+    process.env.NEXT_PUBLIC_TOLLBIT_BASE_URL,
   );
   const tiles = await client.getAllTiles();
   // Get a random name of a user

@@ -90,13 +90,12 @@ export default function Home({ tiles, name }: { tiles: any[]; name: string }) {
   return (
     <div className="flex flex-col w-full pb-24 mx-auto stretch relative">
       <ul className="mb-14" ref={chatRef}>
-
         {conversation.map((message: ClientMessage, index: number) =>
           message.role === "user" ? (
             <UserMessage key={index} {...message} />
           ) : (
             <AIMessage key={index} {...message} />
-          )
+          ),
         )}
       </ul>
       <div className="fixed bottom-0 mb-4 mx-auto max-w-3xl inset-x-0 animate-bounce-once">
