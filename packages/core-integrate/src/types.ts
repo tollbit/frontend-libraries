@@ -23,7 +23,7 @@ export interface Tool extends BaseTool {
 }
 
 export interface ToolForStreaming extends Tool {
-  generate: (params: any) => Promise<ReactElement>;
+  generate(_params: any): Promise<ReactElement>;
 }
 
 export interface TileResponse {

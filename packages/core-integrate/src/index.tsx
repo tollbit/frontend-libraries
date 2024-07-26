@@ -17,7 +17,7 @@ const formatTileToRawTool = (tile: TileResponse): RawTool => {
         enum: i.enums,
         type: i.type,
         description: i.description,
-      })
+      }),
     );
     params.properties = Object.fromEntries(propertyMap.entries());
   } catch (e) {
@@ -64,7 +64,7 @@ const formatTileToTool = (tile: TileResponse): Tool => {
         enum: i.enums,
         type: i.type,
         description: i.description,
-      })
+      }),
     );
     params.properties = Object.fromEntries(propertyMap.entries());
   } catch (e) {
@@ -106,17 +106,12 @@ export const formatTilesToStreamTools = (
   agent: string,
   tiles: TileResponse[],
   apiKey: string,
-  generateFunction: ({
-    tile,
-    params,
-    apiKey,
-    agent,
-  }: {
+  generateFunction: (_args: {
     tile: TileResponse;
     params: any;
     apiKey: string;
     agent: string;
-  }) => Promise<ReactElement>
+  }) => Promise<ReactElement>,
 ): { [key: string]: ToolForStreaming } =>
   tiles.reduce((acc, tile) => {
     const tool = formatTileToTool(tile);
@@ -137,7 +132,7 @@ export const formatTilesToStreamTools = (
   }, {});
 
 export const formatTilesToTools = (
-  tiles: TileResponse[]
+  tiles: TileResponse[],
 ): { [key: string]: Tool } =>
   tiles.reduce((acc, tile) => {
     const tool = formatTileToTool(tile);
@@ -148,7 +143,7 @@ export const formatTilesToTools = (
   }, {});
 
 export const formatTilesToRawTools = (
-  tiles: TileResponse[]
+  tiles: TileResponse[],
 ): { [key: string]: RawTool } =>
   tiles.reduce((acc, tile) => {
     const tool = formatTileToRawTool(tile);

@@ -4,9 +4,12 @@ import { generateText } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { ReactElement, ReactNode } from "react";
 import { nanoid } from "nanoid";
-import {formatTilesToStreamTools, type TileResponse}from "@tollbit/core-integrate-tile";
+import {
+  formatTilesToStreamTools,
+  type TileResponse,
+} from "@tollbit/core-integrate-tile";
 import TollBitTile from "../lib/TollBitTile";
-import { Tollbit } from "@tollbit/tollbit-node-sdk";
+import { Tollbit } from "@tollbit/client";
 
 export interface ServerMessage {
   role: "user" | "assistant";
@@ -37,7 +40,7 @@ export async function continueConversation(
         apiKey,
         "",
         agent,
-        process.env.NEXT_PUBLIC_TOLLBIT_BASE_URL
+        process.env.NEXT_PUBLIC_TOLLBIT_BASE_URL,
       );
 
       const data = await client.getTile(tile.cuid, params);
@@ -54,7 +57,7 @@ export async function continueConversation(
       }
 
       return <TollBitTile tile={data} textResponse={textResponse} />;
-    }
+    },
   );
   let generatedText = false;
   const result = await streamUI({

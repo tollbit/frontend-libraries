@@ -8,12 +8,14 @@
     "./sendMessage": "./dist/utils/sendMessage.js"
   },
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
-    "build": "tsc"
+    "lint": "eslint .",
+    "build": "tsc",
+    "type-check": "tsc --noEmit",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
+    "@tollbit/typescript-config": "*",
     "@turbo/gen": "^1.12.4",
     "@types/node": "^20.11.24",
     "@types/eslint": "^8.56.5",

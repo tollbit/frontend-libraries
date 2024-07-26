@@ -12,12 +12,14 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           registry-url: "https://registry.npmjs.org"
       - name: Install dependencies
         run: npm install --frozen-lockfile
       - name: Build
         run: npm run build
+      - name: Run CI Version Bumps
+        run: npm run ci:version
       - name: Publish package on NPM 📦
         run: npm run ci:publish
         env:
