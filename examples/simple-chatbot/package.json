@@ -9,7 +9,7 @@
     "lint": "next lint",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
-    "type-check": "tsc"
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@ai-sdk/openai": "latest",
