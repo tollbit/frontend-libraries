@@ -29,22 +29,24 @@ const formatTileToRawTool = (tile: TileResponse): RawTool => {
 
   const parameters = {
     ...Object.entries(params.properties).reduce((acc, [key, value]) => {
-      // If the value is an enum ignore the type and use the zod enum schema
       if (value?.enum && value?.enum?.length > 0) {
         return {
           ...acc,
-          [key]: z
-            .enum(value.enum as [string, ...string[]])
-            .describe(value.description),
+          [key]: {
+            type: "string",
+            description: value.description,
+            enum: value.enum,
+          },
         };
       }
-      if (value?.type === "string") {
-        return { ...acc, [key]: z.string().describe(value.description) };
-      }
-      if (value?.type === "number") {
-        return { ...acc, [key]: z.number().describe(value.description) };
-      }
-      return acc;
+
+      return {
+        ...acc,
+        [key]: {
+          type: value.type,
+          description: value.description,
+        },
+      };
     }, {}),
   };
 

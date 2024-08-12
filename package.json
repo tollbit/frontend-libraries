@@ -3,13 +3,14 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "lib:build": "turbo build --filter=./packages/*",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "changeset": "changeset",
     "type-check": "turbo type-check",
     "format:check": "turbo format:check",
-    "version": "changeset version",
+    "version": "changeset",
     "ci:publish": "changeset publish -r && changeset tag"
   },
   "devDependencies": {

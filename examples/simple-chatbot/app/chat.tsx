@@ -8,37 +8,31 @@ import {
 import { useEffect, useState, useRef } from "react";
 import { useActions, useUIState } from "ai/rsc";
 import { nanoid } from "nanoid";
-import { Avatar } from "@/components/ui/avatar";
-import Image from "next/image";
 import { ClientMessage } from "./action";
 import ArrowRightButton from "@/components/ui/ArrowRightButton";
-import UserIcon from "@/components/ui/UserIcon";
+import { BotMessageSquare, User } from "lucide-react";
 
 const AIMessage = ({ display, isText }: ClientMessage) => {
   return (
-    <li className="flex flex-col my-7">
-      <Avatar className="w-6 h-6 mb-3">
-        <Image
-          src="/tollbit-avatar.png"
-          width={36}
-          height={36}
-          alt=""
-          priority
-        />
-      </Avatar>
-      {isText ? <>{display}</> : <div className="w-11/12">{display}</div>}
+    <li className="aiMessageContainer">
+      <span className="aiIconContainer">
+        <BotMessageSquare size={20} color="white" className="icon" />
+      </span>
+      {isText ? <>{display}</> : <div className="">{display}</div>}
     </li>
   );
 };
 
 const UserMessage = (message: ClientMessage) => (
-  <li className="relative w-auto my-7 ">
-    <UserIcon />
-    <h2 className="text-[1.1rem] mt-3 leading-6">{message.display}</h2>
+  <li className="userMessageContainer">
+    <span className="userIconContainer">
+      <User size={20} color="white" className="icon" />
+    </span>
+    <p>{message.display}</p>
   </li>
 );
 
-export default function Home({ tiles, name }: { tiles: any[]; name: string }) {
+export default function Home({ tiles }: { tiles: any[] }) {
   const [conversation, setConversation] = useUIState();
   const [input, setInput] = useState<string>("");
   const { continueConversation } = useActions();
@@ -88,8 +82,8 @@ export default function Home({ tiles, name }: { tiles: any[]; name: string }) {
   }, []);
 
   return (
-    <div className="flex flex-col w-full pb-24 mx-auto stretch relative">
-      <ul className="mb-14" ref={chatRef}>
+    <div className="chat">
+      <ul className="chatList" ref={chatRef}>
         {conversation.map((message: ClientMessage, index: number) =>
           message.role === "user" ? (
             <UserMessage key={index} {...message} />
@@ -98,18 +92,12 @@ export default function Home({ tiles, name }: { tiles: any[]; name: string }) {
           ),
         )}
       </ul>
-      <div className="fixed bottom-0 mb-4 mx-auto max-w-3xl inset-x-0 animate-bounce-once">
-        <div
-          className="drop-shadow-[0_14px_14px_rgba(0,0,0,0.07)] drop-shadow-[0_2px_2px_rgba(0,0,0,0.06)] rounded-full flex items-center justify-between h-16 w-full bg-background px-6 py-3"
-          onClick={() => inputRef.current?.focus()}
-        >
-          <div className="flex w-full">
-            <div className=" mr-4 border-gray-400 h-5 flex items-center">
-              <UserIcon />
-            </div>
+      <div className="inputContainer">
+        <div className="inputContent" onClick={() => inputRef.current?.focus()}>
+          <div className="inputFlex">
             <input
               placeholder="Ask me anything..."
-              className="border-0  w-full focus-visible:outline-none placeholder:text-gray-300"
+              className="input"
               value={input}
               ref={inputRef}
               onChange={(e) => setInput(e.target.value)}
@@ -121,20 +109,16 @@ export default function Home({ tiles, name }: { tiles: any[]; name: string }) {
                 }
               }}
             />
+            <ArrowRightButton
+              onClick={() => {
+                if (input.length > 0) {
+                  sendMessage(input);
+                  setInput("");
+                }
+              }}
+            />
           </div>
-          <ArrowRightButton
-            className="bg-orange-600"
-            onClick={() => {
-              if (input.length > 0) {
-                sendMessage(input);
-                setInput("");
-              }
-            }}
-          />
         </div>
-        <p className="text-center text-gray-300 text-xs pt-3">
-          This is an early-development demo. © TollBit, 2024.
-        </p>
       </div>
     </div>
   );

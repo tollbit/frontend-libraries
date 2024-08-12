@@ -75,7 +75,7 @@ export async function continueConversation(
         ]);
       }
 
-      return <span className="my-3 text-[1.1rem] leading-6">{content}</span>;
+      return <span className="textMessage">{content}</span>;
     },
     tools,
   });

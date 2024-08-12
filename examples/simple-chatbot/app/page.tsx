@@ -1,5 +1,7 @@
 import { Tollbit } from "@tollbit/client";
 import Chat from "./chat";
+import "./styles.css";
+import "@tollbit/react-integrate-tile/styles.css";
 
 export default async function Page() {
   const client = new Tollbit(
@@ -9,28 +11,14 @@ export default async function Page() {
     process.env.NEXT_PUBLIC_TOLLBIT_BASE_URL,
   );
   const tiles = await client.getAllTiles();
-  // Get a random name of a user
-  const names = [
-    "Luke",
-    "Toshit",
-    "Olivia",
-    "Martin",
-    "Josh",
-    "Garrison",
-    "Harseet",
-    "Anthony",
-    "Anupama",
-    "Greta",
-  ];
-  const randomName = names[Math.floor(Math.random() * names.length)];
 
   return (
-    <main className="max-w-3xl mx-auto px-6">
+    <main className="mainContent">
       <script
-        src="https://cdn.jsdelivr.net/npm/@tollbit/core-integrate-tile@latest/dist/scripts/parent.min.js"
+        src="https://cdn.jsdelivr.net/npm/@tollbit/core-integrate-tile@latest/dist/parent.min.js"
         type="text/javascript"
       ></script>
-      <Chat tiles={tiles} name={randomName} />
+      <Chat tiles={tiles} />
     </main>
   );
 }
