@@ -10,7 +10,7 @@
     "changeset": "changeset",
     "type-check": "turbo type-check",
     "format:check": "turbo format:check",
-    "version": "changeset",
+    "version": "changeset version",
     "ci:publish": "changeset publish -r && changeset tag"
   },
   "devDependencies": {

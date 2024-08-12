@@ -1,5 +1,12 @@
 # @tollbit/client
 
+## 0.0.3
+
+### Patch Changes
+
+- 5d13146: Making various library updates to prep for release
+- bump
+
 ## 0.0.2
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @tollbit/core-integrate-tile
 
+## 0.0.7
+
+### Patch Changes
+
+- 5d13146: Making various library updates to prep for release
+- bump
+
 ## 0.0.6
 
 ### Patch Changes

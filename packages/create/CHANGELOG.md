@@ -1,5 +1,15 @@
 # @tollbit/create-tile
 
+## 0.0.5
+
+### Patch Changes
+
+- 5d13146: Making various library updates to prep for release
+- bump
+- Updated dependencies [5d13146]
+- Updated dependencies
+  - @tollbit/core-integrate-tile@0.0.7
+
 ## 0.0.4
 
 ### Patch Changes
