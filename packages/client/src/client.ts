@@ -36,16 +36,6 @@ export interface InputParamsResponse {
   enums: string[] | null;
 }
 
-export interface ParsedInputParams {
-  properties: {
-    [key: string]: {
-      enum?: string[];
-      type: string;
-      description: string;
-    };
-  };
-}
-
 export enum LicenseType {
   ON_DEMAND = "ON_DEMAND_LICENSE",
 }
