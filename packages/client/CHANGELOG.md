@@ -1,5 +1,11 @@
 # @tollbit/client
 
+## 0.1.0
+
+### Minor Changes
+
+- Updates axios to remove security vulnerability
+
 ## 0.0.3
 
 ### Patch Changes
