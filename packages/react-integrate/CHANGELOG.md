@@ -1,5 +1,13 @@
 # @tollbit/react-integrate-tile
 
+## 0.0.7
+
+### Patch Changes
+
+- Adds MIT licenses
+- Updated dependencies
+  - @tollbit/core-integrate-tile@0.0.8
+
 ## 0.0.6
 
 ### Patch Changes
