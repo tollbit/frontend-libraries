@@ -1,6 +1,6 @@
 {
   "name": "@tollbit/client",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Tollbit SDK for usage with node",
   "homepage": "https://tollbit.com/",
   "exports": {
