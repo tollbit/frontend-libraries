@@ -1,6 +1,7 @@
 {
   "name": "@tollbit/react-integrate-tile",
-  "version": "0.0.6",
+  "version": "0.0.7",
+  "license": "MIT",
   "exports": {
     ".": {
       "import": "./dist/index.js",
