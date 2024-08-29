@@ -1,29 +1,33 @@
+// State
 const SEARCH_INPUT = "searchInput";
 const ARTICLES = "articles";
 const PAST_MESSAGES = "pastMessages";
 const SHOW_MAGIC_SEARCH = "showMagicSearch";
 const LOADING = "loading";
 const PROMPTS = "prompts";
+const EXPAND_CHAT = "expandChat";
+
+// IDs and classes
 const MAGIC_SEARCH_ID = "magic-search";
 const ARTICLES_ID = "magic-search-articles";
-const PROMPTS_ID = "magic-search-prompts";
+const SUGGESTIONS_ID = "magic-search-suggestions";
 const CHAT_ID = "magic-search-chat";
+const CHAT_LIST_ID = "magic-search-chat-list";
 const HEADER_ID = "magic-search-header";
 const SEARCH_INPUT_ID = "magic-search-input";
 const CHAT_INPUT_ID = "magic-search-chat-input";
 const SEARCH_TITLE_ID = "magic-search-results-title";
 const SUGGESTIONS_TITLE_ID = "magic-search-suggestions-title";
+const CHAT_TITLE_BUTTON_ID = "magic-search-chat-title-button";
+const CHAT_TITLE_ICON_ID = "magic-search-chat-title-icon";
 const CLOSE_BUTTON_ID = "magic-search-close";
+const TAB = "magic-search-tab";
+
+// Other
 const BOT_ROLE = "assistant";
 const USER_ROLE = "user";
 
-function MagicSearch({ publicKey, id, direction = "left" }) {
-  const searchBar = document.getElementById(id);
-  if (!searchBar) {
-    console.error("Magic Search: Element with id " + id + " not found");
-    return;
-  }
-
+function MagicSearch({ publicKey, classes = {}, direction = "left" }) {
   const state = new Proxy(
     {
       [PAST_MESSAGES]: [],
@@ -32,6 +36,7 @@ function MagicSearch({ publicKey, id, direction = "left" }) {
       [LOADING]: false,
       [SHOW_MAGIC_SEARCH]: false,
       [PROMPTS]: [],
+      [EXPAND_CHAT]: false,
     },
     {
       set: async function (obj, prop, value) {
@@ -73,9 +78,9 @@ function MagicSearch({ publicKey, id, direction = "left" }) {
         }
         if (prop === SHOW_MAGIC_SEARCH) {
           if (value) {
-            showMagicSearch();
+            showMagicSearch(direction);
           } else {
-            hideMagicSearch();
+            hideMagicSearch(direction);
           }
           // Check if we've already queried for prompts or not
           if (!state[PROMPTS].length) {
@@ -107,6 +112,10 @@ function MagicSearch({ publicKey, id, direction = "left" }) {
           );
           return true;
         }
+        if (prop === EXPAND_CHAT) {
+          renderExpandChat();
+          return true;
+        }
       },
     },
   );
@@ -127,29 +136,18 @@ function MagicSearch({ publicKey, id, direction = "left" }) {
 
   const executeSearch = (search) => (state[SEARCH_INPUT] = search);
 
+  const expandChat = () => (state[EXPAND_CHAT] = true);
+
   // Instantiate the HTML for magic search
   window.addEventListener("DOMContentLoaded", async () => {
     instantiateMagicSearch(
       sendUserMessage,
       setIsDrawerOpen,
       executeSearch,
+      expandChat,
+      classes,
       direction,
     );
-  });
-
-  // Listen for keydown events, if the user hits enter while the search bar is focused, submit the search
-  document.addEventListener("keydown", async function (event) {
-    if (searchBar === document.activeElement) {
-      if (event.key === "Enter") {
-        state[SEARCH_INPUT] = searchBar.value;
-        state[LOADING] = true;
-      }
-    }
-  });
-
-  // Configure search bar click listener
-  searchBar.addEventListener("click", () => {
-    state[SHOW_MAGIC_SEARCH] = !state[SHOW_MAGIC_SEARCH];
   });
 }
 
@@ -157,30 +155,38 @@ function instantiateMagicSearch(
   sendUserMessage,
   setIsDrawerOpen,
   executeSearch,
+  expandChat,
+  classes,
   direction,
 ) {
   const main = document.getElementsByTagName("main")[0];
   main.insertAdjacentHTML(
     "afterend",
-    `<div id="${MAGIC_SEARCH_ID}" class="${MAGIC_SEARCH_ID} ${direction === "left" ? `${MAGIC_SEARCH_ID}-left` : `${MAGIC_SEARCH_ID}-right`}">
+    `<div id="${MAGIC_SEARCH_ID}" class="${MAGIC_SEARCH_ID} ${direction === "left" ? `${MAGIC_SEARCH_ID}-left` : `${MAGIC_SEARCH_ID}-right`} ${getClassOverride(MAGIC_SEARCH_ID, classes)}">
       <div class="magic-search-content">
-        <div id="${HEADER_ID}" class="${HEADER_ID}">
+        <div id="${HEADER_ID}" class="${HEADER_ID} ${getClassOverride(HEADER_ID, classes)}">
           <button id="${CLOSE_BUTTON_ID}" class="${CLOSE_BUTTON_ID} ${direction === "left" ? `${CLOSE_BUTTON_ID}-left` : `${CLOSE_BUTTON_ID}-right`}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
         </div>
         <div class="magic-search-input-container">
-          <input id="${SEARCH_INPUT_ID}" class="${SEARCH_INPUT_ID}" placeholder="Search"/>
+          <input id="${SEARCH_INPUT_ID}" class="${SEARCH_INPUT_ID} ${getClassOverride(SEARCH_INPUT_ID, classes)}" placeholder="Search"/>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#343434" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
         </div>
-        <div id="${ARTICLES_ID}" class="${ARTICLES_ID}"></div>
-        <div id="${PROMPTS_ID}" class="${PROMPTS_ID}"></div>
-        <div id="${CHAT_ID}" class="${CHAT_ID}">
+        <div id="${ARTICLES_ID}" class="${ARTICLES_ID} ${getClassOverride(ARTICLES_ID, classes)}"></div>
+        <div id="${SUGGESTIONS_ID}" class="${SUGGESTIONS_ID} ${getClassOverride(SUGGESTIONS_ID, classes)}"></div>
+        <div id="${CHAT_ID}" class="${CHAT_ID} ${getClassOverride(CHAT_ID, classes)}">
+          <button id="${CHAT_TITLE_BUTTON_ID}" class="${CHAT_TITLE_BUTTON_ID} ${getClassOverride(CHAT_TITLE_BUTTON_ID, classes)}">
+            <h3>Chat about it</h3>
+            <svg xmlns="http://www.w3.org/2000/svg" id="${CHAT_TITLE_ICON_ID}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#343434" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div id="${CHAT_LIST_ID}">
+          </div>
           <div class="magic-search-chat-input-container">
-            <input id="${CHAT_INPUT_ID}" class="${CHAT_INPUT_ID}" placeholder="Ask something"/>
+            <input id="${CHAT_INPUT_ID}" class="${CHAT_INPUT_ID} ${getClassOverride(CHAT_INPUT_ID, classes)}" placeholder="Ask something"/>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#343434" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
           </div>
         </div>
       </div>
-      <div class="magic-search-tab ${direction === "left" ? "magic-search-tab-left" : "magic-search-tab-right"}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
+      <div class="${TAB} ${getClassOverride(TAB, classes)} ${direction === "left" ? "magic-search-tab-left" : "magic-search-tab-right"}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search magic-search-tab-icon"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
     </div>`,
   );
   // Instantiate chat and search listener
@@ -210,6 +216,9 @@ function instantiateMagicSearch(
     searchInput.focus();
     setIsDrawerOpen(true);
   });
+  // Add click listener to chat expand button
+  const chatExpandButton = document.getElementById(CHAT_TITLE_BUTTON_ID);
+  chatExpandButton.addEventListener("click", expandChat);
 }
 
 async function renderChat(pastMessages, articles, appendBotMessage, publicKey) {
@@ -220,10 +229,10 @@ async function renderChat(pastMessages, articles, appendBotMessage, publicKey) {
   ) {
     return;
   }
-  const chatContainer = document.getElementById(CHAT_ID);
+  const chatContainer = document.getElementById(CHAT_LIST_ID);
   // Insert the latest message from the user
   chatContainer.insertAdjacentHTML(
-    "afterbegin",
+    "beforeend",
     `
     <div class="magic-search-user-message">
     ${pastMessages[pastMessages.length - 1].content}
@@ -237,7 +246,7 @@ async function renderChat(pastMessages, articles, appendBotMessage, publicKey) {
   });
   // Insert the empty node for the streamed bot message
   chatContainer.insertAdjacentHTML(
-    "afterbegin",
+    "beforeend",
     `<div class="magic-search-bot-message"></div`,
   );
   // Find the most recently added bot message
@@ -319,7 +328,7 @@ function renderArticles(articles, searchInput) {
 }
 
 function renderPrompts(prompts, sendMessage) {
-  const magicSearchPrompts = document.getElementById(PROMPTS_ID);
+  const magicSearchPrompts = document.getElementById(SUGGESTIONS_ID);
   insertOnce(
     SUGGESTIONS_TITLE_ID,
     magicSearchPrompts,
@@ -331,19 +340,33 @@ function renderPrompts(prompts, sendMessage) {
     magicSearchPrompts.insertAdjacentHTML(
       "afterbegin",
       `
-        <button class="prompt">
+        <button class="magic-search-suggestion">
           ${prompt.question}
         </buton>
       `,
     );
   });
 
-  const promptNodes = document.getElementsByClassName("prompt");
+  const promptNodes = document.getElementsByClassName(
+    "magic-search-suggestion",
+  );
   for (let i = 0; i < promptNodes.length; i++) {
     promptNodes[i].addEventListener("click", (e) => {
       sendMessage(e.target.innerText);
     });
   }
+}
+
+function renderExpandChat() {
+  const expandChatButton = document.getElementById(CHAT_TITLE_ICON_ID);
+  if (!expandChatButton) {
+    return;
+  }
+
+  const chat = document.getElementById(CHAT_ID);
+  chat.scrollIntoView();
+  chat.classList.add("expand");
+  expandChatButton.classList.add("rotate-180");
 }
 
 function renderLoading() {
@@ -352,14 +375,19 @@ function renderLoading() {
     .insertAdjacentHTML("beforebegin", `<span class="loader"></span>`);
 }
 
-function showMagicSearch() {
+function showMagicSearch(direction) {
   document.getElementById(MAGIC_SEARCH_ID).style.transform = "translateX(0%)";
-  document.getElementsByTagName("main")[0].style.marginLeft = "320px";
+  document.getElementsByTagName("main")[0].style[
+    direction === "left" ? "marginLeft" : "marginRight"
+  ] = "320px";
 }
 
-function hideMagicSearch() {
-  document.getElementById(MAGIC_SEARCH_ID).style.transform = "translateX(-98%)";
-  document.getElementsByTagName("main")[0].style.marginLeft = "0";
+function hideMagicSearch(direction) {
+  document.getElementById(MAGIC_SEARCH_ID).style.transform =
+    direction === "left" ? "translateX(-98%)" : "translateX(98%)";
+  document.getElementsByTagName("main")[0].style[
+    direction === "left" ? "marginLeft" : "marginRight"
+  ] = "0";
 }
 
 const fetcher = async (path, key, body) =>
@@ -380,3 +408,5 @@ const insertOnce = (id, parent, html, position) => {
   }
   parent.insertAdjacentHTML(position, html);
 };
+
+const getClassOverride = (id, classes) => classes[id] || "";

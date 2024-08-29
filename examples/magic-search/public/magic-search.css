@@ -1,5 +1,6 @@
 main {
   transition: margin-left .5s;
+  transition: margin-right .5s;
 }
 /* General */
 .magic-search {
@@ -49,6 +50,8 @@ main {
   top: 200px;
   width: 40px;
   height: 80px;
+  display: flex;
+  align-items: center;
   background-color:#343434 ;
 }
 .magic-search-tab-left {
@@ -56,6 +59,9 @@ main {
 }
 .magic-search-tab-right {
   left: -40px;
+}
+.magic-search-tab-icon {
+  margin: 0 auto;
 }
 /* Search results */
 .magic-search-input-container {
@@ -118,6 +124,16 @@ main {
 	font-size: 12px;
 }
 /* Chat messages */
+.magic-search-chat {
+  height: 100px;
+  overflow: hidden;
+}
+.magic-search-chat-title-button {
+  font-size: 24px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;;
+}
 .magic-search-chat-input-container {
   display: flex;
   justify-content: space-between;
@@ -133,15 +149,26 @@ main {
 .magic-search-chat-input:focus {
   outline: none;
 }
+.magic-search-user-message {
+  font-size: 20px;
+  padding: 12px 0px;
+}
+
 .magic-search-bot-message {
-  background: yellow;
-  padding: 12px;
+  padding: 12px 0px;
 }
 
 /* Suggestions */
 .magic-search-suggestions-title {
   font-size: 20px;
   margin-bottom: 12px;
+}
+.magic-search-suggestions {
+  margin-bottom: 12px;
+}
+.magic-search-suggestion {
+  padding: 12px 0px;
+  border-bottom: 1px solid #3434
 }
 
 /* Loading state */
@@ -178,4 +205,14 @@ main {
     50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
     75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
     100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
+}
+
+/* Utilities */
+.expand {
+  height: auto;
+  overflow: initial;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
 }
