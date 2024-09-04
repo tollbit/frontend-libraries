@@ -59,6 +59,7 @@ function MagicSearch({ publicKey, classes = {}, direction = "left" }) {
           return true;
         }
         if (prop === SEARCH_INPUT) {
+          state[PROMPTS] = [];
           // Fetch articles from the server
           const articles = await (
             await fetcher("/content/v1/search/articles", publicKey, {
@@ -272,7 +273,7 @@ async function renderChat(pastMessages, articles, appendBotMessage, publicKey) {
       // we need to extract the citations, which are between parentheses
       chatNode.append(flushableChunk);
       for (const citation of citationList) {
-        const idx = articleUrls.indexOf(citation) + 1;
+        const idx = articleUrls.findIndex((c) => c.includes(citation)) + 1;
         const citationTag = document.createElement("a");
         citationTag.textContent = idx;
         citationTag.href = citation;
