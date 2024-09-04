@@ -59,21 +59,22 @@ function MagicSearch({ publicKey, classes = {}, direction = "left" }) {
           return true;
         }
         if (prop === SEARCH_INPUT) {
-          state[PAST_MESSAGES] = [
-            ...state[PAST_MESSAGES],
-            { role: USER_ROLE, content: value },
-          ];
           // Fetch articles from the server
           const articles = await (
             await fetcher("/content/v1/search/articles", publicKey, {
               query: value,
             })
           ).json();
+          console.log(articles)
           // If we have a successful query for articles, set those into state and switch loading to false
-          if (articles?.length && articles[0]?.results?.length) {
-            state[ARTICLES] = articles[0].results;
+          if (articles?.length) {
+            state[ARTICLES] = articles;
             state[LOADING] = false;
           }
+          state[PAST_MESSAGES] = [
+            ...state[PAST_MESSAGES],
+            { role: USER_ROLE, content: value },
+          ];
           return true;
         }
         if (prop === SHOW_MAGIC_SEARCH) {
@@ -229,40 +230,103 @@ async function renderChat(pastMessages, articles, appendBotMessage, publicKey) {
   ) {
     return;
   }
+  const lastUserMessage = pastMessages[pastMessages.length - 1]
+  pastMessages = pastMessages.slice(0, -1)
   const chatContainer = document.getElementById(CHAT_LIST_ID);
   // Insert the latest message from the user
   chatContainer.insertAdjacentHTML(
     "beforeend",
     `
     <div class="magic-search-user-message">
-    ${pastMessages[pastMessages.length - 1].content}
+    ${lastUserMessage.content}
     </div>
     `,
   );
   const response = await fetcher("/content/v1/search/summary", publicKey, {
     articles,
     pastMessages,
-    maxOutputTokens: 100,
+    query: lastUserMessage.content
   });
   // Insert the empty node for the streamed bot message
   chatContainer.insertAdjacentHTML(
     "beforeend",
-    `<div class="magic-search-bot-message"></div`,
+    `<div class="magic-search-bot-message"></div>`,
   );
   // Find the most recently added bot message
   const chatNodes = chatContainer.getElementsByClassName(
     "magic-search-bot-message",
   );
   const chatNode = chatNodes[chatNodes.length - 1];
+  const articleUrls = articles.map((x) => x.url)
   // Declare a separate variable to save the stream as a string
   let chatString = "";
+  let previousChunk = "";
   for await (const chunk of response.body) {
     // Do something with each "chunk"
-    const chunkString = new TextDecoder().decode(chunk);
-    chatNode.append(chunkString);
-    chatString = chatString + chunkString;
+    let chunkString = new TextDecoder().decode(chunk);
+    do {
+      const { flushableChunk, leftOverChunk, citationList } = getFlushableChunks(previousChunk, chunkString)
+      previousChunk = leftOverChunk;
+      chunkString = "";
+      console.log(flushableChunk, leftOverChunk, citationList)
+      // we need to extract the citations, which are between parentheses
+      chatNode.append(flushableChunk);
+      for (const citation of citationList) {
+        const idx = articleUrls.indexOf(citation) + 1;
+        const citationTag = document.createElement("a");
+        citationTag.textContent = idx;
+        citationTag.href = citation;
+        chatNode.insertAdjacentElement(
+          "beforeend",
+          citationTag
+        );
+      }
+      chatString = chatString + flushableChunk;
+    } while (previousChunk !== "" && previousChunk[0] != '(');
   }
   appendBotMessage(chatString);
+}
+
+// returns a triple where the first element is a flushable chunk, and the second is a list of url citations
+// and the third is the leftover chunk to the fed back into this function
+function getFlushableChunks(previousChunk, newChunk) {
+  const flushableBuffer = [];
+  const citationBuffer = [];
+  const citationList = [];
+  let parenthesesOpen = false;
+  const mergedStrings = previousChunk + newChunk;
+  for (var i = 0; i < mergedStrings.length; i++) {
+    const currentChar = mergedStrings[i];
+    if (currentChar == '(') {
+      parenthesesOpen = true;
+    } else if (currentChar == ')') {
+      // if we find a citation, end this pass of the data early and return the citation
+      parenthesesOpen = false;
+      const citationString = citationBuffer.join("");
+      citationList.push(...citationString.split(';'));
+      return {
+        flushableChunk: flushableBuffer.join(""),
+        leftOverChunk: mergedStrings.slice(i + 1),
+        citationList
+      }
+    } else {
+      if (parenthesesOpen) {
+        citationBuffer.push(currentChar);
+      } else {
+        flushableBuffer.push(currentChar);
+      }
+    }
+  }
+  // if we reached the end and there's an open parenthese, the citation buffer becomes the leftover chunk
+  let leftOverChunk = "";
+  if (parenthesesOpen) {
+    leftOverChunk = "(" + citationBuffer.join("")
+  }
+  return {
+    flushableChunk: flushableBuffer.join(""),
+    leftOverChunk,
+    citationList
+  }
 }
 
 function renderArticles(articles, searchInput) {
@@ -391,7 +455,7 @@ function hideMagicSearch(direction) {
 }
 
 const fetcher = async (path, key, body) =>
-  fetch(`http://localhost:8000${path}`, {
+  fetch(`https://pre-api.tollbit.com${path}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
