@@ -276,12 +276,15 @@ async function renderChat(pastMessages, articles, appendBotMessage, publicKey) {
         const citationTag = document.createElement("a");
         citationTag.textContent = idx;
         citationTag.href = citation;
-        chatNode.insertAdjacentElement(
-          "beforeend",
-          citationTag
-        );
+        citationTag.target = "_blank";
+        citationTag.style.color = "blue";
+        chatNode.insertAdjacentElement("beforeend",citationTag);
       }
       chatString = chatString + flushableChunk;
+      // for each chunk we get from the streamed body, we might need to process it multiple times to extract each citation,
+      // which is why we have this do while loop. We only end this do while if there's no more leftover chunks, or if
+      // the leftover chunk is the start of a citation, which generally means that the streamed response cut off in the middle
+      // of a citation, so we request the next chunk from the response body to complete this citation.
     } while (previousChunk !== "" && previousChunk[0] != '(');
   }
   appendBotMessage(chatString);
@@ -303,7 +306,7 @@ function getFlushableChunks(previousChunk, newChunk) {
       // if we find a citation, end this pass of the data early and return the citation
       parenthesesOpen = false;
       const citationString = citationBuffer.join("");
-      citationList.push(...citationString.split(';'));
+      citationList.push(...citationString.split(';').map((x) => x.trim()));
       return {
         flushableChunk: flushableBuffer.join(""),
         leftOverChunk: mergedStrings.slice(i + 1),
