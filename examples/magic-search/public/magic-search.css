@@ -97,19 +97,19 @@ main {
 .magic-search-articles {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .magic-search-article {
 	border-bottom: 1px solid #000000;
-  padding: 0 8px 12px
+  padding: 0 4px 8px
 }
 
 .magic-search-article-title {
-	font-size: 20px;
+	font-size: 16px;
   font-weight: 700;
 	display: block;
-	margin-bottom: 8px;
+	margin-bottom: 4px;
 }
 
 .magic-search-article-text {
@@ -126,7 +126,6 @@ main {
 /* Chat messages */
 .magic-search-chat {
   height: 100px;
-  overflow: hidden;
 }
 .magic-search-chat-title-button {
   font-size: 24px;

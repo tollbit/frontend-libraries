@@ -5,7 +5,6 @@ const PAST_MESSAGES = "pastMessages";
 const SHOW_MAGIC_SEARCH = "showMagicSearch";
 const LOADING = "loading";
 const PROMPTS = "prompts";
-const EXPAND_CHAT = "expandChat";
 
 // IDs and classes
 const MAGIC_SEARCH_ID = "magic-search";
@@ -15,13 +14,13 @@ const CHAT_ID = "magic-search-chat";
 const CHAT_LIST_ID = "magic-search-chat-list";
 const HEADER_ID = "magic-search-header";
 const SEARCH_INPUT_ID = "magic-search-input";
-const CHAT_INPUT_ID = "magic-search-chat-input";
 const SEARCH_TITLE_ID = "magic-search-results-title";
 const SUGGESTIONS_TITLE_ID = "magic-search-suggestions-title";
 const CHAT_TITLE_BUTTON_ID = "magic-search-chat-title-button";
 const CHAT_TITLE_ICON_ID = "magic-search-chat-title-icon";
 const CLOSE_BUTTON_ID = "magic-search-close";
 const TAB = "magic-search-tab";
+const URL_REGEX = new RegExp(/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi);
 
 // Other
 const BOT_ROLE = "assistant";
@@ -36,7 +35,6 @@ function MagicSearch({ publicKey, classes = {}, direction = "left" }) {
       [LOADING]: false,
       [SHOW_MAGIC_SEARCH]: false,
       [PROMPTS]: [],
-      [EXPAND_CHAT]: false,
     },
     {
       set: async function (obj, prop, value) {
@@ -114,10 +112,6 @@ function MagicSearch({ publicKey, classes = {}, direction = "left" }) {
           );
           return true;
         }
-        if (prop === EXPAND_CHAT) {
-          renderExpandChat();
-          return true;
-        }
       },
     },
   );
@@ -138,15 +132,12 @@ function MagicSearch({ publicKey, classes = {}, direction = "left" }) {
 
   const executeSearch = (search) => (state[SEARCH_INPUT] = search);
 
-  const expandChat = () => (state[EXPAND_CHAT] = true);
-
   // Instantiate the HTML for magic search
   window.addEventListener("DOMContentLoaded", async () => {
     instantiateMagicSearch(
       sendUserMessage,
       setIsDrawerOpen,
       executeSearch,
-      expandChat,
       classes,
       direction,
     );
@@ -157,7 +148,6 @@ function instantiateMagicSearch(
   sendUserMessage,
   setIsDrawerOpen,
   executeSearch,
-  expandChat,
   classes,
   direction,
 ) {
@@ -176,31 +166,15 @@ function instantiateMagicSearch(
         <div id="${ARTICLES_ID}" class="${ARTICLES_ID} ${getClassOverride(ARTICLES_ID, classes)}"></div>
         <div id="${SUGGESTIONS_ID}" class="${SUGGESTIONS_ID} ${getClassOverride(SUGGESTIONS_ID, classes)}"></div>
         <div id="${CHAT_ID}" class="${CHAT_ID} ${getClassOverride(CHAT_ID, classes)}">
-          <button id="${CHAT_TITLE_BUTTON_ID}" class="${CHAT_TITLE_BUTTON_ID} ${getClassOverride(CHAT_TITLE_BUTTON_ID, classes)}">
-            <h3>Chat about it</h3>
-            <svg xmlns="http://www.w3.org/2000/svg" id="${CHAT_TITLE_ICON_ID}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#343434" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div id="${CHAT_LIST_ID}">
-          </div>
-          <div class="magic-search-chat-input-container">
-            <input id="${CHAT_INPUT_ID}" class="${CHAT_INPUT_ID} ${getClassOverride(CHAT_INPUT_ID, classes)}" placeholder="Ask something"/>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#343434" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
-          </div>
+          <div id="${CHAT_LIST_ID}"></div>
         </div>
       </div>
       <div class="${TAB} ${getClassOverride(TAB, classes)} ${direction === "left" ? "magic-search-tab-left" : "magic-search-tab-right"}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search magic-search-tab-icon"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
     </div>`,
   );
   // Instantiate chat and search listener
-  const chatInput = document.getElementById(CHAT_INPUT_ID);
   const searchInput = document.getElementById(SEARCH_INPUT_ID);
   document.addEventListener("keydown", async function (event) {
-    if (chatInput === document.activeElement) {
-      if (event.key === "Enter") {
-        sendUserMessage(chatInput.value);
-        chatInput.value = "";
-      }
-    }
     if (searchInput === document.activeElement) {
       if (event.key === "Enter") {
         executeSearch(searchInput.value);
@@ -218,9 +192,6 @@ function instantiateMagicSearch(
     searchInput.focus();
     setIsDrawerOpen(true);
   });
-  // Add click listener to chat expand button
-  const chatExpandButton = document.getElementById(CHAT_TITLE_BUTTON_ID);
-  chatExpandButton.addEventListener("click", expandChat);
 }
 
 async function renderChat(pastMessages, articles, appendBotMessage, publicKey) {
@@ -267,6 +238,10 @@ async function renderChat(pastMessages, articles, appendBotMessage, publicKey) {
     let chunkString = new TextDecoder().decode(chunk);
     do {
       const { flushableChunk, leftOverChunk, citationList } = getFlushableChunks(previousChunk, chunkString)
+      // if this is the same as previous, it means we weren't able to process this chunk, so break out of this while loop
+      if (previousChunk !== "" && leftOverChunk !== "" && previousChunk === leftOverChunk) {
+        break;
+      }
       previousChunk = leftOverChunk;
       chunkString = "";
       console.log(flushableChunk, leftOverChunk, citationList)
@@ -286,19 +261,21 @@ async function renderChat(pastMessages, articles, appendBotMessage, publicKey) {
       // which is why we have this do while loop. We only end this do while if there's no more leftover chunks, or if
       // the leftover chunk is the start of a citation, which generally means that the streamed response cut off in the middle
       // of a citation, so we request the next chunk from the response body to complete this citation.
-    } while (previousChunk !== "" && previousChunk[0] != '(');
+    } while (previousChunk !== "");
   }
   appendBotMessage(chatString);
 }
 
-// returns a triple where the first element is a flushable chunk, and the second is a list of url citations
-// and the third is the leftover chunk to the fed back into this function
+// returns an object where flushableChunk is the string that can be immediately be displayed to the user,
+// leftOverChunk is the unprocesssed string that should be put back into this function in the next iteration
+// and citation list is the citation that should be immediately appended to the flushabale chunk.
 function getFlushableChunks(previousChunk, newChunk) {
   const flushableBuffer = [];
   const citationBuffer = [];
   const citationList = [];
   let parenthesesOpen = false;
   const mergedStrings = previousChunk + newChunk;
+  loop1:
   for (var i = 0; i < mergedStrings.length; i++) {
     const currentChar = mergedStrings[i];
     if (currentChar == '(') {
@@ -307,7 +284,18 @@ function getFlushableChunks(previousChunk, newChunk) {
       // if we find a citation, end this pass of the data early and return the citation
       parenthesesOpen = false;
       const citationString = citationBuffer.join("");
-      citationList.push(...citationString.split(';').map((x) => x.trim()));
+      const citations = citationString.split(';').map((x) => x.trim());
+      loop2:
+      for (const c of citations) {
+        if (!c.match(URL_REGEX)) {
+          console.log("does not match url regex", c);
+          // if this is not a well formed url, then do not add this to the citations
+          citationBuffer.length = 0;
+          flushableBuffer.append(...("(" + citationString + ")"))
+          continue loop1;
+        }
+      }
+      citationList.push(...citations);
       return {
         flushableChunk: flushableBuffer.join(""),
         leftOverChunk: mergedStrings.slice(i + 1),
@@ -397,12 +385,14 @@ function renderArticles(articles, searchInput) {
 
 function renderPrompts(prompts, sendMessage) {
   const magicSearchPrompts = document.getElementById(SUGGESTIONS_ID);
-  insertOnce(
-    SUGGESTIONS_TITLE_ID,
-    magicSearchPrompts,
-    `<h3 id="${SUGGESTIONS_TITLE_ID}" class="${SUGGESTIONS_TITLE_ID} magic-search-title">Suggestions</h3>`,
-    "beforebegin",
-  );
+  if (prompts.length > 0) {
+    insertOnce(
+      SUGGESTIONS_TITLE_ID,
+      magicSearchPrompts,
+      `<h3 id="${SUGGESTIONS_TITLE_ID}" class="${SUGGESTIONS_TITLE_ID} magic-search-title">Suggestions</h3>`,
+      "beforebegin",
+    );
+  }
   magicSearchPrompts.innerHTML = "";
   prompts.forEach((prompt) => {
     magicSearchPrompts.insertAdjacentHTML(
@@ -425,17 +415,17 @@ function renderPrompts(prompts, sendMessage) {
   }
 }
 
-function renderExpandChat() {
-  const expandChatButton = document.getElementById(CHAT_TITLE_ICON_ID);
-  if (!expandChatButton) {
-    return;
-  }
+// function renderExpandChat() {
+//   const expandChatButton = document.getElementById(CHAT_TITLE_ICON_ID);
+//   if (!expandChatButton) {
+//     return;
+//   }
 
-  const chat = document.getElementById(CHAT_ID);
-  chat.scrollIntoView();
-  chat.classList.add("expand");
-  expandChatButton.classList.add("rotate-180");
-}
+//   const chat = document.getElementById(CHAT_ID);
+//   chat.scrollIntoView();
+//   chat.classList.add("expand");
+//   expandChatButton.classList.add("rotate-180");
+// }
 
 function renderLoading() {
   document
