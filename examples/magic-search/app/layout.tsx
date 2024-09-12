@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <script src="/magic-search.js" type="text/javascript" />
+        <script src="http://localhost:9000/bundle.js" type="text/javascript" />
       </head>
       <body className={inter.className}>{children}</body>
     </html>
