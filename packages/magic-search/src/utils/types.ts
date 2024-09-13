@@ -15,8 +15,8 @@ export interface MagicSearchConfiguration {
     suggestionsTitle?: string;
     introTitle?: string;
     searchResultsTitle?: string;
+    showMoreButton?: string;
   };
-  headerImage?: string;
 }
 
 export interface Message {

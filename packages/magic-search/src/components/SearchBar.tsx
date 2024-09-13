@@ -1,30 +1,39 @@
 import React from "react";
+import { getClassOverride } from "../utils";
+import { SEARCH_INPUT_ID, SEARCH_INPUT_WRAP_ID } from "../utils/constants";
+import { MagicSearchConfiguration } from "../utils/types";
 
 const SearchBar = ({
   innerRef,
   handleSubmit,
   value,
-  classNames,
+  inputClassNames = "",
+  inputWrapClassNames = "",
   handleChange,
-  placeholder,
+  configuration,
 }: {
   innerRef: React.RefObject<HTMLInputElement>;
   value: string;
-  classNames: string;
+  inputClassNames?: string;
+  inputWrapClassNames?: string;
   handleSubmit: (e: React.FormEvent) => void;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder: string;
+  configuration: MagicSearchConfiguration;
 }) => {
   return (
-    <div className="magic-search-input-wrap">
+    <div
+      className={`${SEARCH_INPUT_WRAP_ID} ${getClassOverride(SEARCH_INPUT_WRAP_ID, configuration.classes)} ${inputWrapClassNames}`}
+    >
       <div className="magic-search-input-container">
         <form onSubmit={handleSubmit} className="magic-search-form">
           <input
             ref={innerRef}
             value={value}
             onChange={handleChange}
-            className={classNames}
-            placeholder={placeholder}
+            className={`${SEARCH_INPUT_ID} ${getClassOverride(SEARCH_INPUT_ID, configuration.classes)} ${inputClassNames}`}
+            placeholder={
+              configuration?.copy?.searchPlaceholder || "Search for anything..."
+            }
           />
         </form>
       </div>

@@ -2,19 +2,24 @@ import React from "react";
 
 const Article = ({
   title,
-  date,
+  publishedDate,
   author,
   url,
 }: {
   title: string;
-  date: string;
+  publishedDate: string;
   author: string;
   url: string;
 }) => {
-  const publishedDate = new Date(date);
+  // Get the domain from the URL
+  const urlObject = new URL(url);
+  const host = urlObject.host.replace("www.", "");
+
+  // Calculate the time since the article was published
+  const articleDate = new Date(publishedDate);
   const dateNow = new Date();
   // @ts-expect-error
-  const timeDifference = dateNow - publishedDate;
+  const timeDifference = dateNow - articleDate;
 
   const millisecondsInHour = 1000 * 60 * 60;
   const millisecondsInDay = millisecondsInHour * 24;
@@ -44,9 +49,9 @@ const Article = ({
 
   return (
     <a className="magic-search-article" href={url}>
-      <h4 className="magic-search-article-title">{title}</h4>
+      <h3 className="magic-search-article-title">{title}</h3>
       <p className="magic-search-article-author">
-        {timeSincePublished} - By {author || "Unknown Author"}
+        {host}, {timeSincePublished}, {author || "Unknown Author"}
       </p>
     </a>
   );

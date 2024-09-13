@@ -5,6 +5,7 @@ export const CHAT_ID = "magic-search-chat";
 export const CHAT_LIST_ID = "magic-search-chat-list";
 export const HEADER_ID = "magic-search-header";
 export const SEARCH_INPUT_ID = "magic-search-input";
+export const SEARCH_INPUT_WRAP_ID = "magic-search-input-wrap";
 export const SEARCH_TITLE_ID = "magic-search-results-title";
 export const CHAT_TITLE_BUTTON_ID = "magic-search-chat-title-button";
 export const CHAT_TITLE_ICON_ID = "magic-search-chat-title-icon";

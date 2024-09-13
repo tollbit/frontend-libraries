@@ -3,7 +3,7 @@ main {
   transition: margin-left .5s;
   transition: margin-right .5s;
 }
-ody, .magic-search {
+body, .magic-search {
   font-family: 'Red Hat Display', sans-serif;
 }
 /* General */
@@ -14,6 +14,7 @@ ody, .magic-search {
   padding: 20px;
   transition: 0.5s;
   width: 480px;
+  color: #595959;
 }
 .magic-search-content {
   overflow-y: scroll;
@@ -47,16 +48,14 @@ ody, .magic-search {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   height: 80px;
-}
-.magic-search-header-image {
-  margin: 0 auto;
 }
 .magic-search-close {
   height: 50px;
   width: 50px;
   border-radius: 25px;
+  background-color: #fff;
   box-shadow: 0px 1px 4px 0px #00000040;
 }
 .magic-search-close-icon {
@@ -69,21 +68,9 @@ ody, .magic-search {
 }
 .magic-search-close-left {
 }
-.magic-search-tab-container {
-}
 .magic-search-tab {
   position: absolute;
-  top:200px;
-  height: 182px;
-  display: flex;
-  align-items: center;
-}
-.magic-search-border {
-  width: 8px;
-  height: 100vh;
-  position: absolute;
-  background: #343434;
-  top: 0px;
+  top: 0;
 }
 .magic-search-tab-container-left .magic-search-border {
   right: -8px;
@@ -92,10 +79,11 @@ ody, .magic-search {
   left: -8px;
 }
 .magic-search-tab-container-left .magic-search-tab {
-  right: -33px;
+  transform: translateX(100%);
+  right: 1px;
 }
 .magic-search-tab-container-right .magic-search-tab {
-  left: -33px;
+  transform: translateX(-100%) translateX(-19px);
 }
 .magic-search-tab-icon {
   margin: 0 auto;
@@ -137,13 +125,15 @@ ody, .magic-search {
 }
 .magic-search-last-search {
   font-size: 24px;
-  color: #595959;
+  margin-bottom: 24px;
 }
 /* Articles */
 .magic-search-articles {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   gap: 8px;
+  transition: height .5s ease-in;
 }
 
 .magic-search-article {
@@ -153,7 +143,7 @@ ody, .magic-search {
 
 .magic-search-article-title {
 	font-size: 16px;
-  font-weight: 700;
+  text-decoration: underline;
 	display: block;
 	margin-bottom: 4px;
 }
@@ -169,15 +159,18 @@ ody, .magic-search {
 	color: #777;
 	font-size: 12px;
 }
+
 /* Chat messages */
 .magic-search-chat {
-  height: 100px;
+  padding: 12px;
+  font-size: 16px;
+  margin-bottom: 50px;
 }
 .magic-search-chat-title-button {
   font-size: 24px;
   font-weight: 700;
   display: flex;
-  align-items: center;;
+  align-items: center;
 }
 .magic-search-chat-input-container {
   display: flex;
@@ -194,72 +187,76 @@ ody, .magic-search {
 .magic-search-chat-input:focus {
   outline: none;
 }
-.magic-search-user-message {
-  font-size: 20px;
-  padding: 12px 0px;
+.magic-search-results-search {
+  position: fixed;
+  bottom: 20px;
 }
-
-.magic-search-bot-message {
-  padding: 12px 0px;
+.magic-search-chat-input-wrap {
+  position: sticky;
+  bottom: 0;
+  left: 0;
 }
-
+.magic-search-shimmer {
+  height: 16px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  animation: shimmering 2.1s linear infinite;
+  background:  rgba(226,226,226,1);
+  background: linear-gradient(90deg,rgba(226,226,226,1) 9%, rgba(238,238,238,1) 18%, rgba(226,226,226,1) 31%);
+  background-size: 1300px 100%;
+}
+@keyframes shimmering {
+    0% {
+        background-position: -1300px 0;
+    }
+    100% {
+        background-position: 1300px 0;
+    }
+}
 /* Suggestions */
 .magic-search-suggestions-title {
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 12px;
 }
-.magic-search-suggestions {
+.magic-search-prompts {
   margin-bottom: 12px;
 }
-.magic-search-suggestion {
+.magic-search-prompt {
   padding: 16px;
   background: #fff;
   border-radius: 100px;
-  margin-bottom: 8px;;
+  margin-bottom: 12px;
+}
+.magic-search-prompt-response {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0 12px 12px;
 }
 /* Loading state */
+.magic-search-loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
 .magic-search-loader {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  position: relative;
-  animation: rotate 1s linear infinite
+  margin: 0 auto;
+  width: 60px;
+  aspect-ratio: 2;
+  --_g: no-repeat radial-gradient(circle closest-side,#000 90%,#0000);
+  background: 
+    var(--_g) 0%   50%,
+    var(--_g) 50%  50%,
+    var(--_g) 100% 50%;
+  background-size: calc(100%/3) 50%;
+  animation: l3 1s infinite linear;
 }
-.magic-search-loader::before , .magic-search-loader::after {
-  content: "";
-  box-sizing: border-box;
-  position: absolute;
-  inset: 0px;
-  border-radius: 50%;
-  border: 5px solid #FFF;
-  animation: prixClipFix 2s linear infinite ;
-}
-.magic-search-loader::after{
-  border-color: #FF3D00;
-  animation: prixClipFix 2s linear infinite , rotate 0.5s linear infinite reverse;
-  inset: 6px;
-}
-
-@keyframes rotate {
-  0%   {transform: rotate(0deg)}
-  100%   {transform: rotate(360deg)}
-}
-
-@keyframes prixClipFix {
-    0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
-    25%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
-    50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
-    75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
-    100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
-}
-
-/* Utilities */
-.expand {
-  height: auto;
-  overflow: initial;
-}
-
-.rotate-180 {
-  transform: rotate(180deg);
+@keyframes l3 {
+    20%{background-position:0%   0%, 50%  50%,100%  50%}
+    40%{background-position:0% 100%, 50%   0%,100%  50%}
+    60%{background-position:0%  50%, 50% 100%,100%   0%}
+    80%{background-position:0%  50%, 50%  50%,100% 100%}
 }
