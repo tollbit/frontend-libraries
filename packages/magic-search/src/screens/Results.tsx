@@ -5,6 +5,7 @@ import { MagicSearchConfiguration } from "../utils/types";
 import Article from "../components/Article";
 import SearchBar from "../components/SearchBar";
 import LoadingSpinner from "../components/LoadingSpinner";
+import StreamedMessage from "../components/StreamedMessage";
 const Results = ({
   chatResponse,
   articles,
@@ -56,7 +57,10 @@ const Results = ({
         )}
       </div>
       {!shouldShowMore && articles.length > 0 && (
-        <button onClick={() => setShouldShowMore(true)}>
+        <button
+          onClick={() => setShouldShowMore(true)}
+          className="magic-search-see-more-button"
+        >
           {configuration?.copy?.showMoreButton || "SEE MORE RESULTS"}
         </button>
       )}
@@ -64,7 +68,7 @@ const Results = ({
         className={`${CHAT_ID} ${getClassOverride(CHAT_ID, configuration.classes)}`}
       >
         {chatResponse.length > 0 ? (
-          chatResponse
+          <StreamedMessage message={chatResponse} />
         ) : (
           <>
             <div className="magic-search-shimmer" style={{ width: "180px" }} />
