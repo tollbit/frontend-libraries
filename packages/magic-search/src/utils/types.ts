@@ -2,6 +2,7 @@ import { MAGIC_SEARCH_ID } from "./constants";
 
 export interface MagicSearchProps {
   direction: "left" | "right";
+  shiftBody?: boolean;
   publicKey: string;
   configuration?: MagicSearchConfiguration;
 }

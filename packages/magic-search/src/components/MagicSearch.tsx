@@ -53,6 +53,7 @@ const processMessage = (msg: string) => {
 
 const MagicSearch = ({
   direction,
+  shiftBody = true,
   publicKey,
   configuration = { classes: {}, copy: {} },
 }: MagicSearchProps) => {
@@ -60,7 +61,6 @@ const MagicSearch = ({
   const previewSearchRef = useRef<string>("");
 
   const [searchTerm, setSearchTerm] = useState("");
-  // const [lastSearchValue, setLastSearchValue] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [articles, setArticles] = useState<{ [key in number]: any[] }>({});
   const [showMagicSearch, setShowMagicSearch] = useState(false);
@@ -81,6 +81,15 @@ const MagicSearch = ({
   }, []);
 
   useEffect(() => {
+    // Shift page body on open/close
+    if (showMagicSearch && shiftBody) {
+      document.body.style[direction === "left" ? "marginLeft" : "marginRight"] =
+        "300px";
+    }
+    if (!showMagicSearch && shiftBody) {
+      document.body.style[direction === "left" ? "marginLeft" : "marginRight"] =
+        "0";
+    }
     if (searchInputRef.current && showMagicSearch) {
       searchInputRef.current.focus();
     }

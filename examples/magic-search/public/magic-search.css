@@ -1,17 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&display=swap');
-main {
-  transition: margin-left .5s;
-  transition: margin-right .5s;
-}
+
 body, .magic-search {
   font-family: 'Red Hat Display', sans-serif;
+}
+body {
+  transition: margin-left .5s;
+  transition: margin-right .5s;
 }
 /* General */
 .magic-search {
   position: fixed; 
   z-index: 1; 
   background-color: #F4F4F4;
-  padding: 20px;
   transition: 0.5s;
   width: 480px;
   color: #595959;
@@ -20,6 +20,7 @@ body, .magic-search {
   overflow-y: scroll;
   overflow-x: initial;
   height: 100vh;
+  padding: 20px;
 }
 .magic-search-right {
   top: 0;
