@@ -43,6 +43,12 @@ body, .magic-search {
 .magic-search-left.magic-search-hide {
   transform: translateX(-100%);
 }
+.magic-search-page-show {
+  display: block;
+}
+.magic-search-page-hide {
+  display: none;
+}
 .magic-search-header {
   position: relative;
   display: flex;
@@ -50,6 +56,27 @@ body, .magic-search {
   align-items: center;
   margin-bottom: 16px;
   height: 48px;
+}
+.magic-search-nav-button {
+  height: 50px;
+  width: 50px;
+  margin: 4px;
+  border: 1px solid #595959;
+  border-radius: 4px;
+  box-shadow: 0px 1px 4px 0px #00000040;
+  display: flex;
+  align-items: center;
+}
+.magic-search-nav-button-icon {
+  margin: 0 auto;
+}
+.magic-search-nav-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.magic-search-nav-button-disabled {
+  opacity: 0.5;
 }
 .magic-search-close {
   height: 50px;
@@ -61,11 +88,11 @@ body, .magic-search {
 .magic-search-close-icon {
   margin: 0 auto;
 }
-.magic-search-close-right {
+/* .magic-search-close-right {
   position: absolute;
   top: 1px;
   left: 1px;
-}
+} */
 .magic-search-close-left {
 }
 .magic-search-tab {
@@ -215,6 +242,8 @@ body, .magic-search {
     100% {
         background-position: 1300px 0;
     }
+}
+.magic-search-citation {
 }
 /* Suggestions */
 .magic-search-suggestions-title {

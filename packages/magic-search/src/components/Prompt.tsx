@@ -2,15 +2,12 @@ import React from "react";
 
 const Prompt = ({
   question,
-  setLastSearchValue,
+  submitSearch,
 }: {
   question: string;
-  setLastSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  submitSearch: () => void;
 }) => (
-  <button
-    className="magic-search-prompt"
-    onClick={() => setLastSearchValue(question)}
-  >
+  <button className="magic-search-prompt" onClick={submitSearch}>
     {question}
   </button>
 );

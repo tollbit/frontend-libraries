@@ -3,7 +3,7 @@ export default function Home() {
     <main>
       <div className="flex min-h-screen flex-col items-center justify-between m-24 relative">
         <img src="/bgr.png" className="my-0 mx-auto" />
-        <div className="hidden">
+        <div className="text-white">
           "Subscribe\nNews\nReviews\nBest\nGuides\nDeals\nMore\nTRENDING:\niPhone
           16\nNintendo Switch 2\nApple Watch\nBest Movies\niOS 18\nM4 MacBook
           Pro\niPhone 15\nThunderbolts*\nWhat's That Movie Called?\nJohn Wick

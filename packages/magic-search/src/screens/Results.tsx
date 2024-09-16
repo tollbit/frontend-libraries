@@ -5,24 +5,26 @@ import { MagicSearchConfiguration } from "../utils/types";
 import Article from "../components/Article";
 import SearchBar from "../components/SearchBar";
 import LoadingSpinner from "../components/LoadingSpinner";
-import StreamedMessage from "../components/StreamedMessage";
+
 const Results = ({
+  shouldShow,
   chatResponse,
   articles,
   searchTerm,
   setSearchTerm,
-  setLastSearchValue,
+  submitSearch,
   searchInputRef,
   lastSearchValue,
   configuration,
 }: {
+  shouldShow: boolean;
   chatResponse: string;
   articles: any[];
   lastSearchValue: string;
   configuration: MagicSearchConfiguration;
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
-  setLastSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  submitSearch: (value: string) => void;
   searchInputRef: React.RefObject<HTMLInputElement>;
 }) => {
   const articlesRef = useRef<HTMLDivElement>(null);
@@ -30,7 +32,7 @@ const Results = ({
   const [articlesHeight, setArticlesHeight] = useState("180px");
 
   useEffect(() => {
-    if (articlesRef.current) {
+    if (articlesRef.current && articles.length > 0) {
       setArticlesHeight(articlesRef.current.scrollHeight + "px");
     }
   }, [shouldShowMore, articles]);
@@ -38,7 +40,9 @@ const Results = ({
   const filteredArticles = shouldShowMore ? articles : articles.slice(0, 3);
 
   return (
-    <>
+    <div
+      className={`magic-search-results ${shouldShow ? "magic-search-page-show" : "magic-search-page-hide"}`}
+    >
       <div className="magic-search-last-search">{lastSearchValue}</div>
       <div
         ref={articlesRef}
@@ -56,7 +60,7 @@ const Results = ({
           <LoadingSpinner />
         )}
       </div>
-      {!shouldShowMore && articles.length > 0 && (
+      {!shouldShowMore && articles?.length > 0 && (
         <button
           onClick={() => setShouldShowMore(true)}
           className="magic-search-see-more-button"
@@ -67,8 +71,12 @@ const Results = ({
       <div
         className={`${CHAT_ID} ${getClassOverride(CHAT_ID, configuration.classes)}`}
       >
-        {chatResponse.length > 0 ? (
-          <StreamedMessage message={chatResponse} />
+        {chatResponse?.length > 0 ? (
+          // @TODO Can we do anything better here for streaming the response with embedded links? Maybe a markdown renderer
+          <div
+            className="magic-search-streamed-message"
+            dangerouslySetInnerHTML={{ __html: chatResponse }}
+          />
         ) : (
           <>
             <div className="magic-search-shimmer" style={{ width: "180px" }} />
@@ -86,12 +94,12 @@ const Results = ({
         }
         handleSubmit={(e: React.FormEvent) => {
           e.preventDefault();
-          setLastSearchValue(searchTerm);
+          submitSearch(searchTerm);
         }}
         inputWrapClassNames="magic-search-chat-input-wrap"
         innerRef={searchInputRef}
       />
-    </>
+    </div>
   );
 };
 

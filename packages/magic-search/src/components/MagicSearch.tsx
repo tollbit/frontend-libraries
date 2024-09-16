@@ -10,10 +10,46 @@ import {
 import Home from "../screens/Home";
 import Results from "../screens/Results";
 import TabIcon from "./TabIcon";
+import NavButton from "./NavButton";
 
 // Other
 const BOT_ROLE = "assistant";
 const USER_ROLE = "user";
+
+let buffer = "";
+let isCitation = false;
+let citationIndex = 0;
+const citationIndexMap: { [key in string]: number } = {};
+const processMessage = (msg: string) => {
+  let result = "";
+  for (let char of msg) {
+    if (char === "(") {
+      isCitation = true;
+      buffer += char;
+      continue;
+    }
+
+    if (isCitation) {
+      buffer += char;
+      if (char === ")") {
+        isCitation = false;
+        const citation = buffer.slice(1, -1);
+        const citationList = citation.split(";");
+        citationList.forEach((citation) => {
+          if (!citationIndexMap[citation]) {
+            citationIndexMap[citation] = citationIndex + 1;
+          }
+          result += ` <a class="magic-search-citation" href="${citation}" target="_blank">[${citationIndexMap[citation]}]</a> `;
+          citationIndex++;
+        });
+        buffer = "";
+      }
+    } else {
+      result += char;
+    }
+  }
+  return result;
+};
 
 const MagicSearch = ({
   direction,
@@ -24,13 +60,12 @@ const MagicSearch = ({
   const previewSearchRef = useRef<string>("");
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [lastSearchValue, setLastSearchValue] = useState("");
+  // const [lastSearchValue, setLastSearchValue] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
-  const [articles, setArticles] = useState([]);
-  // const [loading, setLoading] = useState(false);
+  const [articles, setArticles] = useState<{ [key in number]: any[] }>({});
   const [showMagicSearch, setShowMagicSearch] = useState(false);
   const [prompts, setPrompts] = useState([]);
-  const [chatResponse, setChatResponse] = useState("");
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
     fetcher("/content/v1/search/questions", publicKey, {
@@ -52,11 +87,10 @@ const MagicSearch = ({
   }, [showMagicSearch]);
 
   useEffect(() => {
-    if (lastSearchValue !== previewSearchRef.current) {
-      setMessages((prevState) => [
-        ...prevState,
-        { role: USER_ROLE, content: lastSearchValue || "" },
-      ]);
+    // If we just appended a user message, we should fetch the articles for that prompt
+    if (messages[messages.length - 1]?.role === USER_ROLE) {
+      setPage((prevPage) => prevPage + 1);
+      const lastSearchValue = messages[messages.length - 1].content;
       fetcher("/content/v1/search/articles", publicKey, {
         query: lastSearchValue,
         numberOfResults: 10,
@@ -65,46 +99,76 @@ const MagicSearch = ({
           return;
         }
         res.json().then((data) => {
-          setArticles(data);
+          setArticles((prevState) => ({
+            ...prevState,
+            [messages.length - 1]: data,
+          }));
           previewSearchRef.current = lastSearchValue;
           // @ts-expect-error
           searchInputRef?.current.value = "";
         });
       });
     }
-  }, [lastSearchValue]);
+  }, [messages]);
 
   useEffect(() => {
     const lastMessage = messages[messages.length - 1];
-    if (lastMessage?.role === USER_ROLE && articles.length > 0) {
+    const mostRecentArticles = articles[messages.length - 1];
+    if (
+      lastMessage?.role === USER_ROLE &&
+      mostRecentArticles &&
+      mostRecentArticles.length > 0
+    ) {
       const fetchAnswer = async () => {
         const stream = await fetcher("/content/v1/search/summary", publicKey, {
-          articles,
+          articles: mostRecentArticles,
           messages,
           query: lastMessage.content,
         });
         const reader = stream?.body?.getReader();
         const decoder = new TextDecoder();
-        let result = "";
         if (!reader) return;
 
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
-          result += decoder.decode(value, { stream: true });
-          setChatResponse(
-            (prevResponse) =>
-              prevResponse + decoder.decode(value, { stream: true }),
-          );
+
+          setMessages((prevMessages) => {
+            if (prevMessages[prevMessages.length - 1]?.role === BOT_ROLE) {
+              return [
+                ...prevMessages.slice(0, -1),
+                {
+                  role: BOT_ROLE,
+                  content:
+                    prevMessages[prevMessages.length - 1].content +
+                    processMessage(decoder.decode(value, { stream: true })),
+                },
+              ];
+            } else {
+              return [
+                ...prevMessages,
+                {
+                  role: BOT_ROLE,
+                  content: processMessage(
+                    decoder.decode(value, { stream: true }),
+                  ),
+                },
+              ];
+            }
+          });
         }
-        setMessages((prevState) => [
-          ...prevState,
-          { role: BOT_ROLE, content: chatResponse },
-        ]);
       };
       fetchAnswer();
     }
-  }, [messages, articles]);
+  }, [articles]);
+
+  const submitSearch = (value: string) => {
+    setMessages((prevState) => [
+      ...prevState,
+      { role: USER_ROLE, content: value || searchTerm },
+    ]);
+    setSearchTerm("");
+  };
 
   return (
     <div
@@ -134,29 +198,50 @@ const MagicSearch = ({
               <path d="m6 6 12 12" />
             </svg>
           </button>
+          <div className="magic-search-nav-button-container">
+            <NavButton
+              direction="forward"
+              // Disable the next button if we don't have messages or if we are at the last page
+              disabled={messages.length === 0 || page * 2 === messages.length}
+              onClick={() => setPage((prevPage) => prevPage + 1)}
+            />
+            <NavButton
+              direction="backward"
+              disabled={page === 0}
+              onClick={() => setPage((prevPage) => prevPage - 1)}
+            />
+          </div>
         </div>
-        {!lastSearchValue ? (
-          <Home
-            prompts={prompts}
-            searchInputRef={searchInputRef}
-            configuration={configuration}
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            setLastSearchValue={setLastSearchValue}
-            publicKey={publicKey}
-          />
-        ) : (
-          <Results
-            chatResponse={chatResponse}
-            articles={articles}
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            searchInputRef={searchInputRef}
-            lastSearchValue={lastSearchValue}
-            configuration={configuration}
-            setLastSearchValue={setLastSearchValue}
-          />
-        )}
+        <Home
+          shouldShow={page === 0}
+          prompts={prompts}
+          searchInputRef={searchInputRef}
+          configuration={configuration}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          submitSearch={submitSearch}
+        />
+        {messages.map((message, index) => {
+          if (message.role !== USER_ROLE) {
+            return;
+          }
+
+          return (
+            <Results
+              key={index}
+              // Each page corresponds to a given user message. Page 1 corresponds to message 0, page 2 corresponds to message 2, page 3 corresponds to message 4, etc.
+              shouldShow={(page - 1) * 2 === index}
+              chatResponse={messages[index + 1]?.content}
+              articles={articles[index] || []}
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              searchInputRef={searchInputRef}
+              lastSearchValue={message.content}
+              configuration={configuration}
+              submitSearch={submitSearch}
+            />
+          );
+        })}
         <div
           className={`magic-search-tab-container  ${direction === "left" ? "magic-search-tab-container-left" : "magic-search-tab-container-right"}`}
         >
