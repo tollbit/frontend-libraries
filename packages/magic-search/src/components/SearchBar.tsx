@@ -26,10 +26,10 @@ const SearchBar = ({
 }) => {
   return (
     <div
-      className={`${SEARCH_BACKGROUND_ID} ${getClassOverride(SEARCH_BACKGROUND_ID, configuration.classes)}`}
+      className={`${SEARCH_BACKGROUND_ID} ${getClassOverride(SEARCH_BACKGROUND_ID, configuration.classes)} ${inputWrapClassNames}`}
     >
       <div
-        className={`${SEARCH_INPUT_WRAP_ID} ${getClassOverride(SEARCH_INPUT_WRAP_ID, configuration.classes)} ${inputWrapClassNames}`}
+        className={`${SEARCH_INPUT_WRAP_ID} ${getClassOverride(SEARCH_INPUT_WRAP_ID, configuration.classes)}`}
       >
         <div className="magic-search-input-container">
           <form onSubmit={handleSubmit} className="magic-search-form">

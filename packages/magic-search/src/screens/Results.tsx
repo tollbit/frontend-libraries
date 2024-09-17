@@ -1,6 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { getClassOverride } from "../utils";
-import { ARTICLES_ID, CHAT_ID } from "../utils/constants";
+import {
+  ARTICLES_ID,
+  CHAT_ID,
+  SEE_MORE_BUTTON_BACKGROUND_ID,
+  SEE_MORE_BUTTON_ID,
+} from "../utils/constants";
 import { MagicSearchConfiguration } from "../utils/types";
 import Article from "../components/Article";
 import SearchBar from "../components/SearchBar";
@@ -61,12 +66,16 @@ const Results = ({
         )}
       </div>
       {!shouldShowMore && articles?.length > 0 && (
-        <button
-          onClick={() => setShouldShowMore(true)}
-          className="magic-search-see-more-button"
+        <div
+          className={`${SEE_MORE_BUTTON_BACKGROUND_ID} ${getClassOverride(SEE_MORE_BUTTON_BACKGROUND_ID, configuration)}`}
         >
-          {configuration?.copy?.showMoreButton || "SEE MORE RESULTS"}
-        </button>
+          <button
+            onClick={() => setShouldShowMore(true)}
+            className={`${SEE_MORE_BUTTON_ID} ${getClassOverride(SEE_MORE_BUTTON_ID, configuration)}`}
+          >
+            {configuration?.copy?.showMoreButton || "SEE MORE RESULTS"}
+          </button>
+        </div>
       )}
       <div
         className={`${CHAT_ID} ${getClassOverride(CHAT_ID, configuration.classes)}`}

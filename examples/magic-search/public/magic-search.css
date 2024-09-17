@@ -162,13 +162,13 @@ body {
   width: 100%;
 }
 .magic-search-title {
-  padding: 0 var(--title-padding-x);
   font-size: 16px;
   font-weight: 700;
 }
 .magic-search-last-search {
   font-size: 24px;
-  margin-bottom: 24px;
+  background-color: #fff;
+  padding: 0 var(--title-padding-x) 24px;
 }
 /* Articles */
 .magic-search-articles {
@@ -176,6 +176,8 @@ body {
   flex-direction: column;
   overflow: hidden;
   gap: 8px;
+  background: #fff;
+  padding: 0 var(--title-padding-x);
   transition: height .5s ease-in;
 }
 
@@ -190,9 +192,12 @@ body {
 	display: block;
 	margin-bottom: 4px;
 }
-
 .magic-search-article-author {
 	font-size: 14px;
+}
+.magic-search-see-more-button-background {
+  background: linear-gradient(0, transparent 50%, white 50%);
+
 }
 .magic-search-see-more-button {
   border-radius: 10px;
@@ -205,10 +210,10 @@ body {
 }
 /* Chat messages */
 .magic-search-chat {
-  padding: 12px;
+  padding: 12px var(--title-padding-x);
   font-size: 16px;
   margin-bottom: 50px;
-  min-height: 400px;
+  min-height: 100vh;
 }
 .magic-search-streamed-message {
   white-space: pre-wrap;
@@ -266,6 +271,7 @@ body {
 .magic-search-suggestions-title {
   font-size: 16px;
   font-weight: 700;
+  padding: 0 var(--title-padding-x);
   margin-bottom: 12px;
 }
 .magic-search-prompts {

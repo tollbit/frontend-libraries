@@ -4,6 +4,9 @@ export const SUGGESTIONS_ID = "magic-search-suggestions";
 export const CHAT_ID = "magic-search-chat";
 export const CHAT_LIST_ID = "magic-search-chat-list";
 export const HEADER_ID = "magic-search-header";
+export const SEE_MORE_BUTTON_ID = "magic-search-see-more-button";
+export const SEE_MORE_BUTTON_BACKGROUND_ID =
+  "magic-search-see-more-button-background";
 export const SEARCH_BACKGROUND_ID = "magic-search-input-background";
 export const SEARCH_INPUT_ID = "magic-search-input";
 export const SEARCH_INPUT_WRAP_ID = "magic-search-input-wrap";
