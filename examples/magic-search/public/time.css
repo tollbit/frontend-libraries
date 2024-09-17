@@ -1,0 +1,12 @@
+:root {
+  --time-red: #D62F22;
+}
+.magic-search-suggestions-title {
+  color: var(--time-red);
+}
+.magic-search-articles-title {
+  color: var(--time-red);
+}
+.magic-search-input-wrap {
+  background: var(--time-red);
+}

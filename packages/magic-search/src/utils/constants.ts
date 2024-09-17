@@ -1,5 +1,6 @@
 export const MAGIC_SEARCH_ID = "magic-search";
 export const ARTICLES_ID = "magic-search-articles";
+export const ARTICLES_TITLE_ID = "magic-search-articles-title";
 export const SUGGESTIONS_ID = "magic-search-suggestions";
 export const CHAT_ID = "magic-search-chat";
 export const CHAT_LIST_ID = "magic-search-chat-list";

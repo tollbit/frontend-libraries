@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { getClassOverride } from "../utils";
 import {
   ARTICLES_ID,
+  ARTICLES_TITLE_ID,
   CHAT_ID,
   SEE_MORE_BUTTON_BACKGROUND_ID,
   SEE_MORE_BUTTON_ID,
@@ -54,7 +55,9 @@ const Results = ({
         style={{ height: articlesHeight }}
         className={`${ARTICLES_ID} ${getClassOverride(ARTICLES_ID, configuration.classes)}`}
       >
-        <div className="magic-search-title">
+        <div
+          className={`${ARTICLES_TITLE_ID} ${getClassOverride(ARTICLES_TITLE_ID, configuration.classes)}`}
+        >
           {configuration?.copy?.searchResultsTitle || "TOP RESULTS"}
         </div>
         {filteredArticles.length > 0 ? (
