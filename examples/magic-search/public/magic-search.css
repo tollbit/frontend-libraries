@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&display=swap');
 
+:root {
+  --padding-x: 16px;
+  --title-padding-x: 24px;
+}
+
 body, .magic-search {
   font-family: 'Red Hat Display', sans-serif;
 }
@@ -20,7 +25,6 @@ body {
   overflow-y: scroll;
   overflow-x: initial;
   height: 100vh;
-  padding: 20px;
 }
 .magic-search-right {
   top: 0;
@@ -44,19 +48,25 @@ body {
 .magic-search-left.magic-search-hide {
   transform: translateX(-100%);
 }
+/* .magic-search-home, .magic-search-results { 
+  overflow: hidden;
+  transition: height, 0.5s linear;
+}*/
 .magic-search-page-show {
+  /* overflow: auto;
+  height: 100vh; */
   display: block;
 }
 .magic-search-page-hide {
+  /* height: 0px; */
   display: none;
-}
+} 
 .magic-search-header {
-  position: relative;
+  background: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
-  height: 48px;
+  padding: 20px var(--padding-x);
 }
 .magic-search-nav-button {
   height: 50px;
@@ -108,19 +118,24 @@ body {
 }
 .magic-search-tab-container-left .magic-search-tab {
   transform: translateX(100%);
-  right: 1px;
+  right: -1px;
 }
 .magic-search-tab-container-right .magic-search-tab {
-  transform: translateX(-100%) translateX(-19px);
+  transform: translateX(-100%) translateX(1px);
 }
 .magic-search-tab-icon {
   margin: 0 auto;
 }
 .magic-search-intro-title {
+  background: #fff;
   font-size: 18px;
-  padding: 12px;
+  padding: 12px calc(var(--title-padding-x) + var(--padding-x));
 }
 /* Search results */
+.magic-search-input-background {
+  padding: 0 var(--padding-x);
+  background: linear-gradient(0, transparent 50%, white 50%);
+}
 .magic-search-input-wrap {
   background: linear-gradient(to right, red, purple);
   padding: 3px;
@@ -147,6 +162,7 @@ body {
   width: 100%;
 }
 .magic-search-title {
+  padding: 0 var(--title-padding-x);
   font-size: 16px;
   font-weight: 700;
 }
@@ -253,6 +269,7 @@ body {
   margin-bottom: 12px;
 }
 .magic-search-prompts {
+  padding: 0 var(--padding-x);
   margin-bottom: 12px;
 }
 .magic-search-prompt {

@@ -34,7 +34,7 @@ const processMessage = (msg: string) => {
       if (char === ")") {
         isCitation = false;
         const citation = buffer.slice(1, -1);
-        const citationList = citation.split(";");
+        const citationList = citation.split(";").map((c) => c.trim());
         citationList.forEach((citation) => {
           if (!citationIndexMap[citation]) {
             citationIndexMap[citation] = citationIndex + 1;
@@ -86,10 +86,11 @@ const MagicSearch = ({
       document.body.style[direction === "left" ? "marginLeft" : "marginRight"] =
         "300px";
     }
-    if (!showMagicSearch && shiftBody) {
-      document.body.style[direction === "left" ? "marginLeft" : "marginRight"] =
-        "0";
-    }
+    // @TODO - Don't do this
+    // if (!showMagicSearch && shiftBody) {
+    //   document.body.style[direction === "left" ? "marginLeft" : "marginRight"] =
+    //     "0";
+    // }
     if (searchInputRef.current && showMagicSearch) {
       searchInputRef.current.focus();
     }
@@ -98,7 +99,8 @@ const MagicSearch = ({
   useEffect(() => {
     // If we just appended a user message, we should fetch the articles for that prompt
     if (messages[messages.length - 1]?.role === USER_ROLE) {
-      setPage((prevPage) => prevPage + 1);
+      // Set the new page to the last page
+      setPage(Math.ceil(messages.length / 2));
       const lastSearchValue = messages[messages.length - 1].content;
       fetcher("/content/v1/search/articles", publicKey, {
         query: lastSearchValue,
@@ -181,7 +183,7 @@ const MagicSearch = ({
 
   return (
     <div
-      className={`${MAGIC_SEARCH_ID} ${direction === "left" ? `${MAGIC_SEARCH_ID}-left` : `${MAGIC_SEARCH_ID}-right`} ${showMagicSearch ? "magic-search-show" : "magic-search-hide"}${getClassOverride(MAGIC_SEARCH_ID, configuration.classes)}`}
+      className={`${MAGIC_SEARCH_ID} ${direction === "left" ? `${MAGIC_SEARCH_ID}-left` : `${MAGIC_SEARCH_ID}-right`} ${showMagicSearch ? "magic-search-show" : "magic-search-hide"} ${getClassOverride(MAGIC_SEARCH_ID, configuration.classes)}`}
     >
       <div className="magic-search-content">
         <div
@@ -252,7 +254,7 @@ const MagicSearch = ({
           );
         })}
         <div
-          className={`magic-search-tab-container  ${direction === "left" ? "magic-search-tab-container-left" : "magic-search-tab-container-right"}`}
+          className={`magic-search-tab-container ${direction === "left" ? "magic-search-tab-container-left" : "magic-search-tab-container-right"}`}
         >
           <div
             role="button"
