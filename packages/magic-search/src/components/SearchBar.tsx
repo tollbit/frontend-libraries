@@ -2,10 +2,11 @@ import React from "react";
 import { getClassOverride } from "../utils";
 import {
   SEARCH_BACKGROUND_ID,
+  SEARCH_INPUT_CONTAINER_ID,
   SEARCH_INPUT_ID,
   SEARCH_INPUT_WRAP_ID,
 } from "../utils/constants";
-import { MagicSearchConfiguration } from "../utils/types";
+import { useConfiguration } from "../context/ConfigurationProvider";
 
 const SearchBar = ({
   innerRef,
@@ -14,7 +15,6 @@ const SearchBar = ({
   inputClassNames = "",
   inputWrapClassNames = "",
   handleChange,
-  configuration,
 }: {
   innerRef: React.RefObject<HTMLInputElement>;
   value: string;
@@ -22,8 +22,8 @@ const SearchBar = ({
   inputWrapClassNames?: string;
   handleSubmit: (e: React.FormEvent) => void;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  configuration: MagicSearchConfiguration;
 }) => {
+  const configuration = useConfiguration();
   return (
     <div
       className={`${SEARCH_BACKGROUND_ID} ${getClassOverride(SEARCH_BACKGROUND_ID, configuration.classes)} ${inputWrapClassNames}`}
@@ -31,7 +31,9 @@ const SearchBar = ({
       <div
         className={`${SEARCH_INPUT_WRAP_ID} ${getClassOverride(SEARCH_INPUT_WRAP_ID, configuration.classes)}`}
       >
-        <div className="magic-search-input-container">
+        <div
+          className={`${SEARCH_INPUT_CONTAINER_ID} ${getClassOverride(SEARCH_INPUT_CONTAINER_ID, configuration.classes)} ${inputClassNames}`}
+        >
           <form onSubmit={handleSubmit} className="magic-search-form">
             <input
               ref={innerRef}

@@ -4,13 +4,14 @@ import {
   ARTICLES_ID,
   ARTICLES_TITLE_ID,
   CHAT_ID,
+  LAST_SEARCH_ID,
   SEE_MORE_BUTTON_BACKGROUND_ID,
   SEE_MORE_BUTTON_ID,
 } from "../utils/constants";
-import { MagicSearchConfiguration } from "../utils/types";
 import Article from "../components/Article";
 import SearchBar from "../components/SearchBar";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { useConfiguration } from "../context/ConfigurationProvider";
 
 const Results = ({
   shouldShow,
@@ -21,18 +22,17 @@ const Results = ({
   submitSearch,
   searchInputRef,
   lastSearchValue,
-  configuration,
 }: {
   shouldShow: boolean;
   chatResponse: string;
   articles: any[];
   lastSearchValue: string;
-  configuration: MagicSearchConfiguration;
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
   submitSearch: (value: string) => void;
   searchInputRef: React.RefObject<HTMLInputElement>;
 }) => {
+  const configuration = useConfiguration();
   const articlesRef = useRef<HTMLDivElement>(null);
   const [shouldShowMore, setShouldShowMore] = useState(false);
   const [articlesHeight, setArticlesHeight] = useState("180px");
@@ -49,7 +49,11 @@ const Results = ({
     <div
       className={`magic-search-results ${shouldShow ? "magic-search-page-show" : "magic-search-page-hide"}`}
     >
-      <div className="magic-search-last-search">{lastSearchValue}</div>
+      <div
+        className={`${LAST_SEARCH_ID} ${getClassOverride(LAST_SEARCH_ID, configuration.classes)}`}
+      >
+        {lastSearchValue}
+      </div>
       <div
         ref={articlesRef}
         style={{ height: articlesHeight }}
@@ -70,11 +74,11 @@ const Results = ({
       </div>
       {!shouldShowMore && articles?.length > 0 && (
         <div
-          className={`${SEE_MORE_BUTTON_BACKGROUND_ID} ${getClassOverride(SEE_MORE_BUTTON_BACKGROUND_ID, configuration)}`}
+          className={`${SEE_MORE_BUTTON_BACKGROUND_ID} ${getClassOverride(SEE_MORE_BUTTON_BACKGROUND_ID, configuration.classes)}`}
         >
           <button
             onClick={() => setShouldShowMore(true)}
-            className={`${SEE_MORE_BUTTON_ID} ${getClassOverride(SEE_MORE_BUTTON_ID, configuration)}`}
+            className={`${SEE_MORE_BUTTON_ID} ${getClassOverride(SEE_MORE_BUTTON_ID, configuration.classes)}`}
           >
             {configuration?.copy?.showMoreButton || "SEE MORE RESULTS"}
           </button>
@@ -99,7 +103,6 @@ const Results = ({
         )}
       </div>
       <SearchBar
-        configuration={configuration}
         value={searchTerm}
         handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setSearchTerm(e.target.value)

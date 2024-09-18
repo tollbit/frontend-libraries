@@ -6,11 +6,13 @@ import {
   HEADER_ID,
   CLOSE_BUTTON_ID,
   TAB,
+  MAGIC_SEARCH_CONTENT_ID,
 } from "../utils/constants";
 import Home from "../screens/Home";
 import Results from "../screens/Results";
 import TabIcon from "./TabIcon";
 import NavButton from "./NavButton";
+import { useConfiguration } from "../context/ConfigurationProvider";
 
 // Other
 const BOT_ROLE = "assistant";
@@ -55,8 +57,8 @@ const MagicSearch = ({
   direction,
   shiftBody = true,
   publicKey,
-  configuration = { classes: {}, copy: {} },
 }: MagicSearchProps) => {
+  const configuration = useConfiguration();
   const searchInputRef = useRef<HTMLInputElement>(null);
   const previewSearchRef = useRef<string>("");
 
@@ -185,7 +187,9 @@ const MagicSearch = ({
     <div
       className={`${MAGIC_SEARCH_ID} ${direction === "left" ? `${MAGIC_SEARCH_ID}-left` : `${MAGIC_SEARCH_ID}-right`} ${showMagicSearch ? "magic-search-show" : "magic-search-hide"} ${getClassOverride(MAGIC_SEARCH_ID, configuration.classes)}`}
     >
-      <div className="magic-search-content">
+      <div
+        className={`${MAGIC_SEARCH_CONTENT_ID} ${getClassOverride(MAGIC_SEARCH_CONTENT_ID, configuration.classes)}`}
+      >
         <div
           className={`${HEADER_ID} ${getClassOverride(HEADER_ID, configuration.classes)}`}
         >
@@ -227,7 +231,6 @@ const MagicSearch = ({
           shouldShow={page === 0}
           prompts={prompts}
           searchInputRef={searchInputRef}
-          configuration={configuration}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           submitSearch={submitSearch}
@@ -248,7 +251,6 @@ const MagicSearch = ({
               setSearchTerm={setSearchTerm}
               searchInputRef={searchInputRef}
               lastSearchValue={message.content}
-              configuration={configuration}
               submitSearch={submitSearch}
             />
           );

@@ -1,4 +1,7 @@
 import React from "react";
+import { ARTICLE_TITLE_ID } from "../utils/constants";
+import { getClassOverride } from "../utils";
+import { useConfiguration } from "../context/ConfigurationProvider";
 
 const Article = ({
   title,
@@ -11,6 +14,7 @@ const Article = ({
   author: string;
   url: string;
 }) => {
+  const configuration = useConfiguration();
   // Get the domain from the URL
   const urlObject = new URL(url);
   const host = urlObject.host.replace("www.", "");
@@ -49,7 +53,11 @@ const Article = ({
 
   return (
     <a className="magic-search-article" href={url}>
-      <h3 className="magic-search-article-title">{title}</h3>
+      <h3
+        className={`${ARTICLE_TITLE_ID} ${getClassOverride(ARTICLE_TITLE_ID, configuration.classes)}`}
+      >
+        {title}
+      </h3>
       <p className="magic-search-article-author">
         {host}, {timeSincePublished}, {author || "Unknown Author"}
       </p>

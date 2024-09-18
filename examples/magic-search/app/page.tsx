@@ -29,7 +29,7 @@ export default function Home() {
           type="text/javascript"
           dangerouslySetInnerHTML={{
             __html: `
-            MagicSearch({id: "search", publicKey: "pk_time_cm0wx5efc000108ia34ty4g5s", direction: "right", configuration: {headerImage: "/magic-search-header.png"}})
+            MagicSearch({publicKey: "pk_time_cm0wx5efc000108ia34ty4g5s", direction: "right", configuration: {}})
           `,
           }}
         ></script>
