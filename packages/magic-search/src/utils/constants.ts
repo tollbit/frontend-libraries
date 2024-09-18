@@ -23,6 +23,7 @@ export const CHAT_TITLE_ICON_ID = "magic-search-chat-title-icon";
 export const CLOSE_BUTTON_ID = "magic-search-close";
 export const INTRO_TITLE_ID = "magic-search-intro-title";
 export const TAB = "magic-search-tab";
+export const LOADING_SPINNER_ID = "magic-search-loader";
 export const URL_REGEX = new RegExp(
   /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi,
 );

@@ -1,5 +1,3 @@
-import "../../public/verge.css";
-
 export default function Home() {
   return (
     <main>
@@ -165,7 +163,6 @@ export default function Home() {
                   "magic-search-articles": "bg-black",
                   "magic-search-see-more-button-background": "bg-none text-[#3CFFD0] w-auto",
                   "magic-search-see-more-button": "bg-inherit text-[#3CFFD0] underline mx-auto",
-
                 }
               }
           });
