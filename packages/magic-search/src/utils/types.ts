@@ -1,5 +1,3 @@
-import { MAGIC_SEARCH_ID } from "./constants";
-
 export interface MagicSearchProps {
   direction: "left" | "right";
   shiftBody?: boolean;
@@ -9,7 +7,7 @@ export interface MagicSearchProps {
 
 export interface MagicSearchConfiguration {
   classes?: {
-    [MAGIC_SEARCH_ID]?: string;
+    [key in string]?: string;
   };
   copy?: {
     searchPlaceholder?: string;

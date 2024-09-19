@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { getClassOverride, fetcher } from "../utils/index";
+import { useClassOverride, fetcher } from "../utils/index";
 import { MagicSearchProps, Message } from "../utils/types";
 import {
   MAGIC_SEARCH_ID,
@@ -13,6 +13,7 @@ import Results from "../screens/Results";
 import TabIcon from "./TabIcon";
 import NavButton from "./NavButton";
 import { useConfiguration } from "../context/ConfigurationProvider";
+import { twMerge } from "tailwind-merge";
 
 // Other
 const BOT_ROLE = "assistant";
@@ -53,6 +54,9 @@ const processMessage = (msg: string) => {
   return result;
 };
 
+const bodyClassesLeft = ["ml-0", "md:ml-72", "lg:ml-96"];
+const bodyClassesRight = ["mr-0", "md:mr-72", "lg:mr-96"];
+
 const MagicSearch = ({
   direction,
   shiftBody = true,
@@ -83,16 +87,27 @@ const MagicSearch = ({
   }, []);
 
   useEffect(() => {
+    if (shiftBody) {
+      document.body.style.transition = `${direction === "left" ? "margin-left" : "margin-right"} 0.5s`;
+    }
+  }, []);
+
+  useEffect(() => {
     // Shift page body on open/close
     if (showMagicSearch && shiftBody) {
-      document.body.style[direction === "left" ? "marginLeft" : "marginRight"] =
-        "300px";
+      document.body.classList.add(
+        ...(direction === "left" ? bodyClassesLeft : bodyClassesRight),
+      );
     }
-    // @TODO - Don't do this
-    // if (!showMagicSearch && shiftBody) {
-    //   document.body.style[direction === "left" ? "marginLeft" : "marginRight"] =
-    //     "0";
-    // }
+
+    if (!showMagicSearch && shiftBody) {
+      if (direction === "left") {
+        document.body.classList.remove(...bodyClassesLeft);
+      }
+      if (direction === "right") {
+        document.body.classList.remove(...bodyClassesRight);
+      }
+    }
     if (searchInputRef.current && showMagicSearch) {
       searchInputRef.current.focus();
     }
@@ -185,16 +200,22 @@ const MagicSearch = ({
 
   return (
     <div
-      className={`${MAGIC_SEARCH_ID} ${direction === "left" ? `${MAGIC_SEARCH_ID}-left` : `${MAGIC_SEARCH_ID}-right`} ${showMagicSearch ? "magic-search-show" : "magic-search-hide"} ${getClassOverride(MAGIC_SEARCH_ID, configuration.classes)}`}
+      className={twMerge(
+        `fixed bg-[#F4F4F4] [transition:0.5s] w-[480px] text-[#595959] top-0  translate-x-full ${direction === "left" ? `left-0 ${showMagicSearch ? "translate-x-0" : "-translate-x-full"}` : `right-0 ${showMagicSearch ? "translate-x-0" : "translate-x-full"}`} ${useClassOverride(MAGIC_SEARCH_ID)}`,
+      )}
     >
       <div
-        className={`${MAGIC_SEARCH_CONTENT_ID} ${getClassOverride(MAGIC_SEARCH_CONTENT_ID, configuration.classes)}`}
+        className={twMerge(
+          `overflow-y-scroll h-screen ${useClassOverride(MAGIC_SEARCH_CONTENT_ID)}`,
+        )}
       >
         <div
-          className={`${HEADER_ID} ${getClassOverride(HEADER_ID, configuration.classes)}`}
+          className={twMerge(
+            `bg-white flex justify-between items-center px-4 py-5 ${useClassOverride(HEADER_ID)}`,
+          )}
         >
           <button
-            className={`${CLOSE_BUTTON_ID} ${direction === "left" ? `${CLOSE_BUTTON_ID}-left` : `${CLOSE_BUTTON_ID}-right`}`}
+            className={`h-14 w-14 rounded-full bg-white shadow-md`}
             onClick={() => setShowMagicSearch(false)}
           >
             <svg
@@ -207,13 +228,13 @@ const MagicSearch = ({
               strokeWidth="1"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="lucide lucide-x magic-search-close-icon"
+              className="mx-auto my-0 stroke-[#595959]"
             >
               <path d="M18 6 6 18" />
               <path d="m6 6 12 12" />
             </svg>
           </button>
-          <div className="magic-search-nav-button-container">
+          <div className="flex justify-center items-center">
             <NavButton
               direction="forward"
               // Disable the next button if we don't have messages or if we are at the last page
@@ -256,11 +277,11 @@ const MagicSearch = ({
           );
         })}
         <div
-          className={`magic-search-tab-container ${direction === "left" ? "magic-search-tab-container-left" : "magic-search-tab-container-right"}`}
+          className={`absolute top-0 ${direction === "left" ? "right-px" : "-left-[39px]"}`}
         >
           <div
             role="button"
-            className={`${TAB} ${getClassOverride(TAB, configuration.classes)}`}
+            className={`${TAB} ${useClassOverride(TAB)}`}
             onClick={() => setShowMagicSearch(!showMagicSearch)}
           >
             <TabIcon direction={direction} />

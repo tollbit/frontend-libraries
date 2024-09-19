@@ -1,7 +1,8 @@
 import React from "react";
 import { ARTICLE_TITLE_ID } from "../utils/constants";
-import { getClassOverride } from "../utils";
+import { useClassOverride } from "../utils";
 import { useConfiguration } from "../context/ConfigurationProvider";
+import { twMerge } from "tailwind-merge";
 
 const Article = ({
   title,
@@ -52,13 +53,18 @@ const Article = ({
   }
 
   return (
-    <a className="magic-search-article" href={url}>
+    <a
+      className="border-b-px border-solid border-gray-400 pt-0 px-1 pb-2"
+      href={url}
+    >
       <h3
-        className={`${ARTICLE_TITLE_ID} ${getClassOverride(ARTICLE_TITLE_ID, configuration.classes)}`}
+        className={twMerge(
+          `underline block mb-1 font-semibold ${useClassOverride(ARTICLE_TITLE_ID)}`,
+        )}
       >
         {title}
       </h3>
-      <p className="magic-search-article-author">
+      <p className="text-sm">
         {host}, {timeSincePublished}, {author || "Unknown Author"}
       </p>
     </a>

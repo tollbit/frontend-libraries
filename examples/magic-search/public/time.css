@@ -10,3 +10,6 @@
 .magic-search-input-wrap {
   background: var(--time-red);
 }
+.time-magic-search-loader-dot {
+  background: var(--time-red);
+}

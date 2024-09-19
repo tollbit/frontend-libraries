@@ -1,14 +1,28 @@
 import React from "react";
-import { useConfiguration } from "../context/ConfigurationProvider";
-import { LOADING_SPINNER_ID } from "../utils/constants";
-import { getClassOverride } from "../utils";
+import { LOADING_SPINNER_DOT_ID, LOADING_SPINNER_ID } from "../utils/constants";
+import { useClassOverride } from "../utils";
+import { twMerge } from "tailwind-merge";
 
 const LoadingSpinner = () => {
-  const configuration = useConfiguration();
   return (
-    <div className="magic-search-loader-container">
+    <div
+      className={`flex h-full space-x-2 justify-center items-center ${useClassOverride(LOADING_SPINNER_ID)}`}
+    >
+      <span className="sr-only">Loading...</span>
       <div
-        className={`${LOADING_SPINNER_ID} ${getClassOverride(LOADING_SPINNER_ID, configuration.classes)}`}
+        className={twMerge(
+          `h-4 w-4 bg-gray-800 rounded-full animate-bounce [animation-delay:-0.3s] ${useClassOverride(LOADING_SPINNER_DOT_ID)}`,
+        )}
+      />
+      <div
+        className={twMerge(
+          `h-4 w-4 bg-gray-800 rounded-full animate-bounce [animation-delay:-0.15s] ${useClassOverride(LOADING_SPINNER_DOT_ID)}`,
+        )}
+      />
+      <div
+        className={twMerge(
+          `h-4 w-4 bg-gray-800 rounded-full animate-bounce ${useClassOverride(LOADING_SPINNER_DOT_ID)}`,
+        )}
       />
     </div>
   );

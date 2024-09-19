@@ -1,5 +1,5 @@
 import React from "react";
-import { getClassOverride } from "../utils";
+import { useClassOverride } from "../utils";
 import {
   SEARCH_BACKGROUND_ID,
   SEARCH_INPUT_CONTAINER_ID,
@@ -7,6 +7,7 @@ import {
   SEARCH_INPUT_WRAP_ID,
 } from "../utils/constants";
 import { useConfiguration } from "../context/ConfigurationProvider";
+import { twMerge } from "tailwind-merge";
 
 const SearchBar = ({
   innerRef,
@@ -26,20 +27,28 @@ const SearchBar = ({
   const configuration = useConfiguration();
   return (
     <div
-      className={`${SEARCH_BACKGROUND_ID} ${getClassOverride(SEARCH_BACKGROUND_ID, configuration.classes)} ${inputWrapClassNames}`}
+      className={twMerge(
+        `px-4 py-0 bg-[linear-gradient(0,_transparent_50%,_white_50%)] ${useClassOverride(SEARCH_BACKGROUND_ID)} ${inputWrapClassNames}`,
+      )}
     >
       <div
-        className={`${SEARCH_INPUT_WRAP_ID} ${getClassOverride(SEARCH_INPUT_WRAP_ID, configuration.classes)}`}
+        className={twMerge(
+          `bg-[linear-gradient(to_right,_red,_purple)] p-1 rounded-[40px] mb-6 ${useClassOverride(SEARCH_INPUT_WRAP_ID)}`,
+        )}
       >
         <div
-          className={`${SEARCH_INPUT_CONTAINER_ID} ${getClassOverride(SEARCH_INPUT_CONTAINER_ID, configuration.classes)} ${inputClassNames}`}
+          className={twMerge(
+            `flex justify-between items-center rounded-[40px] p-3 bg-white ${useClassOverride(SEARCH_INPUT_CONTAINER_ID)} ${inputClassNames}`,
+          )}
         >
-          <form onSubmit={handleSubmit} className="magic-search-form">
+          <form onSubmit={handleSubmit} className="w-full">
             <input
               ref={innerRef}
               value={value}
               onChange={handleChange}
-              className={`${SEARCH_INPUT_ID} ${getClassOverride(SEARCH_INPUT_ID, configuration.classes)} ${inputClassNames}`}
+              className={twMerge(
+                `w-full h-10 p-1 focus:outline-none ${useClassOverride(SEARCH_INPUT_ID)} ${inputClassNames}`,
+              )}
               placeholder={
                 configuration?.copy?.searchPlaceholder ||
                 "Search for anything..."

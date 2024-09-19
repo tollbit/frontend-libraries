@@ -1,5 +1,9 @@
-export const getClassOverride = (id: string, classes: any) =>
-  classes?.[id] || "";
+import { useConfiguration } from "../context/ConfigurationProvider";
+
+export const useClassOverride = (id: string): string => {
+  const configuration = useConfiguration();
+  return configuration?.classes?.[id] || "";
+};
 
 export const fetcher = async (path: string, key: string, body: object) =>
   fetch(`https://pre-api.tollbit.com${path}`, {

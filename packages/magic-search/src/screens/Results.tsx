@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { getClassOverride } from "../utils";
+import { useClassOverride } from "../utils";
 import {
   ARTICLES_ID,
   ARTICLES_TITLE_ID,
@@ -12,6 +12,8 @@ import Article from "../components/Article";
 import SearchBar from "../components/SearchBar";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { useConfiguration } from "../context/ConfigurationProvider";
+import { twMerge } from "tailwind-merge";
+import Shimmer from "../components/Shimmer";
 
 const Results = ({
   shouldShow,
@@ -46,21 +48,25 @@ const Results = ({
   const filteredArticles = shouldShowMore ? articles : articles.slice(0, 3);
 
   return (
-    <div
-      className={`magic-search-results ${shouldShow ? "magic-search-page-show" : "magic-search-page-hide"}`}
-    >
+    <div className={shouldShow ? "block" : "hidden"}>
       <div
-        className={`${LAST_SEARCH_ID} ${getClassOverride(LAST_SEARCH_ID, configuration.classes)}`}
+        className={twMerge(
+          `text-2xl bg-white pt-0 px-6 pb-6 ${useClassOverride(LAST_SEARCH_ID)}`,
+        )}
       >
         {lastSearchValue}
       </div>
       <div
         ref={articlesRef}
         style={{ height: articlesHeight }}
-        className={`${ARTICLES_ID} ${getClassOverride(ARTICLES_ID, configuration.classes)}`}
+        className={twMerge(
+          `flex flex-col overflow-hidden gap-2 bg-white px-6 py-0 [transition:height_.5s_ease-in] ${useClassOverride(ARTICLES_ID)}`,
+        )}
       >
         <div
-          className={`${ARTICLES_TITLE_ID} ${getClassOverride(ARTICLES_TITLE_ID, configuration.classes)}`}
+          className={twMerge(
+            `text-base font-bold ${useClassOverride(ARTICLES_TITLE_ID)}`,
+          )}
         >
           {configuration?.copy?.searchResultsTitle || "TOP RESULTS"}
         </div>
@@ -74,31 +80,37 @@ const Results = ({
       </div>
       {!shouldShowMore && articles?.length > 0 && (
         <div
-          className={`${SEE_MORE_BUTTON_BACKGROUND_ID} ${getClassOverride(SEE_MORE_BUTTON_BACKGROUND_ID, configuration.classes)}`}
+          className={twMerge(
+            `bg-[linear-gradient(0,_transparent_50%,_white_50%)] ${useClassOverride(SEE_MORE_BUTTON_BACKGROUND_ID)}`,
+          )}
         >
           <button
             onClick={() => setShouldShowMore(true)}
-            className={`${SEE_MORE_BUTTON_ID} ${getClassOverride(SEE_MORE_BUTTON_ID, configuration.classes)}`}
+            className={twMerge(
+              `rounded-xl w-full text-center bg-white p-3 shadow-md m-2 ${useClassOverride(SEE_MORE_BUTTON_ID)}`,
+            )}
           >
             {configuration?.copy?.showMoreButton || "SEE MORE RESULTS"}
           </button>
         </div>
       )}
       <div
-        className={`${CHAT_ID} ${getClassOverride(CHAT_ID, configuration.classes)}`}
+        className={twMerge(
+          `px-6 py-3 mb-10 min-h-screen ${useClassOverride(CHAT_ID)}`,
+        )}
       >
         {chatResponse?.length > 0 ? (
           // @TODO Can we do anything better here for streaming the response with embedded links? Maybe a markdown renderer
           <div
-            className="magic-search-streamed-message"
+            className="whitespace-pre-wrap"
             dangerouslySetInnerHTML={{ __html: chatResponse }}
           />
         ) : (
           <>
-            <div className="magic-search-shimmer" style={{ width: "180px" }} />
-            <div className="magic-search-shimmer" style={{ width: "240px" }} />
-            <div className="magic-search-shimmer" style={{ width: "320px" }} />
-            <div className="magic-search-shimmer" style={{ width: "380px" }} />
+            <Shimmer width={180} />
+            <Shimmer width={240} />
+            <Shimmer width={320} />
+            <Shimmer width={380} />
           </>
         )}
       </div>
@@ -109,9 +121,11 @@ const Results = ({
         }
         handleSubmit={(e: React.FormEvent) => {
           e.preventDefault();
-          submitSearch(searchTerm);
+          if (searchTerm.length > 0) {
+            submitSearch(searchTerm);
+          }
         }}
-        inputWrapClassNames="magic-search-chat-input-wrap"
+        inputWrapClassNames="sticky bottom-6 left-0"
         innerRef={searchInputRef}
       />
     </div>

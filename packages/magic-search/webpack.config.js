@@ -5,13 +5,19 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const config = {
   mode: "development",
-  entry: "./src/index.tsx",
+  entry: {
+    bundle: "./src/index.tsx",
+    cjs: "./src/cjs/index.cjs",
+  },
   module: {
     rules: [
       {
         test: /.tsx?$/,
-        use: "ts-loader",
+        loader: "ts-loader",
         exclude: /node_modules/,
+        options: {
+          configFile: "tsconfig.json",
+        },
       },
       {
         test: /\.css$/,
@@ -27,11 +33,12 @@ const config = {
     static: {
       directory: path.join(__dirname, "dist"),
     },
+    hot: true,
     compress: true,
     port: 9000,
   },
   output: {
-    filename: "bundle.js",
+    filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
   },
 };

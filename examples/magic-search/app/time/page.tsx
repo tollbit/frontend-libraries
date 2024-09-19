@@ -136,7 +136,15 @@ export default function Home() {
           type="text/javascript"
           dangerouslySetInnerHTML={{
             __html: `
-            MagicSearch({publicKey: "pk_verge_cm0wx5r52000708iad40lbr9z", direction: "left", classes: {}})
+            MagicSearch({
+              publicKey: "pk_verge_cm0wx5r52000708iad40lbr9z",
+              direction: "left",
+              configuration: {
+                classes: {
+                }
+              }
+            }
+          )
           `,
           }}
         ></script>

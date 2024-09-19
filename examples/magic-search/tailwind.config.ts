@@ -1,10 +1,15 @@
 import type { Config } from "tailwindcss";
+import path from "path";
 
 const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    path.join(
+      path.dirname(require.resolve("@tollbit/magic-search")),
+      "**/*.js",
+    ),
   ],
   theme: {
     extend: {

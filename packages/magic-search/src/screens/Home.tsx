@@ -1,5 +1,5 @@
 import React from "react";
-import { getClassOverride } from "../utils";
+import { useClassOverride } from "../utils";
 import SearchBar from "../components/SearchBar";
 import {
   INTRO_TITLE_ID,
@@ -8,6 +8,7 @@ import {
   SUGGESTIONS_TITLE_ID,
 } from "../utils/constants";
 import { useConfiguration } from "../context/ConfigurationProvider";
+import { twMerge } from "tailwind-merge";
 
 const Home = ({
   shouldShow,
@@ -26,11 +27,11 @@ const Home = ({
 }) => {
   const configuration = useConfiguration();
   return (
-    <div
-      className={`magic-search-home ${shouldShow ? "magic-search-page-show" : "magic-search-page-hide"}`}
-    >
+    <div className={shouldShow ? "block" : "hidden"}>
       <div
-        className={`${INTRO_TITLE_ID} ${getClassOverride(INTRO_TITLE_ID, configuration.classes)} `}
+        className={twMerge(
+          `bg-white text-lg py-3 px-10 ${useClassOverride(INTRO_TITLE_ID)}`,
+        )}
       >
         {configuration?.copy?.introTitle ||
           "I can help you find what you're looking for"}
@@ -48,16 +49,20 @@ const Home = ({
       />
       {prompts.length > 0 && (
         <div
-          className={`${SUGGESTIONS_ID} ${getClassOverride(SUGGESTIONS_ID, configuration.classes)}`}
+          className={`h-full px-6 py-0 mb-3 ${useClassOverride(SUGGESTIONS_ID)}`}
         >
           <h3
-            className={`${SUGGESTIONS_TITLE_ID} ${getClassOverride(SUGGESTIONS_TITLE_ID, configuration.classes)}`}
+            className={twMerge(
+              `text-md font-bold px-6 py-0 mb-3 ${useClassOverride(SUGGESTIONS_TITLE_ID)}`,
+            )}
           >
             {configuration?.copy?.suggestionsTitle || "THINGS YOU SHOULD KNOW"}
           </h3>
           {prompts.map((prompt: any) => (
             <button
-              className={`${PROMPT_ID} ${getClassOverride(PROMPT_ID, configuration.classes)}`}
+              className={twMerge(
+                `p-4 bg-white rounded-3xl mb-3 ${useClassOverride(PROMPT_ID)}`,
+              )}
               key={prompt.question}
               onClick={() => submitSearch(prompt.question)}
             >

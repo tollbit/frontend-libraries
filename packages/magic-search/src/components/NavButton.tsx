@@ -1,4 +1,7 @@
 import React from "react";
+import { useClassOverride } from "../utils";
+import { useConfiguration } from "../context/ConfigurationProvider";
+import { twMerge } from "tailwind-merge";
 
 const NavButton = ({
   direction = "forward",
@@ -10,13 +13,15 @@ const NavButton = ({
   onClick?: () => void;
 }) => (
   <button
-    className={`magic-search-nav-button ${disabled ? "magic-search-nav-button-disabled" : ""}`}
+    className={twMerge(
+      `h-14 w-14 m-1 border-px border-solid border-[#595959] rounded-1 shadow-md bg-white flex items-center ${disabled ? "bg-[#EAEAEA]" : ""}`,
+    )}
     onClick={onClick}
     disabled={disabled}
   >
     {direction === "backward" ? (
       <svg
-        className="magic-search-nav-button-icon"
+        className="mx-auto my-0 stroke-[#595959]"
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"
@@ -31,7 +36,7 @@ const NavButton = ({
       </svg>
     ) : (
       <svg
-        className="magic-search-nav-button-icon"
+        className="mx-auto my-0 stroke-[#595959]"
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"

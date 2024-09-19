@@ -18,12 +18,13 @@ export const SEARCH_INPUT_ID = "magic-search-input";
 export const SEARCH_INPUT_WRAP_ID = "magic-search-input-wrap";
 export const SEARCH_INPUT_CONTAINER_ID = "magic-search-input-container";
 export const SEARCH_TITLE_ID = "magic-search-results-title";
-export const CHAT_TITLE_BUTTON_ID = "magic-search-chat-title-button";
 export const CHAT_TITLE_ICON_ID = "magic-search-chat-title-icon";
 export const CLOSE_BUTTON_ID = "magic-search-close";
 export const INTRO_TITLE_ID = "magic-search-intro-title";
 export const TAB = "magic-search-tab";
 export const LOADING_SPINNER_ID = "magic-search-loader";
+export const LOADING_SPINNER_DOT_ID = "magic-search-loader-dot";
+export const NAV_BUTTON_ID = "magic-search-nav-button";
 export const URL_REGEX = new RegExp(
   /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi,
 );
