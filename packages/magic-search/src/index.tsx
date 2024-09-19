@@ -1,5 +1,4 @@
 import { createRoot } from "react-dom/client";
-import React from "react";
 import MagicSearchApp from "./components/MagicSearchApp";
 import { MagicSearchProps } from "./utils/types";
 import { MAGIC_SEARCH_ID } from "./utils/constants";

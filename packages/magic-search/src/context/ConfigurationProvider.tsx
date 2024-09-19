@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from "react";
+import { createContext, useContext } from "react";
 import { MagicSearchConfiguration } from "../utils/types";
 
 export const ConfigurationContext = createContext<{

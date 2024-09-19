@@ -18,9 +18,10 @@
     "lint": "eslint .",
     "type-check": "tsc --noEmit",
     "format:check": "prettier --check .",
-    "build": "export NODE_ENV=production && webpack &&  tailwindcss -i ./src/globals.css -o ./dist/styles.css",
-    "dev": "webpack --watch",
-    "serve": "webpack serve"
+    "build": "export NODE_ENV=production && webpack --config webpack.prod.js &&  tailwindcss -i ./src/globals.css -o ./dist/styles.css",
+    "dev": "webpack --watch --config webpack.dev.js",
+    "dev:build": "webpack --config webpack.dev.js",
+    "serve": "webpack serve --config webpack.dev.js"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
@@ -53,7 +54,9 @@
     "webpack-dev-server": "^5.1.0"
   },
   "dependencies": {
+    "eslint-plugin-jest": "^28.8.3",
     "react": "18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "webpack-merge": "^6.0.1"
   }
 }

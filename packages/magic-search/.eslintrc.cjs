@@ -7,6 +7,10 @@ module.exports = {
     project: "./tsconfig.lint.json",
     tsconfigRootDir: __dirname,
   },
+  plugins: ["jest"],
+  env: {
+    "jest/globals": true,
+  },
   rules: {
     "no-unused-vars": [
       "warn", // or "error"

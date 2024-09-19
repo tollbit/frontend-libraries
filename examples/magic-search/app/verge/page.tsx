@@ -150,7 +150,7 @@ export default function Home() {
                 classes: {
                   "magic-search-content": "bg-black text-white",
                   "magic-search-header": "bg-[#5200FF]",
-                  "magic-search-intro-title": "bg-[#5200FF] text-[#45D09C]",
+                  "magic-search-intro-title": "bg-[#5200FF] font-bold text-[#45D09C]",
                   "magic-search-input-background": "bg-[#5200FF] bg-none pb-1",
                   "magic-search-input-wrap": "bg-none",
                   "magic-search-input": "bg-[#5200FF] text-white placeholder:text-white",

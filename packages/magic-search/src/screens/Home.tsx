@@ -1,4 +1,3 @@
-import React from "react";
 import { useClassOverride } from "../utils";
 import SearchBar from "../components/SearchBar";
 import {
@@ -23,7 +22,7 @@ const Home = ({
   searchInputRef: React.RefObject<HTMLInputElement>;
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
-  submitSearch: (value: string) => void;
+  submitSearch: (_value: string) => void;
 }) => {
   const configuration = useConfiguration();
   return (

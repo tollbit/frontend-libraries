@@ -1,5 +1,3 @@
-import React from "react";
-
 interface TabIconProps {
   direction: "left" | "right";
   gradient?: Gradient;
@@ -45,7 +43,7 @@ const TabIcon = ({ direction, gradient = defaultGradient }: TabIconProps) => (
         y2={gradient.y2 || "100%"}
         gradientUnits="userSpaceOnUse"
       >
-        {gradient.gradientColors.map((color: GradientColor, index: number) => (
+        {gradient.gradientColors.map((color: GradientColor) => (
           <stop
             key={color.stopColor}
             offset={color.offset}

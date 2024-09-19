@@ -1,4 +1,3 @@
-import React from "react";
 import { useClassOverride } from "../utils";
 import {
   SEARCH_BACKGROUND_ID,
@@ -21,8 +20,8 @@ const SearchBar = ({
   value: string;
   inputClassNames?: string;
   inputWrapClassNames?: string;
-  handleSubmit: (e: React.FormEvent) => void;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (_e: React.FormEvent) => void;
+  handleChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
   const configuration = useConfiguration();
   return (

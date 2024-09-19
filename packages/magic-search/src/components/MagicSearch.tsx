@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useClassOverride, fetcher } from "../utils/index";
 import { MagicSearchProps, Message } from "../utils/types";
 import {
   MAGIC_SEARCH_ID,
   HEADER_ID,
-  CLOSE_BUTTON_ID,
   TAB,
   MAGIC_SEARCH_CONTENT_ID,
 } from "../utils/constants";
@@ -12,7 +11,6 @@ import Home from "../screens/Home";
 import Results from "../screens/Results";
 import TabIcon from "./TabIcon";
 import NavButton from "./NavButton";
-import { useConfiguration } from "../context/ConfigurationProvider";
 import { twMerge } from "tailwind-merge";
 
 // Other
@@ -22,7 +20,7 @@ const USER_ROLE = "user";
 let buffer = "";
 let isCitation = false;
 let citationIndex = 0;
-const citationIndexMap: { [key in string]: number } = {};
+const citationIndexMap: { [_key in string]: number } = {};
 const processMessage = (msg: string) => {
   let result = "";
   for (let char of msg) {
@@ -62,13 +60,12 @@ const MagicSearch = ({
   shiftBody = true,
   publicKey,
 }: MagicSearchProps) => {
-  const configuration = useConfiguration();
   const searchInputRef = useRef<HTMLInputElement>(null);
   const previewSearchRef = useRef<string>("");
 
   const [searchTerm, setSearchTerm] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
-  const [articles, setArticles] = useState<{ [key in number]: any[] }>({});
+  const [articles, setArticles] = useState<{ [_key in number]: any[] }>({});
   const [showMagicSearch, setShowMagicSearch] = useState(false);
   const [prompts, setPrompts] = useState([]);
   const [page, setPage] = useState(0);

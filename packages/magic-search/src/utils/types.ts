@@ -7,7 +7,7 @@ export interface MagicSearchProps {
 
 export interface MagicSearchConfiguration {
   classes?: {
-    [key in string]?: string;
+    [_key in string]?: string;
   };
   copy?: {
     searchPlaceholder?: string;

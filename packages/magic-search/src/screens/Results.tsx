@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useClassOverride } from "../utils";
 import {
   ARTICLES_ID,
@@ -31,7 +31,7 @@ const Results = ({
   lastSearchValue: string;
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
-  submitSearch: (value: string) => void;
+  submitSearch: (_value: string) => void;
   searchInputRef: React.RefObject<HTMLInputElement>;
 }) => {
   const configuration = useConfiguration();

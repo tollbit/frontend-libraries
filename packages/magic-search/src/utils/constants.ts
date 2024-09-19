@@ -25,6 +25,3 @@ export const TAB = "magic-search-tab";
 export const LOADING_SPINNER_ID = "magic-search-loader";
 export const LOADING_SPINNER_DOT_ID = "magic-search-loader-dot";
 export const NAV_BUTTON_ID = "magic-search-nav-button";
-export const URL_REGEX = new RegExp(
-  /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi,
-);

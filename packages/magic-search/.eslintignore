@@ -1,0 +1,4 @@
+webpack.*.js
+tailwind.config.js
+jest.setup.ts
+jest.config.js

@@ -1,4 +1,3 @@
-import React from "react";
 import { LOADING_SPINNER_DOT_ID, LOADING_SPINNER_ID } from "../utils/constants";
 import { useClassOverride } from "../utils";
 import { twMerge } from "tailwind-merge";

@@ -1,7 +1,6 @@
-import React from "react";
 import { useClassOverride } from "../utils";
-import { useConfiguration } from "../context/ConfigurationProvider";
 import { twMerge } from "tailwind-merge";
+import { NAV_BUTTON_ID } from "../utils/constants";
 
 const NavButton = ({
   direction = "forward",
@@ -14,7 +13,7 @@ const NavButton = ({
 }) => (
   <button
     className={twMerge(
-      `h-14 w-14 m-1 border-px border-solid border-[#595959] rounded-1 shadow-md bg-white flex items-center ${disabled ? "bg-[#EAEAEA]" : ""}`,
+      `h-14 w-14 m-1 border-px border-solid border-[#595959] rounded-1 shadow-md bg-white flex items-center ${disabled ? "bg-[#EAEAEA]" : ""} ${useClassOverride(NAV_BUTTON_ID)}`,
     )}
     onClick={onClick}
     disabled={disabled}
