@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <script src="http://localhost:9000/bundle.js" type="text/javascript" />
+        <Script src="http://localhost:9000/bundle.js" type="text/javascript" />
       </head>
       <body className={inter.className}>{children}</body>
     </html>

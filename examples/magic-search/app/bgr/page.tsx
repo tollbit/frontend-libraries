@@ -4,10 +4,10 @@ export default function Home() {
       <div className="flex min-h-screen flex-col items-center justify-between m-24 relative">
         <img src="/bgr.png" className="my-0 mx-auto" />
         <div className="text-white">
-          "Subscribe\nNews\nReviews\nBest\nGuides\nDeals\nMore\nTRENDING:\niPhone
+          Subscribe\nNews\nReviews\nBest\nGuides\nDeals\nMore\nTRENDING:\niPhone
           16\nNintendo Switch 2\nApple Watch\nBest Movies\niOS 18\nM4 MacBook
-          Pro\niPhone 15\nThunderbolts*\nWhat's That Movie Called?\nJohn Wick
-          5\nOver a million Android TV streaming boxes infected by Vo1d
+          Pro\niPhone 15\nThunderbolts*\nWhat&quot;s That Movie Called?\nJohn
+          Wick 5\nOver a million Android TV streaming boxes infected by Vo1d
           malware\n\nEven if you are an iPhone user, there’s a solid chance you
           have an Android device somewhere in your house. If the device happens
           to …\n\nTech\nJacob Siegal\niPadOS 18 review: A successful update with
@@ -161,8 +161,8 @@ export default function Home() {
           coverage.\n\nScience Expert\nJoshua Hawkins\n\nOver a decade of
           writing, editing, and fact-checking expertise with science
           content.\n\nTech Expert\nJoe Wituschek\n\nCovering the technology
-          industry's breaking news, opinion pieces and reviews for over 10
-          years.\n\nMeet BGR's Team\nReviews\nApps & Software\n2 hours
+          industry&quot;s breaking news, opinion pieces and reviews for over 10
+          years.\n\nMeet BGR&quot;s Team\nReviews\nApps & Software\n2 hours
           ago\niPadOS 18 review: A successful update with one major
           omission\nHome Theater\n24 hours ago\nHisense S7N CanvasTV review:
           Taking on Samsung at a much lower price\nApps & Software\n1 day
@@ -186,7 +186,7 @@ export default function Home() {
           Founder\n\nNews\nTech\nEntertainment\nScience\nReviews\nDeals\nGuides\nAbout
           BGR\nAdvertising\nContact Us\nPrivacy Policy\nAdChoices\nTerms Of
           Use\n\nBGR is a part of Penske Media Corporation.\n© 2024 BGR Media,
-          LLC. All Rights Reserved."
+          LLC. All Rights Reserved.
         </div>
         <script
           type="text/javascript"

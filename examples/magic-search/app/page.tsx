@@ -7,7 +7,7 @@ export default function Home() {
           className="relative p-4 text-black border-grey"
           placeholder="Search...."
         />
-        If you're in the market for a quality sedan, there are several fantastic
+        If youre in the market for a quality sedan, there are several fantastic
         options available that cater to a range of preferences, from
         value-driven choices to luxurious family cars. According to the rankings
         from experts at KBB.com and Car and Driver, here are some of the top
