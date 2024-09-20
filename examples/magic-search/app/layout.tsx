@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* <script
-          src="https://cdn.jsdelivr.net/npm/@tollbit/magic-search@0.0.1/dist/bundle.min.js"
+          src="https://cdn.jsdelivr.net/npm/@tollbit/magic-search@0.0.2/dist/bundle.min.js"
           type="text/javascript"
         /> */}
         <script src="http://localhost:9000/bundle.js" type="text/javascript" />

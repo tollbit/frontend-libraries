@@ -1,4 +1,5 @@
 import "../../public/time.css";
+// import "@tollbit/magic-search/dist/styles.css";
 
 export default function Home() {
   return (

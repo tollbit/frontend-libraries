@@ -53,7 +53,9 @@ const processMessage = (msg: string) => {
 };
 
 const bodyClassesLeft = ["ml-0", "md:ml-72", "lg:ml-96"];
+const transitionClassesLeft = ["transition-[margin-left]", "duration-500"];
 const bodyClassesRight = ["mr-0", "md:mr-72", "lg:mr-96"];
+const transitionClassesRight = ["transition-[margin-right]", "duration-500"];
 
 const MagicSearch = ({
   direction,
@@ -84,16 +86,12 @@ const MagicSearch = ({
   }, []);
 
   useEffect(() => {
-    if (shiftBody) {
-      document.body.style.transition = `${direction === "left" ? "margin-left" : "margin-right"} 0.5s`;
-    }
-  }, []);
-
-  useEffect(() => {
     // Shift page body on open/close
     if (showMagicSearch && shiftBody) {
       document.body.classList.add(
-        ...(direction === "left" ? bodyClassesLeft : bodyClassesRight),
+        ...(direction === "left"
+          ? [...bodyClassesLeft, ...transitionClassesLeft]
+          : [...bodyClassesRight, ...transitionClassesRight]),
       );
     }
 
