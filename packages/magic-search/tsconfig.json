@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "skipLibCheck": true,
+    "types": ["node", "jest", "@testing-library/jest-dom", "@testing-library/react"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

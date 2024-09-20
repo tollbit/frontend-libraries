@@ -4,7 +4,7 @@ import { Inter_Tight } from "next/font/google";
 
 const Inter = Inter_Tight({ subsets: ["latin"] });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
