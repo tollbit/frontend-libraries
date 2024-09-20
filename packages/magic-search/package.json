@@ -1,6 +1,6 @@
 {
   "name": "@tollbit/magic-search",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Scripts to create the TollBit Magic Search experience for any publisher",
   "author": "Luke Reisch <lucas@tollbit.com>",
   "license": "MIT",
