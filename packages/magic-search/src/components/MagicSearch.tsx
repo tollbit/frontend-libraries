@@ -274,11 +274,11 @@ const MagicSearch = ({
           );
         })}
         <div
-          className={`absolute top-0 ${direction === "left" ? "right-px" : "-left-[39px]"}`}
+          className={`absolute top-0 ${direction === "left" ? "right-0 translate-x-[calc(100%-1px)]" : "-translate-x-[calc(100%-1px)]"}`}
         >
           <div
             role="button"
-            className={`${TAB} ${useClassOverride(TAB)}`}
+            className={useClassOverride(TAB)}
             onClick={() => setShowMagicSearch(!showMagicSearch)}
           >
             <TabIcon direction={direction} />
