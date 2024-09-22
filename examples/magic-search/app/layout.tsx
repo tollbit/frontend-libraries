@@ -21,6 +21,7 @@ export default function RootLayout({
           src="https://cdn.jsdelivr.net/npm/@tollbit/magic-search@0.0.2/dist/bundle.min.js"
           type="text/javascript"
         /> */}
+        {/* eslint-disable-next-line */}
         <script src="http://localhost:9000/bundle.js" type="text/javascript" />
       </head>
       <body className={inter.className}>{children}</body>
