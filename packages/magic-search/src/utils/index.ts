@@ -6,7 +6,7 @@ export const useClassOverride = (id: string): string => {
 };
 
 export const fetcher = async (path: string, key: string, body: object) =>
-  fetch(`http://localhost:8000/${path}`, {
+  fetch(`https://api.tollbit.com/${path}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
