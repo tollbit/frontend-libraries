@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useClassOverride, fetcher } from "../utils/index";
+import { useClassOverride, fetcher, logger } from "../utils/index";
 import { MagicSearchProps, Message } from "../utils/types";
 import {
   MAGIC_SEARCH_ID,
@@ -73,17 +73,19 @@ const MagicSearch = ({
   const [page, setPage] = useState(0);
 
   useEffect(() => {
-    fetcher("/content/v1/search/questions", publicKey, {
-      content: document.getElementsByTagName("body")[0]?.innerText,
-    }).then((res: Response) => {
-      if (!res.ok) {
-        return;
-      }
-      res.json().then((data) => {
-        setPrompts(data);
+    if (showMagicSearch && !prompts.length) {
+      fetcher("/content/v1/search/questions", publicKey, {
+        content: document.getElementsByTagName("body")[0]?.innerText,
+      }).then((res: Response) => {
+        if (!res.ok) {
+          return;
+        }
+        res.json().then((data) => {
+          setPrompts(data);
+        });
       });
-    });
-  }, []);
+    }
+  }, [showMagicSearch, prompts]);
 
   useEffect(() => {
     // Shift page body on open/close

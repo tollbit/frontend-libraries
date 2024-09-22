@@ -8,6 +8,7 @@ import {
 } from "../utils/constants";
 import { useConfiguration } from "../context/ConfigurationProvider";
 import { twMerge } from "tailwind-merge";
+import PlaceholderPrompt from "../components/PlaceholderPrompt";
 
 const Home = ({
   shouldShow,
@@ -46,18 +47,18 @@ const Home = ({
         }}
         innerRef={searchInputRef}
       />
-      {prompts.length > 0 && (
-        <div
-          className={`h-full px-6 py-0 mb-3 ${useClassOverride(SUGGESTIONS_ID)}`}
+      <div
+        className={`h-full px-6 py-0 mb-3 ${useClassOverride(SUGGESTIONS_ID)}`}
+      >
+        <h3
+          className={twMerge(
+            `text-md font-bold px-6 py-0 mb-3 ${useClassOverride(SUGGESTIONS_TITLE_ID)}`,
+          )}
         >
-          <h3
-            className={twMerge(
-              `text-md font-bold px-6 py-0 mb-3 ${useClassOverride(SUGGESTIONS_TITLE_ID)}`,
-            )}
-          >
-            {configuration?.copy?.suggestionsTitle || "THINGS YOU SHOULD KNOW"}
-          </h3>
-          {prompts.map((prompt: any) => (
+          {configuration?.copy?.suggestionsTitle || "THINGS YOU SHOULD KNOW"}
+        </h3>
+        {prompts.length > 0 ? (
+          prompts.map((prompt: any) => (
             <button
               className={twMerge(
                 `p-4 bg-white rounded-3xl mb-3 ${useClassOverride(PROMPT_ID)}`,
@@ -67,9 +68,16 @@ const Home = ({
             >
               {prompt.question}
             </button>
-          ))}
-        </div>
-      )}
+          ))
+        ) : (
+          <>
+            <PlaceholderPrompt />
+            <PlaceholderPrompt />
+            <PlaceholderPrompt />
+            <PlaceholderPrompt />
+          </>
+        )}
+      </div>
     </div>
   );
 };
