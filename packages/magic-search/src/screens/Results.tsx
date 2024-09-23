@@ -47,7 +47,6 @@ const Results = ({
 
   const filteredArticles = shouldShowMore ? articles : articles.slice(0, 3);
 
-  throw new Error("results error");
   return (
     <div className={shouldShow ? "block" : "hidden"}>
       <div
