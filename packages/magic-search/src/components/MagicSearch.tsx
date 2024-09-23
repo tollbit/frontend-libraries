@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useClassOverride, fetcher, logger } from "../utils/index";
+import { useClassOverride, fetcher } from "../utils/index";
 import { MagicSearchProps, Message } from "../utils/types";
 import {
   MAGIC_SEARCH_ID,
@@ -12,6 +12,8 @@ import Results from "../screens/Results";
 import TabIcon from "./TabIcon";
 import NavButton from "./NavButton";
 import { twMerge } from "tailwind-merge";
+import { useLogger } from "../context/LoggerProvider";
+import ErrorBoundary from "./ErrorBoundary";
 
 // Other
 const BOT_ROLE = "assistant";
@@ -62,6 +64,7 @@ const MagicSearch = ({
   shiftBody = true,
   publicKey,
 }: MagicSearchProps) => {
+  const logger = useLogger();
   const searchInputRef = useRef<HTMLInputElement>(null);
   const previewSearchRef = useRef<string>("");
 
@@ -245,32 +248,36 @@ const MagicSearch = ({
             />
           </div>
         </div>
-        <Home
-          shouldShow={page === 0}
-          prompts={prompts}
-          searchInputRef={searchInputRef}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          submitSearch={submitSearch}
-        />
+        <ErrorBoundary>
+          <Home
+            shouldShow={page === 0}
+            prompts={prompts}
+            searchInputRef={searchInputRef}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            submitSearch={submitSearch}
+          />
+        </ErrorBoundary>
         {messages.map((message, index) => {
           if (message.role !== USER_ROLE) {
             return;
           }
 
           return (
-            <Results
-              key={index}
-              // Each page corresponds to a given user message. Page 1 corresponds to message 0, page 2 corresponds to message 2, page 3 corresponds to message 4, etc.
-              shouldShow={(page - 1) * 2 === index}
-              chatResponse={messages[index + 1]?.content}
-              articles={articles[index] || []}
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              searchInputRef={searchInputRef}
-              lastSearchValue={message.content}
-              submitSearch={submitSearch}
-            />
+            <ErrorBoundary key={index}>
+              <Results
+                key={index}
+                // Each page corresponds to a given user message. Page 1 corresponds to message 0, page 2 corresponds to message 2, page 3 corresponds to message 4, etc.
+                shouldShow={(page - 1) * 2 === index}
+                chatResponse={messages[index + 1]?.content}
+                articles={articles[index] || []}
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                searchInputRef={searchInputRef}
+                lastSearchValue={message.content}
+                submitSearch={submitSearch}
+              />
+            </ErrorBoundary>
           );
         })}
         <div

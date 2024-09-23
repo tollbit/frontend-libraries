@@ -1,16 +1,19 @@
 import { createPortal } from "react-dom";
 import MagicSearchComponent from "./MagicSearch";
-import { MagicSearchProps } from "../utils/types";
+import { MagicSearchAppProps } from "../utils/types";
 import { ConfigurationProvider } from "../context/ConfigurationProvider";
 import ErrorBoundary from "./ErrorBoundary";
+import { LoggerProvider } from "../context/LoggerProvider";
 
-const MagicSearchApp = (props: MagicSearchProps) =>
+const MagicSearchApp = (props: MagicSearchAppProps) =>
   createPortal(
-    <ErrorBoundary>
-      <ConfigurationProvider configuration={props.configuration}>
-        <MagicSearchComponent {...props} />
-      </ConfigurationProvider>
-    </ErrorBoundary>,
+    <LoggerProvider logger={props.logger}>
+      <ErrorBoundary>
+        <ConfigurationProvider configuration={props.configuration}>
+          <MagicSearchComponent {...props} />
+        </ConfigurationProvider>
+      </ErrorBoundary>
+    </LoggerProvider>,
     document.body,
   );
 
