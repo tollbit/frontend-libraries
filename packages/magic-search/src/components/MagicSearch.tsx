@@ -81,9 +81,13 @@ const MagicSearch = ({
         content: document.getElementsByTagName("body")[0]?.innerText,
       }).then((res: Response) => {
         if (!res.ok) {
+          logger.error("Failed to fetch prompts", { status: res.status });
           return;
         }
         res.json().then((data) => {
+          if (!data) {
+            logger.info("No prompts found");
+          }
           setPrompts(data);
         });
       });
@@ -124,9 +128,13 @@ const MagicSearch = ({
         numberOfResults: 10,
       }).then((res: Response) => {
         if (!res.ok) {
+          logger.error("Failed to fetch articles", { status: res.status });
           return;
         }
         res.json().then((data) => {
+          if (!data) {
+            logger.info("No articles found", { query: lastSearchValue });
+          }
           setArticles((prevState) => ({
             ...prevState,
             [messages.length - 1]: data,

@@ -1,5 +1,11 @@
 # @tollbit/magic-search
 
+## 0.0.5
+
+### Patch Changes
+
+- Add logging, error boundaries, etc.
+
 ## 0.0.4
 
 ### Patch Changes
