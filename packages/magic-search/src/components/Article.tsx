@@ -35,7 +35,7 @@ const Article = ({
 
   let timeSincePublished;
   // If time difference is not a number, dont show time since published
-  if (typeof timeDifference !== "number") {
+  if (Number.isNaN(timeDifference)) {
     timeSincePublished = "";
   } else if (timeDifference < millisecondsInHour) {
     timeSincePublished = "less than an hour ago";
