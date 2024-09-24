@@ -14,6 +14,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import { useConfiguration } from "../context/ConfigurationProvider";
 import { twMerge } from "tailwind-merge";
 import Shimmer from "../components/Shimmer";
+import { useTracker } from "../context/TrackerProvider";
 
 const Results = ({
   shouldShow,
@@ -34,6 +35,7 @@ const Results = ({
   submitSearch: (_value: string) => void;
   searchInputRef: React.RefObject<HTMLInputElement>;
 }) => {
+  const tracker = useTracker();
   const configuration = useConfiguration();
   const articlesRef = useRef<HTMLDivElement>(null);
   const [shouldShowMore, setShouldShowMore] = useState(false);
@@ -85,7 +87,12 @@ const Results = ({
           )}
         >
           <button
-            onClick={() => setShouldShowMore(true)}
+            onClick={() => {
+              tracker.trackEvent("see_more_results", {
+                searchTerm: lastSearchValue,
+              });
+              setShouldShowMore(true);
+            }}
             className={twMerge(
               `rounded-xl w-full text-center bg-white p-3 shadow-md m-2 ${useClassOverride(SEE_MORE_BUTTON_ID)}`,
             )}

@@ -1,6 +1,7 @@
 import { ARTICLE_TITLE_ID } from "../utils/constants";
 import { useClassOverride } from "../utils";
 import { twMerge } from "tailwind-merge";
+import { useTracker } from "../context/TrackerProvider";
 
 const Article = ({
   title,
@@ -13,6 +14,7 @@ const Article = ({
   author: string;
   url: string;
 }) => {
+  const tracker = useTracker();
   // Get the domain from the URL
   const urlObject = new URL(url);
   const host = urlObject.host.replace("www.", "");
@@ -30,7 +32,10 @@ const Article = ({
   const millisecondsInYear = millisecondsInDay * 365;
 
   let timeSincePublished;
-  if (timeDifference < millisecondsInHour) {
+  // If time difference is not a number, dont show time since published
+  if (typeof timeDifference !== "number") {
+    timeSincePublished = "";
+  } else if (timeDifference < millisecondsInHour) {
     timeSincePublished = "less than an hour ago";
   } else if (timeDifference < millisecondsInDay) {
     const hours = Math.floor(timeDifference / millisecondsInHour);
@@ -53,6 +58,7 @@ const Article = ({
     <a
       className="border-b-px border-solid border-gray-400 pt-0 px-1 pb-2"
       href={url}
+      onClick={() => tracker.trackEvent("article_clicked", { url, title })}
     >
       <h3
         className={twMerge(
@@ -62,7 +68,8 @@ const Article = ({
         {title}
       </h3>
       <p className="text-sm">
-        {host}, {timeSincePublished}, {author || "Unknown Author"}
+        {host}, {timeSincePublished ? `${timeSincePublished}, ` : ""}
+        {author || "Unknown Author"}
       </p>
     </a>
   );

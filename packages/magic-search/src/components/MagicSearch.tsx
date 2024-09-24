@@ -14,6 +14,7 @@ import NavButton from "./NavButton";
 import { twMerge } from "tailwind-merge";
 import { useLogger } from "../context/LoggerProvider";
 import ErrorBoundary from "./ErrorBoundary";
+import { useTracker } from "../context/TrackerProvider";
 
 // Other
 const BOT_ROLE = "assistant";
@@ -65,6 +66,7 @@ const MagicSearch = ({
   publicKey,
 }: MagicSearchProps) => {
   const logger = useLogger();
+  const tracker = useTracker();
   const searchInputRef = useRef<HTMLInputElement>(null);
   const previewSearchRef = useRef<string>("");
 
@@ -95,6 +97,12 @@ const MagicSearch = ({
   }, [showMagicSearch, prompts]);
 
   useEffect(() => {
+    if (showMagicSearch) {
+      tracker.trackPageview();
+    }
+  }, [showMagicSearch]);
+
+  useEffect(() => {
     // Shift page body on open/close
     if (showMagicSearch && shiftBody) {
       document.body.classList.add(
@@ -120,9 +128,11 @@ const MagicSearch = ({
   useEffect(() => {
     // If we just appended a user message, we should fetch the articles for that prompt
     if (messages[messages.length - 1]?.role === USER_ROLE) {
+      const lastSearchValue = messages[messages.length - 1].content;
+      // Track the new search
+      tracker.trackEvent("search", { searchValue: lastSearchValue, page });
       // Set the new page to the last page
       setPage(Math.ceil(messages.length / 2));
-      const lastSearchValue = messages[messages.length - 1].content;
       fetcher("/content/v1/search/articles", publicKey, {
         query: lastSearchValue,
         numberOfResults: 10,
@@ -224,7 +234,10 @@ const MagicSearch = ({
         >
           <button
             className={`h-14 w-14 rounded-full bg-white shadow-md`}
-            onClick={() => setShowMagicSearch(false)}
+            onClick={() => {
+              tracker.trackEvent("close", { page });
+              setShowMagicSearch(false);
+            }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -247,12 +260,18 @@ const MagicSearch = ({
               direction="forward"
               // Disable the next button if we don't have messages or if we are at the last page
               disabled={messages.length === 0 || page * 2 === messages.length}
-              onClick={() => setPage((prevPage) => prevPage + 1)}
+              onClick={() => {
+                tracker.trackEvent("next", { page });
+                setPage((prevPage) => prevPage + 1);
+              }}
             />
             <NavButton
               direction="backward"
               disabled={page === 0}
-              onClick={() => setPage((prevPage) => prevPage - 1)}
+              onClick={() => {
+                tracker.trackEvent("back", { page });
+                setPage((prevPage) => prevPage - 1);
+              }}
             />
           </div>
         </div>
@@ -294,7 +313,10 @@ const MagicSearch = ({
           <div
             role="button"
             className={useClassOverride(TAB)}
-            onClick={() => setShowMagicSearch(!showMagicSearch)}
+            onClick={() => {
+              tracker.trackEvent("tabClick", { showMagicSearch });
+              setShowMagicSearch(!showMagicSearch);
+            }}
           >
             <TabIcon direction={direction} />
           </div>

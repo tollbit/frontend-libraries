@@ -4,15 +4,18 @@ import { MagicSearchAppProps } from "../utils/types";
 import { ConfigurationProvider } from "../context/ConfigurationProvider";
 import ErrorBoundary from "./ErrorBoundary";
 import { LoggerProvider } from "../context/LoggerProvider";
+import { TrackerProvider } from "../context/TrackerProvider";
 
 const MagicSearchApp = (props: MagicSearchAppProps) =>
   createPortal(
     <LoggerProvider logger={props.logger}>
-      <ErrorBoundary>
-        <ConfigurationProvider configuration={props.configuration}>
-          <MagicSearchComponent {...props} />
-        </ConfigurationProvider>
-      </ErrorBoundary>
+      <TrackerProvider>
+        <ErrorBoundary>
+          <ConfigurationProvider configuration={props.configuration}>
+            <MagicSearchComponent {...props} />
+          </ConfigurationProvider>
+        </ErrorBoundary>
+      </TrackerProvider>
     </LoggerProvider>,
     document.body,
   );

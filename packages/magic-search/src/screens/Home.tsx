@@ -9,6 +9,7 @@ import {
 import { useConfiguration } from "../context/ConfigurationProvider";
 import { twMerge } from "tailwind-merge";
 import PlaceholderPrompt from "../components/PlaceholderPrompt";
+import { useTracker } from "../context/TrackerProvider";
 
 const Home = ({
   shouldShow,
@@ -25,6 +26,7 @@ const Home = ({
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
   submitSearch: (_value: string) => void;
 }) => {
+  const tracker = useTracker();
   const configuration = useConfiguration();
   return (
     <div className={shouldShow ? "block" : "hidden"}>
@@ -64,7 +66,12 @@ const Home = ({
                 `p-4 bg-white rounded-3xl mb-3 ${useClassOverride(PROMPT_ID)}`,
               )}
               key={prompt.question}
-              onClick={() => submitSearch(prompt.question)}
+              onClick={() => {
+                tracker.trackEvent("prompt_clicked", {
+                  question: prompt.question,
+                });
+                submitSearch(prompt.question);
+              }}
             >
               {prompt.question}
             </button>
