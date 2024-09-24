@@ -1,4 +1,4 @@
-import { useClassOverride } from "../utils";
+import { getClassOverride } from "../utils";
 import {
   SEARCH_BACKGROUND_ID,
   SEARCH_INPUT_CONTAINER_ID,
@@ -27,17 +27,17 @@ const SearchBar = ({
   return (
     <div
       className={twMerge(
-        `px-4 py-0 bg-[linear-gradient(0,_transparent_50%,_white_50%)] ${useClassOverride(SEARCH_BACKGROUND_ID)} ${inputWrapClassNames}`,
+        `px-4 py-0 bg-[linear-gradient(0,_transparent_50%,_white_50%)] ${getClassOverride(SEARCH_BACKGROUND_ID, configuration)} ${inputWrapClassNames}`,
       )}
     >
       <div
         className={twMerge(
-          `bg-[linear-gradient(to_right,_red,_purple)] p-1 rounded-[40px] mb-6 ${useClassOverride(SEARCH_INPUT_WRAP_ID)}`,
+          `bg-[linear-gradient(to_right,_red,_purple)] p-1 rounded-[40px] mb-6 ${getClassOverride(SEARCH_INPUT_WRAP_ID, configuration)}`,
         )}
       >
         <div
           className={twMerge(
-            `flex justify-between items-center rounded-[40px] p-3 bg-white ${useClassOverride(SEARCH_INPUT_CONTAINER_ID)} ${inputClassNames}`,
+            `flex justify-between items-center rounded-[40px] p-3 bg-white ${getClassOverride(SEARCH_INPUT_CONTAINER_ID, configuration)} ${inputClassNames}`,
           )}
         >
           <form onSubmit={handleSubmit} className="w-full">
@@ -46,7 +46,7 @@ const SearchBar = ({
               value={value}
               onChange={handleChange}
               className={twMerge(
-                `w-full h-10 p-4 focus:outline-none ${useClassOverride(SEARCH_INPUT_ID)} ${inputClassNames}`,
+                `w-full h-10 p-4 focus:outline-none ${getClassOverride(SEARCH_INPUT_ID, configuration)} ${inputClassNames}`,
               )}
               placeholder={
                 configuration?.copy?.searchPlaceholder ||

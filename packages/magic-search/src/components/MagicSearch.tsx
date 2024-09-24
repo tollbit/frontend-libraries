@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useClassOverride, fetcher } from "../utils/index";
+import { getClassOverride, fetcher } from "../utils/index";
 import { MagicSearchProps, Message } from "../utils/types";
 import {
   MAGIC_SEARCH_ID,
@@ -15,6 +15,7 @@ import { twMerge } from "tailwind-merge";
 import { useLogger } from "../context/LoggerProvider";
 import ErrorBoundary from "./ErrorBoundary";
 import { useTracker } from "../context/TrackerProvider";
+import { useConfiguration } from "../context/ConfigurationProvider";
 
 // Other
 const BOT_ROLE = "assistant";
@@ -67,6 +68,7 @@ const MagicSearch = ({
 }: MagicSearchProps) => {
   const logger = useLogger();
   const tracker = useTracker();
+  const configuration = useConfiguration();
   const searchInputRef = useRef<HTMLInputElement>(null);
   const previewSearchRef = useRef<string>("");
 
@@ -219,17 +221,17 @@ const MagicSearch = ({
   return (
     <div
       className={twMerge(
-        `fixed bg-[#F4F4F4] [transition:0.5s] w-[480px] text-[#595959] top-0  translate-x-full ${direction === "left" ? `left-0 ${showMagicSearch ? "translate-x-0" : "-translate-x-full"}` : `right-0 ${showMagicSearch ? "translate-x-0" : "translate-x-full"}`} ${useClassOverride(MAGIC_SEARCH_ID)}`,
+        `fixed bg-[#F4F4F4] [transition:0.5s] w-[480px] text-[#595959] top-0  translate-x-full ${direction === "left" ? `left-0 ${showMagicSearch ? "translate-x-0" : "-translate-x-full"}` : `right-0 ${showMagicSearch ? "translate-x-0" : "translate-x-full"}`} ${getClassOverride(MAGIC_SEARCH_ID, configuration)}`,
       )}
     >
       <div
         className={twMerge(
-          `overflow-y-scroll h-screen ${useClassOverride(MAGIC_SEARCH_CONTENT_ID)}`,
+          `overflow-y-scroll h-screen ${getClassOverride(MAGIC_SEARCH_CONTENT_ID, configuration)}`,
         )}
       >
         <div
           className={twMerge(
-            `bg-white flex justify-between items-center px-4 py-5 ${useClassOverride(HEADER_ID)}`,
+            `bg-white flex justify-between items-center px-4 py-5 ${getClassOverride(HEADER_ID, configuration)}`,
           )}
         >
           <button
@@ -312,7 +314,7 @@ const MagicSearch = ({
         >
           <div
             role="button"
-            className={useClassOverride(TAB)}
+            className={getClassOverride(TAB, configuration)}
             onClick={() => {
               tracker.trackEvent("tabClick", { showMagicSearch });
               setShowMagicSearch(!showMagicSearch);

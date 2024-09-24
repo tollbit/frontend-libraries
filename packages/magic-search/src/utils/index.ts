@@ -1,7 +1,9 @@
-import { useConfiguration } from "../context/ConfigurationProvider";
+import { MagicSearchConfiguration } from "./types";
 
-export const useClassOverride = (id: string): string => {
-  const configuration = useConfiguration();
+export const getClassOverride = (
+  id: string,
+  configuration: MagicSearchConfiguration,
+): string => {
   return configuration?.classes?.[id] || "";
 };
 

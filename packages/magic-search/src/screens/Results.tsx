@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useClassOverride } from "../utils";
+import { getClassOverride } from "../utils";
 import {
   ARTICLES_ID,
   ARTICLES_TITLE_ID,
@@ -53,7 +53,7 @@ const Results = ({
     <div className={shouldShow ? "block" : "hidden"}>
       <div
         className={twMerge(
-          `text-2xl bg-white pt-0 px-12 pb-6 ${useClassOverride(LAST_SEARCH_ID)}`,
+          `text-2xl bg-white pt-0 px-12 pb-6 ${getClassOverride(LAST_SEARCH_ID, configuration)}`,
         )}
       >
         {lastSearchValue}
@@ -62,12 +62,12 @@ const Results = ({
         ref={articlesRef}
         style={{ height: articlesHeight }}
         className={twMerge(
-          `flex flex-col overflow-hidden gap-4 bg-white px-12 py-0 [transition:height_.5s_ease-in] ${useClassOverride(ARTICLES_ID)}`,
+          `flex flex-col overflow-hidden gap-4 bg-white px-12 py-0 [transition:height_.5s_ease-in] ${getClassOverride(ARTICLES_ID, configuration)}`,
         )}
       >
         <div
           className={twMerge(
-            `text-base font-bold ${useClassOverride(ARTICLES_TITLE_ID)}`,
+            `text-base font-bold ${getClassOverride(ARTICLES_TITLE_ID, configuration)}`,
           )}
         >
           {configuration?.copy?.searchResultsTitle || "TOP RESULTS"}
@@ -83,7 +83,7 @@ const Results = ({
       {!shouldShowMore && articles?.length > 0 && (
         <div
           className={twMerge(
-            `bg-[linear-gradient(0,_transparent_50%,_white_50%)] ${useClassOverride(SEE_MORE_BUTTON_BACKGROUND_ID)}`,
+            `bg-[linear-gradient(0,_transparent_50%,_white_50%)] ${getClassOverride(SEE_MORE_BUTTON_BACKGROUND_ID, configuration)}`,
           )}
         >
           <button
@@ -94,7 +94,7 @@ const Results = ({
               setShouldShowMore(true);
             }}
             className={twMerge(
-              `rounded-xl w-[calc(100%-3rem)] box-border text-center bg-white p-3 shadow-md mx-6 my-1 ${useClassOverride(SEE_MORE_BUTTON_ID)}`,
+              `rounded-xl w-[calc(100%-3rem)] box-border text-center bg-white p-3 shadow-md mx-6 my-1 ${getClassOverride(SEE_MORE_BUTTON_ID, configuration)}`,
             )}
           >
             {configuration?.copy?.showMoreButton || "SEE MORE RESULTS"}
@@ -103,7 +103,7 @@ const Results = ({
       )}
       <div
         className={twMerge(
-          `px-12 py-4 mb-10 min-h-screen ${useClassOverride(CHAT_ID)}`,
+          `px-12 py-4 mb-10 min-h-screen ${getClassOverride(CHAT_ID, configuration)}`,
         )}
       >
         {chatResponse?.length > 0 ? (

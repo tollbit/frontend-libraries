@@ -1,4 +1,4 @@
-import { useClassOverride } from "../utils";
+import { getClassOverride } from "../utils";
 import SearchBar from "../components/SearchBar";
 import {
   INTRO_TITLE_ID,
@@ -32,7 +32,7 @@ const Home = ({
     <div className={shouldShow ? "block" : "hidden"}>
       <div
         className={twMerge(
-          `bg-white text-lg py-3 px-12 ${useClassOverride(INTRO_TITLE_ID)}`,
+          `bg-white text-lg py-3 px-12 ${getClassOverride(INTRO_TITLE_ID, configuration)}`,
         )}
       >
         {configuration?.copy?.introTitle ||
@@ -50,11 +50,11 @@ const Home = ({
         innerRef={searchInputRef}
       />
       <div
-        className={`h-full px-6 py-0 mb-3 ${useClassOverride(SUGGESTIONS_ID)}`}
+        className={`h-full px-6 py-0 mb-3 ${getClassOverride(SUGGESTIONS_ID, configuration)}`}
       >
         <h3
           className={twMerge(
-            `text-md font-bold px-6 py-0 mb-3 ${useClassOverride(SUGGESTIONS_TITLE_ID)}`,
+            `text-md font-bold px-6 py-0 mb-3 ${getClassOverride(SUGGESTIONS_TITLE_ID, configuration)}`,
           )}
         >
           {configuration?.copy?.suggestionsTitle || "THINGS YOU SHOULD KNOW"}
@@ -63,7 +63,7 @@ const Home = ({
           prompts.map((prompt: any) => (
             <button
               className={twMerge(
-                `py-4 px-6 bg-white rounded-3xl text-left mb-3 ${useClassOverride(PROMPT_ID)}`,
+                `py-4 px-6 bg-white rounded-3xl text-left mb-3 ${getClassOverride(PROMPT_ID, configuration)}`,
               )}
               key={prompt.question}
               onClick={() => {

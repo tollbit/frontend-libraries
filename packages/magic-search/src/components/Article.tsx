@@ -1,7 +1,8 @@
 import { ARTICLE_TITLE_ID } from "../utils/constants";
-import { useClassOverride } from "../utils";
+import { getClassOverride } from "../utils";
 import { twMerge } from "tailwind-merge";
 import { useTracker } from "../context/TrackerProvider";
+import { useConfiguration } from "../context/ConfigurationProvider";
 
 const Article = ({
   title,
@@ -14,6 +15,7 @@ const Article = ({
   author: string;
   url: string;
 }) => {
+  const configuration = useConfiguration();
   const tracker = useTracker();
   // Get the domain from the URL
   const urlObject = new URL(url);
@@ -62,7 +64,7 @@ const Article = ({
     >
       <h3
         className={twMerge(
-          `underline block mb-2 font-semibold ${useClassOverride(ARTICLE_TITLE_ID)}`,
+          `underline block mb-2 font-semibold ${getClassOverride(ARTICLE_TITLE_ID, configuration)}`,
         )}
       >
         {title}
