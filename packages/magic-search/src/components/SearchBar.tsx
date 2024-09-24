@@ -46,7 +46,7 @@ const SearchBar = ({
               value={value}
               onChange={handleChange}
               className={twMerge(
-                `w-full h-10 p-1 focus:outline-none ${useClassOverride(SEARCH_INPUT_ID)} ${inputClassNames}`,
+                `w-full h-10 p-4 focus:outline-none ${useClassOverride(SEARCH_INPUT_ID)} ${inputClassNames}`,
               )}
               placeholder={
                 configuration?.copy?.searchPlaceholder ||

@@ -56,13 +56,13 @@ const Article = ({
 
   return (
     <a
-      className="border-b-px border-solid border-gray-400 pt-0 px-1 pb-2"
+      className="border-b last:border-0 border-solid border-gray-400 pb-4"
       href={url}
       onClick={() => tracker.trackEvent("article_clicked", { url, title })}
     >
       <h3
         className={twMerge(
-          `underline block mb-1 font-semibold ${useClassOverride(ARTICLE_TITLE_ID)}`,
+          `underline block mb-2 font-semibold ${useClassOverride(ARTICLE_TITLE_ID)}`,
         )}
       >
         {title}

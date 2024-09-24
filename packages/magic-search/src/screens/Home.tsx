@@ -32,7 +32,7 @@ const Home = ({
     <div className={shouldShow ? "block" : "hidden"}>
       <div
         className={twMerge(
-          `bg-white text-lg py-3 px-10 ${useClassOverride(INTRO_TITLE_ID)}`,
+          `bg-white text-lg py-3 px-12 ${useClassOverride(INTRO_TITLE_ID)}`,
         )}
       >
         {configuration?.copy?.introTitle ||
@@ -63,7 +63,7 @@ const Home = ({
           prompts.map((prompt: any) => (
             <button
               className={twMerge(
-                `p-4 bg-white rounded-3xl mb-3 ${useClassOverride(PROMPT_ID)}`,
+                `py-4 px-6 bg-white rounded-3xl text-left mb-3 ${useClassOverride(PROMPT_ID)}`,
               )}
               key={prompt.question}
               onClick={() => {
