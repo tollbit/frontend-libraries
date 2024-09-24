@@ -1,8 +1,14 @@
+import { Logtail } from "@logtail/browser";
+
 export interface MagicSearchProps {
   direction: "left" | "right";
   shiftBody?: boolean;
   publicKey: string;
   configuration?: MagicSearchConfiguration;
+}
+
+export interface MagicSearchAppProps extends MagicSearchProps {
+  logger: Logtail;
 }
 
 export interface MagicSearchConfiguration {

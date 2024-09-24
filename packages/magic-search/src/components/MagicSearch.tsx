@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useClassOverride, fetcher } from "../utils/index";
+import { getClassOverride, fetcher } from "../utils/index";
 import { MagicSearchProps, Message } from "../utils/types";
 import {
   MAGIC_SEARCH_ID,
@@ -12,6 +12,10 @@ import Results from "../screens/Results";
 import TabIcon from "./TabIcon";
 import NavButton from "./NavButton";
 import { twMerge } from "tailwind-merge";
+import { useLogger } from "../context/LoggerProvider";
+import ErrorBoundary from "./ErrorBoundary";
+import { useTracker } from "../context/TrackerProvider";
+import { useConfiguration } from "../context/ConfigurationProvider";
 
 // Other
 const BOT_ROLE = "assistant";
@@ -40,7 +44,7 @@ const processMessage = (msg: string) => {
           if (!citationIndexMap[citation]) {
             citationIndexMap[citation] = citationIndex + 1;
           }
-          result += ` <a class="magic-search-citation" href="${citation}" target="_blank">[${citationIndexMap[citation]}]</a> `;
+          result += `<a class="magic-search-citation" href="${citation}" target="_blank">[${citationIndexMap[citation]}]</a>`;
           citationIndex++;
         });
         buffer = "";
@@ -62,6 +66,9 @@ const MagicSearch = ({
   shiftBody = true,
   publicKey,
 }: MagicSearchProps) => {
+  const logger = useLogger();
+  const tracker = useTracker();
+  const configuration = useConfiguration();
   const searchInputRef = useRef<HTMLInputElement>(null);
   const previewSearchRef = useRef<string>("");
 
@@ -73,17 +80,29 @@ const MagicSearch = ({
   const [page, setPage] = useState(0);
 
   useEffect(() => {
-    fetcher("/content/v1/search/questions", publicKey, {
-      content: document.getElementsByTagName("body")[0]?.innerText,
-    }).then((res: Response) => {
-      if (!res.ok) {
-        return;
-      }
-      res.json().then((data) => {
-        setPrompts(data);
+    if (showMagicSearch && !prompts.length) {
+      fetcher("/content/v1/search/questions", publicKey, {
+        content: document.getElementsByTagName("body")[0]?.innerText,
+      }).then((res: Response) => {
+        if (!res.ok) {
+          logger.error("Failed to fetch prompts", { status: res.status });
+          return;
+        }
+        res.json().then((data) => {
+          if (!data) {
+            logger.info("No prompts found");
+          }
+          setPrompts(data);
+        });
       });
-    });
-  }, []);
+    }
+  }, [showMagicSearch, prompts]);
+
+  useEffect(() => {
+    if (showMagicSearch) {
+      tracker.trackPageview();
+    }
+  }, [showMagicSearch]);
 
   useEffect(() => {
     // Shift page body on open/close
@@ -111,17 +130,23 @@ const MagicSearch = ({
   useEffect(() => {
     // If we just appended a user message, we should fetch the articles for that prompt
     if (messages[messages.length - 1]?.role === USER_ROLE) {
+      const lastSearchValue = messages[messages.length - 1].content;
+      // Track the new search
+      tracker.trackEvent("search", { searchValue: lastSearchValue, page });
       // Set the new page to the last page
       setPage(Math.ceil(messages.length / 2));
-      const lastSearchValue = messages[messages.length - 1].content;
       fetcher("/content/v1/search/articles", publicKey, {
         query: lastSearchValue,
         numberOfResults: 10,
       }).then((res: Response) => {
         if (!res.ok) {
+          logger.error("Failed to fetch articles", { status: res.status });
           return;
         }
         res.json().then((data) => {
+          if (!data) {
+            logger.info("No articles found", { query: lastSearchValue });
+          }
           setArticles((prevState) => ({
             ...prevState,
             [messages.length - 1]: data,
@@ -196,22 +221,25 @@ const MagicSearch = ({
   return (
     <div
       className={twMerge(
-        `fixed bg-[#F4F4F4] [transition:0.5s] w-[480px] text-[#595959] top-0  translate-x-full ${direction === "left" ? `left-0 ${showMagicSearch ? "translate-x-0" : "-translate-x-full"}` : `right-0 ${showMagicSearch ? "translate-x-0" : "translate-x-full"}`} ${useClassOverride(MAGIC_SEARCH_ID)}`,
+        `fixed bg-[#F4F4F4] [transition:0.5s] w-[480px] text-[#595959] top-0  translate-x-full ${direction === "left" ? `left-0 ${showMagicSearch ? "translate-x-0" : "-translate-x-full"}` : `right-0 ${showMagicSearch ? "translate-x-0" : "translate-x-full"}`} ${getClassOverride(MAGIC_SEARCH_ID, configuration)}`,
       )}
     >
       <div
         className={twMerge(
-          `overflow-y-scroll h-screen ${useClassOverride(MAGIC_SEARCH_CONTENT_ID)}`,
+          `overflow-y-scroll h-screen ${getClassOverride(MAGIC_SEARCH_CONTENT_ID, configuration)}`,
         )}
       >
         <div
           className={twMerge(
-            `bg-white flex justify-between items-center px-4 py-5 ${useClassOverride(HEADER_ID)}`,
+            `bg-white flex justify-between items-center px-4 py-5 ${getClassOverride(HEADER_ID, configuration)}`,
           )}
         >
           <button
             className={`h-14 w-14 rounded-full bg-white shadow-md`}
-            onClick={() => setShowMagicSearch(false)}
+            onClick={() => {
+              tracker.trackEvent("close", { page });
+              setShowMagicSearch(false);
+            }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -234,41 +262,51 @@ const MagicSearch = ({
               direction="forward"
               // Disable the next button if we don't have messages or if we are at the last page
               disabled={messages.length === 0 || page * 2 === messages.length}
-              onClick={() => setPage((prevPage) => prevPage + 1)}
+              onClick={() => {
+                tracker.trackEvent("next", { page });
+                setPage((prevPage) => prevPage + 1);
+              }}
             />
             <NavButton
               direction="backward"
               disabled={page === 0}
-              onClick={() => setPage((prevPage) => prevPage - 1)}
+              onClick={() => {
+                tracker.trackEvent("back", { page });
+                setPage((prevPage) => prevPage - 1);
+              }}
             />
           </div>
         </div>
-        <Home
-          shouldShow={page === 0}
-          prompts={prompts}
-          searchInputRef={searchInputRef}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          submitSearch={submitSearch}
-        />
+        <ErrorBoundary>
+          <Home
+            shouldShow={page === 0}
+            prompts={prompts}
+            searchInputRef={searchInputRef}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            submitSearch={submitSearch}
+          />
+        </ErrorBoundary>
         {messages.map((message, index) => {
           if (message.role !== USER_ROLE) {
             return;
           }
 
           return (
-            <Results
-              key={index}
-              // Each page corresponds to a given user message. Page 1 corresponds to message 0, page 2 corresponds to message 2, page 3 corresponds to message 4, etc.
-              shouldShow={(page - 1) * 2 === index}
-              chatResponse={messages[index + 1]?.content}
-              articles={articles[index] || []}
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              searchInputRef={searchInputRef}
-              lastSearchValue={message.content}
-              submitSearch={submitSearch}
-            />
+            <ErrorBoundary key={index}>
+              <Results
+                key={index}
+                // Each page corresponds to a given user message. Page 1 corresponds to message 0, page 2 corresponds to message 2, page 3 corresponds to message 4, etc.
+                shouldShow={(page - 1) * 2 === index}
+                chatResponse={messages[index + 1]?.content}
+                articles={articles[index] || []}
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                searchInputRef={searchInputRef}
+                lastSearchValue={message.content}
+                submitSearch={submitSearch}
+              />
+            </ErrorBoundary>
           );
         })}
         <div
@@ -276,8 +314,11 @@ const MagicSearch = ({
         >
           <div
             role="button"
-            className={useClassOverride(TAB)}
-            onClick={() => setShowMagicSearch(!showMagicSearch)}
+            className={getClassOverride(TAB, configuration)}
+            onClick={() => {
+              tracker.trackEvent("tabClick", { showMagicSearch });
+              setShowMagicSearch(!showMagicSearch);
+            }}
           >
             <TabIcon direction={direction} />
           </div>
