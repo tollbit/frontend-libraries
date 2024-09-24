@@ -1,5 +1,11 @@
 # @tollbit/magic-search
 
+## 0.0.6
+
+### Patch Changes
+
+- Add z index 100
+
 ## 0.0.5
 
 ### Patch Changes
