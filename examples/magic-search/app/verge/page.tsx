@@ -161,8 +161,8 @@ export default function Home() {
                   "magic-search-articles-title": "text-[#3CFFD0]",
                   "magic-search-article-title": "no-underline",
                   "magic-search-articles": "bg-black",
-                  "magic-search-see-more-button-background": "bg-none text-[#3CFFD0] w-auto",
-                  "magic-search-see-more-button": "bg-inherit text-[#3CFFD0] underline mx-auto",
+                  "magic-search-see-more-button-background": "bg-none text-[#3CFFD0]",
+                  "magic-search-see-more-button": "bg-inherit text-[#3CFFD0] underline",
                   "magic-search-loader-dot": "bg-white",
                 }
               }

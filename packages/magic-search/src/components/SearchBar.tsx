@@ -27,7 +27,7 @@ const SearchBar = ({
   return (
     <div
       className={twMerge(
-        `px-4 py-0 bg-[linear-gradient(0,_transparent_50%,_white_50%)] ${getClassOverride(SEARCH_BACKGROUND_ID, configuration)} ${inputWrapClassNames}`,
+        `px-5 py-0 bg-[linear-gradient(0,_transparent_50%,_white_50%)] ${getClassOverride(SEARCH_BACKGROUND_ID, configuration)} ${inputWrapClassNames}`,
       )}
     >
       <div
@@ -37,7 +37,7 @@ const SearchBar = ({
       >
         <div
           className={twMerge(
-            `flex justify-between items-center rounded-[40px] p-3 bg-white ${getClassOverride(SEARCH_INPUT_CONTAINER_ID, configuration)} ${inputClassNames}`,
+            `flex justify-between items-center rounded-[40px] px-2 py-3 bg-white ${getClassOverride(SEARCH_INPUT_CONTAINER_ID, configuration)} ${inputClassNames}`,
           )}
         >
           <form onSubmit={handleSubmit} className="w-full">
@@ -46,7 +46,7 @@ const SearchBar = ({
               value={value}
               onChange={handleChange}
               className={twMerge(
-                `w-full h-10 p-4 focus:outline-none ${getClassOverride(SEARCH_INPUT_ID, configuration)} ${inputClassNames}`,
+                `w-full h-10 p-2 focus:outline-none ${getClassOverride(SEARCH_INPUT_ID, configuration)} ${inputClassNames}`,
               )}
               placeholder={
                 configuration?.copy?.searchPlaceholder ||

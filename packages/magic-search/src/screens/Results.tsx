@@ -53,7 +53,7 @@ const Results = ({
     <div className={shouldShow ? "block" : "hidden"}>
       <div
         className={twMerge(
-          `text-2xl bg-white pt-0 px-12 pb-6 ${getClassOverride(LAST_SEARCH_ID, configuration)}`,
+          `text-2xl bg-white pt-0 px-10 pb-6 ${getClassOverride(LAST_SEARCH_ID, configuration)}`,
         )}
       >
         {lastSearchValue}
@@ -62,7 +62,7 @@ const Results = ({
         ref={articlesRef}
         style={{ height: articlesHeight }}
         className={twMerge(
-          `flex flex-col overflow-hidden gap-4 bg-white px-12 py-0 [transition:height_.5s_ease-in] ${getClassOverride(ARTICLES_ID, configuration)}`,
+          `flex flex-col overflow-hidden gap-4 bg-white px-10 py-0 [transition:height_.5s_ease-in] ${getClassOverride(ARTICLES_ID, configuration)}`,
         )}
       >
         <div
@@ -94,7 +94,7 @@ const Results = ({
               setShouldShowMore(true);
             }}
             className={twMerge(
-              `rounded-xl w-[calc(100%-3rem)] box-border text-center bg-white p-3 shadow-md mx-6 my-1 ${getClassOverride(SEE_MORE_BUTTON_ID, configuration)}`,
+              `rounded-xl w-[calc(100%-3rem)] text-center bg-white p-3 shadow-md mx-6 my-1 ${getClassOverride(SEE_MORE_BUTTON_ID, configuration)}`,
             )}
           >
             {configuration?.copy?.showMoreButton || "SEE MORE RESULTS"}
@@ -103,7 +103,7 @@ const Results = ({
       )}
       <div
         className={twMerge(
-          `px-12 py-4 mb-10 min-h-screen ${getClassOverride(CHAT_ID, configuration)}`,
+          `px-10 py-4 mb-10 min-h-screen ${getClassOverride(CHAT_ID, configuration)}`,
         )}
       >
         {chatResponse?.length > 0 ? (

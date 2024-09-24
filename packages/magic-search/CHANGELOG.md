@@ -1,5 +1,11 @@
 # @tollbit/magic-search
 
+## 0.0.8
+
+### Patch Changes
+
+- Padding adjustments per design input
+
 ## 0.0.7
 
 ### Patch Changes
