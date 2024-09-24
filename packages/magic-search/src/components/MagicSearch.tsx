@@ -221,7 +221,7 @@ const MagicSearch = ({
   return (
     <div
       className={twMerge(
-        `fixed bg-[#F4F4F4] [transition:0.5s] w-[480px] text-[#595959] top-0  translate-x-full ${direction === "left" ? `left-0 ${showMagicSearch ? "translate-x-0" : "-translate-x-full"}` : `right-0 ${showMagicSearch ? "translate-x-0" : "translate-x-full"}`} ${getClassOverride(MAGIC_SEARCH_ID, configuration)}`,
+        `fixed bg-[#F4F4F4] [transition:0.5s] w-[480px] text-[#595959] top-0 z-[100] translate-x-full ${direction === "left" ? `left-0 ${showMagicSearch ? "translate-x-0" : "-translate-x-full"}` : `right-0 ${showMagicSearch ? "translate-x-0" : "translate-x-full"}`} ${getClassOverride(MAGIC_SEARCH_ID, configuration)}`,
       )}
     >
       <div
