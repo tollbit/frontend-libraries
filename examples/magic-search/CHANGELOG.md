@@ -1,5 +1,12 @@
 # magic-search-demo
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies
+  - @tollbit/magic-search@0.0.7
+
 ## 0.1.5
 
 ### Patch Changes

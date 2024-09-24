@@ -1,5 +1,11 @@
 # @tollbit/magic-search
 
+## 0.0.7
+
+### Patch Changes
+
+- Add gap to shimmer
+
 ## 0.0.6
 
 ### Patch Changes
