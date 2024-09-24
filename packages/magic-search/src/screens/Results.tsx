@@ -113,12 +113,12 @@ const Results = ({
             dangerouslySetInnerHTML={{ __html: chatResponse }}
           />
         ) : (
-          <>
+          <div className="flex flex-col gap-2">
             <Shimmer width={180} />
             <Shimmer width={240} />
             <Shimmer width={320} />
             <Shimmer width={380} />
-          </>
+          </div>
         )}
       </div>
       <SearchBar
