@@ -1,5 +1,11 @@
 # @tollbit/magic-search
 
+## 0.0.9
+
+### Patch Changes
+
+- small style tweaks
+
 ## 0.0.8
 
 ### Patch Changes

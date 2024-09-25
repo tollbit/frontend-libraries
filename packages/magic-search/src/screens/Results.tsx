@@ -132,7 +132,7 @@ const Results = ({
             submitSearch(searchTerm);
           }
         }}
-        inputWrapClassNames="sticky bottom-6 left-0"
+        inputWrapClassNames="sticky bottom-6 left-0 bg-none"
         innerRef={searchInputRef}
       />
     </div>

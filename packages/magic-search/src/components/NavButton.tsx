@@ -16,7 +16,7 @@ const NavButton = ({
   return (
     <button
       className={twMerge(
-        `h-14 w-14 m-1 border-px border-solid border-[#595959] rounded-1 shadow-md bg-white flex items-center ${disabled ? "bg-[#EAEAEA]" : ""} ${getClassOverride(NAV_BUTTON_ID, configuration)}`,
+        `h-14 w-14 m-1 border-px border-solid border-[#595959] rounded-md shadow-md bg-white flex items-center ${disabled ? "bg-[#EAEAEA]" : ""} ${getClassOverride(NAV_BUTTON_ID, configuration)}`,
       )}
       onClick={onClick}
       disabled={disabled}
