@@ -1,5 +1,11 @@
 # @tollbit/magic-search
 
+## 0.0.10
+
+### Patch Changes
+
+- change url
+
 ## 0.0.9
 
 ### Patch Changes
