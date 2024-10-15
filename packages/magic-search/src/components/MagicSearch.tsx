@@ -320,7 +320,10 @@ const MagicSearch = ({
               setShowMagicSearch(!showMagicSearch);
             }}
           >
-            <TabIcon direction={direction} />
+            <TabIcon
+              direction={direction}
+              gradient={configuration.tabGradient}
+            />
           </div>
         </div>
       </div>

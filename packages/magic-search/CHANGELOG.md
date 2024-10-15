@@ -1,5 +1,11 @@
 # @tollbit/magic-search
 
+## 0.0.11
+
+### Patch Changes
+
+- Update analytics url, update tabGradient to pass that data along to the tab
+
 ## 0.0.10
 
 ### Patch Changes

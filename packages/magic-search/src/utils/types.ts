@@ -22,9 +22,23 @@ export interface MagicSearchConfiguration {
     searchResultsTitle?: string;
     showMoreButton?: string;
   };
+  tabGradient?: Gradient;
 }
 
 export interface Message {
   role: "user" | "assistant";
   content: string;
+}
+
+export interface Gradient {
+  gradientColors: GradientColor[];
+  x1?: string;
+  y1?: string;
+  x2?: string;
+  y2?: string;
+}
+
+export interface GradientColor {
+  stopColor: string;
+  offset: string;
 }

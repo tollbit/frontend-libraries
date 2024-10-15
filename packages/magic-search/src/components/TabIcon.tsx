@@ -1,18 +1,9 @@
+import { Gradient, GradientColor } from "../utils/types";
 interface TabIconProps {
   direction: "left" | "right";
   gradient?: Gradient;
 }
-interface Gradient {
-  gradientColors: GradientColor[];
-  x1?: string;
-  y1?: string;
-  x2?: string;
-  y2?: string;
-}
-interface GradientColor {
-  stopColor: string;
-  offset: string;
-}
+
 const defaultGradient = {
   gradientColors: [
     {

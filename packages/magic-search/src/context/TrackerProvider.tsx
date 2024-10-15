@@ -24,7 +24,7 @@ export const TrackerProvider = ({
   children: React.ReactNode;
 }) => {
   const plausible = Plausible({
-    domain: "tollbit.com",
+    domain: "api.tollbit.com",
     trackLocalhost: true,
   });
 
