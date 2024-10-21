@@ -1,4 +1,4 @@
-import { getClassOverride } from "../utils";
+import { getClassOverride, twMerge } from "../utils";
 import SearchBar from "../components/SearchBar";
 import {
   INTRO_TITLE_ID,
@@ -7,7 +7,6 @@ import {
   SUGGESTIONS_TITLE_ID,
 } from "../utils/constants";
 import { useConfiguration } from "../context/ConfigurationProvider";
-import { twMerge } from "tailwind-merge";
 import PlaceholderPrompt from "../components/PlaceholderPrompt";
 import { useTracker } from "../context/TrackerProvider";
 

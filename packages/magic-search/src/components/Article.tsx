@@ -1,6 +1,5 @@
 import { ARTICLE_TITLE_ID } from "../utils/constants";
-import { getClassOverride } from "../utils";
-import { twMerge } from "tailwind-merge";
+import { getClassOverride, twMerge } from "../utils";
 import { useTracker } from "../context/TrackerProvider";
 import { useConfiguration } from "../context/ConfigurationProvider";
 

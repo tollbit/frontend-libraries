@@ -1,4 +1,4 @@
-import { getClassOverride } from "../utils";
+import { getClassOverride, twMerge } from "../utils";
 import {
   SEARCH_BACKGROUND_ID,
   SEARCH_INPUT_CONTAINER_ID,
@@ -6,7 +6,6 @@ import {
   SEARCH_INPUT_WRAP_ID,
 } from "../utils/constants";
 import { useConfiguration } from "../context/ConfigurationProvider";
-import { twMerge } from "tailwind-merge";
 
 const SearchBar = ({
   innerRef,

@@ -1,8 +1,7 @@
 import { useConfiguration } from "../context/ConfigurationProvider";
-import { getClassOverride } from "../utils";
+import { getClassOverride, twMerge } from "../utils";
 import { PROMPT_ID } from "../utils/constants";
 import Shimmer from "./Shimmer";
-import { twMerge } from "tailwind-merge";
 
 const PlaceholderPrompt = () => {
   const configuration = useConfiguration();

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { getClassOverride } from "../utils";
+import { getClassOverride, twMerge } from "../utils";
 import {
   ARTICLES_ID,
   ARTICLES_TITLE_ID,
@@ -12,7 +12,6 @@ import Article from "../components/Article";
 import SearchBar from "../components/SearchBar";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { useConfiguration } from "../context/ConfigurationProvider";
-import { twMerge } from "tailwind-merge";
 import Shimmer from "../components/Shimmer";
 import { useTracker } from "../context/TrackerProvider";
 

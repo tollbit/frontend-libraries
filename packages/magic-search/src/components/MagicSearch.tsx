@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { getClassOverride, fetcher } from "../utils/index";
+import { getClassOverride, fetcher, twMerge } from "../utils";
 import { MagicSearchProps, Message } from "../utils/types";
 import {
   MAGIC_SEARCH_ID,
@@ -11,7 +11,6 @@ import Home from "../screens/Home";
 import Results from "../screens/Results";
 import TabIcon from "./TabIcon";
 import NavButton from "./NavButton";
-import { twMerge } from "tailwind-merge";
 import { useLogger } from "../context/LoggerProvider";
 import ErrorBoundary from "./ErrorBoundary";
 import { useTracker } from "../context/TrackerProvider";

@@ -1,5 +1,4 @@
-import { getClassOverride } from "../utils";
-import { twMerge } from "tailwind-merge";
+import { getClassOverride, twMerge } from "../utils";
 import { NAV_BUTTON_ID } from "../utils/constants";
 import { useConfiguration } from "../context/ConfigurationProvider";
 

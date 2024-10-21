@@ -1,6 +1,5 @@
 import { LOADING_SPINNER_DOT_ID, LOADING_SPINNER_ID } from "../utils/constants";
-import { getClassOverride } from "../utils";
-import { twMerge } from "tailwind-merge";
+import { getClassOverride, twMerge } from "../utils";
 import { useConfiguration } from "../context/ConfigurationProvider";
 
 const LoadingSpinner = () => {
