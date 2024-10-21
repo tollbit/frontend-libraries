@@ -28,10 +28,10 @@ const Home = ({
   const tracker = useTracker();
   const configuration = useConfiguration();
   return (
-    <div className={shouldShow ? "block" : "hidden"}>
+    <div className={shouldShow ? "tb-block" : "tb-hidden"}>
       <div
         className={twMerge(
-          `bg-white text-lg py-3 px-10 ${getClassOverride(INTRO_TITLE_ID, configuration)}`,
+          `tb-bg-white tb-text-lg tb-py-3 tb-px-10 ${getClassOverride(INTRO_TITLE_ID, configuration)}`,
         )}
       >
         {configuration?.copy?.introTitle ||
@@ -49,11 +49,11 @@ const Home = ({
         innerRef={searchInputRef}
       />
       <div
-        className={`h-full px-5 py-0 mb-3 ${getClassOverride(SUGGESTIONS_ID, configuration)}`}
+        className={`tb-h-full tb-px-5 tb-py-0 tb-mb-3 ${getClassOverride(SUGGESTIONS_ID, configuration)}`}
       >
         <h3
           className={twMerge(
-            `text-md font-bold px-5 py-0 mb-3 ${getClassOverride(SUGGESTIONS_TITLE_ID, configuration)}`,
+            `tb-text-md tb-font-bold tb-px-5 tb-py-0 tb-mb-3 ${getClassOverride(SUGGESTIONS_TITLE_ID, configuration)}`,
           )}
         >
           {configuration?.copy?.suggestionsTitle || "THINGS YOU SHOULD KNOW"}
@@ -62,7 +62,7 @@ const Home = ({
           prompts.map((prompt: any) => (
             <button
               className={twMerge(
-                `py-4 px-5 bg-white rounded-3xl text-left mb-3 ${getClassOverride(PROMPT_ID, configuration)}`,
+                `tb-py-4 tb-px-5 tb-bg-white tb-rounded-3xl tb-text-left tb-mb-3 ${getClassOverride(PROMPT_ID, configuration)}`,
               )}
               key={prompt.question}
               onClick={() => {

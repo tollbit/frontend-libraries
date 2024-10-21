@@ -18,8 +18,8 @@
     "lint": "eslint .",
     "type-check": "tsc --noEmit",
     "format:check": "prettier --check .",
-    "build": "export NODE_ENV=production && tailwindcss -i ./src/globals.css -o ./dist/styles.css && webpack --config webpack.prod.js",
-    "dev": "webpack --watch --config webpack.dev.js",
+    "build": "export NODE_ENV=production && webpack --config webpack.prod.js &&  tailwindcss -i ./src/globals.css -o ./dist/styles.css",
+    "dev": "webpack --watch --config webpack.dev.js & tailwindcss -i ./src/globals.css -o ./dist/styles.css --watch",
     "dev:build": "webpack --config webpack.dev.js",
     "serve": "webpack serve --config webpack.dev.js"
   },

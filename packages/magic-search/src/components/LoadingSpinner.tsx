@@ -6,22 +6,22 @@ const LoadingSpinner = () => {
   const configuration = useConfiguration();
   return (
     <div
-      className={`flex h-full space-x-2 justify-center items-center ${getClassOverride(LOADING_SPINNER_ID, configuration)}`}
+      className={`tb-flex tb-h-full tb-space-x-2 tb-justify-center tb-items-center ${getClassOverride(LOADING_SPINNER_ID, configuration)}`}
     >
-      <span className="sr-only">Loading...</span>
+      <span className="tb-sr-only">Loading...</span>
       <div
         className={twMerge(
-          `h-4 w-4 bg-gray-800 rounded-full animate-bounce [animation-delay:-0.3s] ${getClassOverride(LOADING_SPINNER_DOT_ID, configuration)}`,
+          `tb-h-4 tb-w-4 tb-bg-gray-800 tb-rounded-full tb-animate-bounce [animation-delay:-0.3s] ${getClassOverride(LOADING_SPINNER_DOT_ID, configuration)}`,
         )}
       />
       <div
         className={twMerge(
-          `h-4 w-4 bg-gray-800 rounded-full animate-bounce [animation-delay:-0.15s] ${getClassOverride(LOADING_SPINNER_DOT_ID, configuration)}`,
+          `tb-h-4 tb-w-4 tb-bg-gray-800 tb-rounded-full tb-animate-bounce [animation-delay:-0.15s] ${getClassOverride(LOADING_SPINNER_DOT_ID, configuration)}`,
         )}
       />
       <div
         className={twMerge(
-          `h-4 w-4 bg-gray-800 rounded-full animate-bounce ${getClassOverride(LOADING_SPINNER_DOT_ID, configuration)}`,
+          `tb-h-4 tb-w-4 tb-bg-gray-800 tb-rounded-full tb-animate-bounce ${getClassOverride(LOADING_SPINNER_DOT_ID, configuration)}`,
         )}
       />
     </div>

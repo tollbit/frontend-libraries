@@ -192,7 +192,7 @@ export default function Home() {
           type="text/javascript"
           dangerouslySetInnerHTML={{
             __html: `
-            MagicSearch({id: "search", publicKey: "pk_time_cm0wx5efc000108ia34ty4g5s", direction: "right", classes: {}})
+            MagicSearch({id: "search", publicKey: "pk_aggM6CCtLn6se2r2rC5BTu5k346bxGhgK5bf2JybgtYMvEwCFGuVsRWhGjV25gi8YWBLERYDM8Rr3utQjFnjkHogtXQgjUGShi", direction: "right", configuration: {showMobileFloatingButton: true}});
           `,
           }}
         ></script>

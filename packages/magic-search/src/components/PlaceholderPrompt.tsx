@@ -8,7 +8,7 @@ const PlaceholderPrompt = () => {
   return (
     <div
       className={twMerge(
-        `py-4 px-5 flex flex-col gap-2 bg-white rounded-3xl mb-3 ${getClassOverride(PROMPT_ID, configuration)}`,
+        `tb-py-4 tb-px-5 tb-flex tb-flex-col tb-gap-2 tb-bg-white tb-rounded-3xl tb-mb-3 ${getClassOverride(PROMPT_ID, configuration)}`,
       )}
     >
       <Shimmer width={300} />

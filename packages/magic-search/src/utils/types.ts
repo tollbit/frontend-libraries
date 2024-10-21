@@ -23,6 +23,7 @@ export interface MagicSearchConfiguration {
     showMoreButton?: string;
   };
   tabGradient?: Gradient;
+  showMobileFloatingButton?: boolean;
 }
 
 export interface Message {
