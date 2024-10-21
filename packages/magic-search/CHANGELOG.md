@@ -1,5 +1,11 @@
 # @tollbit/magic-search
 
+## 0.1.0
+
+### Minor Changes
+
+- Update styles, drop native tailwind support
+
 ## 0.0.11
 
 ### Patch Changes

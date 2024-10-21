@@ -23,7 +23,7 @@ const TabIcon = ({ direction, gradient = defaultGradient }: TabIconProps) => (
     viewBox="0 0 33 820"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    transform={direction === "right" ? "scale(-1, 1)" : ""}
+    className={direction === "right" ? "tb-scale-x-[-1]" : ""}
   >
     <defs>
       <linearGradient

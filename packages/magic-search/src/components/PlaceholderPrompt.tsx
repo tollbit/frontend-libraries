@@ -1,15 +1,14 @@
 import { useConfiguration } from "../context/ConfigurationProvider";
-import { getClassOverride } from "../utils";
+import { getClassOverride, twMerge } from "../utils";
 import { PROMPT_ID } from "../utils/constants";
 import Shimmer from "./Shimmer";
-import { twMerge } from "tailwind-merge";
 
 const PlaceholderPrompt = () => {
   const configuration = useConfiguration();
   return (
     <div
       className={twMerge(
-        `py-4 px-5 flex flex-col gap-2 bg-white rounded-3xl mb-3 ${getClassOverride(PROMPT_ID, configuration)}`,
+        `tb-py-4 tb-px-5 tb-flex tb-flex-col tb-gap-2 tb-bg-white tb-rounded-3xl tb-mb-3 ${getClassOverride(PROMPT_ID, configuration)}`,
       )}
     >
       <Shimmer width={300} />

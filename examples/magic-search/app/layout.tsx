@@ -23,6 +23,7 @@ export default function RootLayout({
         /> */}
         {/* eslint-disable-next-line */}
         <script src="http://localhost:9000/bundle.js" type="text/javascript" />
+        <link rel="stylesheet" href="http://localhost:9000/styles.css" />
       </head>
       <body className={inter.className}>{children}</body>
     </html>

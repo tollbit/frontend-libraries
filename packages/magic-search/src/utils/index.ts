@@ -1,4 +1,5 @@
 import { MagicSearchConfiguration } from "./types";
+import { extendTailwindMerge } from "tailwind-merge";
 
 export const getClassOverride = (
   id: string,
@@ -16,3 +17,7 @@ export const fetcher = async (path: string, key: string, body: object) =>
     },
     body: JSON.stringify(body),
   });
+
+export const twMerge = extendTailwindMerge({
+  prefix: "tb-",
+});

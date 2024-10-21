@@ -1,4 +1,4 @@
-import { getClassOverride } from "../utils";
+import { getClassOverride, twMerge } from "../utils";
 import {
   SEARCH_BACKGROUND_ID,
   SEARCH_INPUT_CONTAINER_ID,
@@ -6,7 +6,6 @@ import {
   SEARCH_INPUT_WRAP_ID,
 } from "../utils/constants";
 import { useConfiguration } from "../context/ConfigurationProvider";
-import { twMerge } from "tailwind-merge";
 
 const SearchBar = ({
   innerRef,
@@ -27,26 +26,26 @@ const SearchBar = ({
   return (
     <div
       className={twMerge(
-        `px-5 py-0 bg-[linear-gradient(0,_transparent_50%,_white_50%)] ${inputWrapClassNames} ${getClassOverride(SEARCH_BACKGROUND_ID, configuration)}`,
+        `tb-px-5 tb-py-0 tb-bg-[linear-gradient(0,_transparent_50%,_white_50%)] ${inputWrapClassNames} ${getClassOverride(SEARCH_BACKGROUND_ID, configuration)}`,
       )}
     >
       <div
         className={twMerge(
-          `bg-[linear-gradient(to_right,_red,_purple)] p-1 rounded-[40px] mb-6 ${getClassOverride(SEARCH_INPUT_WRAP_ID, configuration)}`,
+          `tb-bg-[linear-gradient(to_right,_red,_purple)] tb-p-1 tb-rounded-[40px] tb-mb-6 ${getClassOverride(SEARCH_INPUT_WRAP_ID, configuration)}`,
         )}
       >
         <div
           className={twMerge(
-            `flex justify-between items-center rounded-[40px] px-2 py-3 bg-white ${inputClassNames} ${getClassOverride(SEARCH_INPUT_CONTAINER_ID, configuration)}`,
+            `tb-flex tb-justify-between tb-items-center tb-rounded-[40px] tb-px-2 tb-py-3 tb-bg-white ${inputClassNames} ${getClassOverride(SEARCH_INPUT_CONTAINER_ID, configuration)}`,
           )}
         >
-          <form onSubmit={handleSubmit} className="w-full">
+          <form onSubmit={handleSubmit} className="tb-w-full">
             <input
               ref={innerRef}
               value={value}
               onChange={handleChange}
               className={twMerge(
-                `w-full h-10 p-2 focus:outline-none  ${inputClassNames} ${getClassOverride(SEARCH_INPUT_ID, configuration)}`,
+                `tb-w-full tb-h-10 tb-p-2 focus:tb-outline-none  ${inputClassNames} ${getClassOverride(SEARCH_INPUT_ID, configuration)}`,
               )}
               placeholder={
                 configuration?.copy?.searchPlaceholder ||

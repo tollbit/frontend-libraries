@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { getClassOverride, fetcher } from "../utils/index";
+import { getClassOverride, fetcher, twMerge } from "../utils";
 import { MagicSearchProps, Message } from "../utils/types";
 import {
   MAGIC_SEARCH_ID,
@@ -11,7 +11,6 @@ import Home from "../screens/Home";
 import Results from "../screens/Results";
 import TabIcon from "./TabIcon";
 import NavButton from "./NavButton";
-import { twMerge } from "tailwind-merge";
 import { useLogger } from "../context/LoggerProvider";
 import ErrorBoundary from "./ErrorBoundary";
 import { useTracker } from "../context/TrackerProvider";
@@ -56,10 +55,16 @@ const processMessage = (msg: string) => {
   return result;
 };
 
-const bodyClassesLeft = ["ml-0", "md:ml-72", "lg:ml-96"];
-const transitionClassesLeft = ["transition-[margin-left]", "duration-500"];
-const bodyClassesRight = ["mr-0", "md:mr-72", "lg:mr-96"];
-const transitionClassesRight = ["transition-[margin-right]", "duration-500"];
+const bodyClassesLeft = ["tb-ml-0", "md:tb-ml-72", "lg:tb-ml-96"];
+const transitionClassesLeft = [
+  "tb-transition-[margin-left]",
+  "tb-duration-500",
+];
+const bodyClassesRight = ["tb-mr-0", "md:tb-mr-72", "lg:tb-mr-96"];
+const transitionClassesRight = [
+  "tb-transition-[margin-right]",
+  "tb-duration-500",
+];
 
 const MagicSearch = ({
   direction,
@@ -221,21 +226,21 @@ const MagicSearch = ({
   return (
     <div
       className={twMerge(
-        `fixed bg-[#F4F4F4] [transition:0.5s] w-[480px] text-[#595959] top-0 z-[100] translate-x-full ${direction === "left" ? `left-0 ${showMagicSearch ? "translate-x-0" : "-translate-x-full"}` : `right-0 ${showMagicSearch ? "translate-x-0" : "translate-x-full"}`} ${getClassOverride(MAGIC_SEARCH_ID, configuration)}`,
+        `tb-fixed tb-bg-[#F4F4F4] [transition:0.5s] sm:tb-w-[480px] tb-text-[#595959] tb-top-0 tb-z-[100] tb-translate-x-full ${direction === "left" ? `tb-left-0 ${showMagicSearch ? "tb-translate-x-0" : "-tb-translate-x-full"}` : `tb-right-0 ${showMagicSearch ? "tb-translate-x-0" : "tb-translate-x-full"}`} ${getClassOverride(MAGIC_SEARCH_ID, configuration)}`,
       )}
     >
       <div
         className={twMerge(
-          `overflow-y-scroll h-screen ${getClassOverride(MAGIC_SEARCH_CONTENT_ID, configuration)}`,
+          `tb-overflow-y-scroll tb-h-screen ${getClassOverride(MAGIC_SEARCH_CONTENT_ID, configuration)}`,
         )}
       >
         <div
           className={twMerge(
-            `bg-white flex justify-between items-center px-4 py-5 ${getClassOverride(HEADER_ID, configuration)}`,
+            `tb-bg-white tb-flex tb-justify-between tb-items-center tb-px-4 tb-py-5 ${getClassOverride(HEADER_ID, configuration)}`,
           )}
         >
           <button
-            className={`h-14 w-14 rounded-full bg-white shadow-md`}
+            className={`tb-h-14 tb-w-14 tb-rounded-full tb-bg-white tb-shadow-md`}
             onClick={() => {
               tracker.trackEvent("close", { page });
               setShowMagicSearch(false);
@@ -251,13 +256,13 @@ const MagicSearch = ({
               strokeWidth="1"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="mx-auto my-0 stroke-[#595959]"
+              className="tb-mx-auto tb-my-0 tb-stroke-[#595959]"
             >
               <path d="M18 6 6 18" />
               <path d="m6 6 12 12" />
             </svg>
           </button>
-          <div className="flex justify-center items-center">
+          <div className="tb-flex tb-justify-center tb-items-center">
             <NavButton
               direction="forward"
               // Disable the next button if we don't have messages or if we are at the last page
@@ -310,7 +315,7 @@ const MagicSearch = ({
           );
         })}
         <div
-          className={`absolute top-0 ${direction === "left" ? "right-0 translate-x-[calc(100%-1px)]" : "-translate-x-[calc(100%-1px)]"}`}
+          className={`tb-absolute tb-top-0 ${direction === "left" ? "tb-right-0 tb-translate-x-[calc(100%-1px)]" : "-tb-translate-x-[calc(100%-1px)]"}`}
         >
           <div
             role="button"
