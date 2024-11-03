@@ -13,9 +13,14 @@ export const useTracker = (): Tracker => {
   return context.tracker;
 };
 
+interface Options {
+  props?: { [key: string]: any };
+  [key: string]: any;
+}
+
 interface Tracker {
-  trackEvent: (eventName: string, options?: any, eventData?: any) => void;
-  trackPageview: (eventData?: any, options?: any) => void;
+  trackEvent: (eventName: string, options?: Options, eventData?: any) => void;
+  trackPageview: (eventData?: any, options?: Options) => void;
 }
 
 export const TrackerProvider = ({
@@ -25,14 +30,28 @@ export const TrackerProvider = ({
 }) => {
   const plausible = Plausible({
     domain: "api.tollbit.com",
-    trackLocalhost: true,
   });
 
+  let domain = "";
+  if (typeof window !== "undefined") {
+    domain = window.location.hostname;
+  }
+
   const tracker: Tracker = {
-    trackEvent: (eventName: string, options?: any, eventData?: any) =>
-      plausible.trackEvent(eventName, options, eventData),
-    trackPageview: (eventData?: any, options?: any) =>
-      plausible.trackPageview(eventData, options),
+    trackEvent: (eventName: string, options?: Options, eventData?: any) =>
+      plausible.trackEvent(
+        eventName,
+        {
+          ...options,
+          props: { domain, ...options?.props },
+        },
+        eventData,
+      ),
+    trackPageview: (eventData?: any, options?: Options) =>
+      plausible.trackPageview(eventData, {
+        ...options,
+        props: { domain, ...options?.props },
+      }),
   };
 
   return (

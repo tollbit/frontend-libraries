@@ -70,7 +70,7 @@ const Article = ({
       </h3>
       <p className="tb-text-sm">
         {host}, {timeSincePublished ? `${timeSincePublished}, ` : ""}
-        {author || "Unknown Author"}
+        {author || ""}
       </p>
     </a>
   );
