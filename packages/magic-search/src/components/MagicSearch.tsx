@@ -137,7 +137,9 @@ const MagicSearch = ({
     if (messages[messages.length - 1]?.role === USER_ROLE) {
       const lastSearchValue = messages[messages.length - 1].content;
       // Track the new search
-      tracker.trackEvent("search", { searchValue: lastSearchValue, page });
+      tracker.trackEvent("search", {
+        props: { searchValue: lastSearchValue, page },
+      });
       // Set the new page to the last page
       setPage(Math.ceil(messages.length / 2));
       fetcher("/content/v1/search/articles", publicKey, {
@@ -268,7 +270,7 @@ const MagicSearch = ({
               // Disable the next button if we don't have messages or if we are at the last page
               disabled={messages.length === 0 || page * 2 === messages.length}
               onClick={() => {
-                tracker.trackEvent("next", { page });
+                tracker.trackEvent("next", { props: { page } });
                 setPage((prevPage) => prevPage + 1);
               }}
             />
@@ -276,7 +278,7 @@ const MagicSearch = ({
               direction="backward"
               disabled={page === 0}
               onClick={() => {
-                tracker.trackEvent("back", { page });
+                tracker.trackEvent("back", { props: { page } });
                 setPage((prevPage) => prevPage - 1);
               }}
             />
@@ -321,7 +323,6 @@ const MagicSearch = ({
             role="button"
             className={getClassOverride(TAB, configuration)}
             onClick={() => {
-              tracker.trackEvent("tabClick", { showMagicSearch });
               setShowMagicSearch(!showMagicSearch);
             }}
           >
