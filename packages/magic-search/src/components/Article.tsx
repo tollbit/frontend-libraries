@@ -69,8 +69,8 @@ const Article = ({
         {title}
       </h3>
       <p className="tb-text-sm">
-        {host}, {timeSincePublished ? `${timeSincePublished}, ` : ""}
-        {author || ""}
+        {host}, {timeSincePublished ? `${timeSincePublished} ` : ""}
+        {`, ${author}` || ""}
       </p>
     </a>
   );

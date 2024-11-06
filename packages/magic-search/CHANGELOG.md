@@ -1,5 +1,11 @@
 # @tollbit/magic-search
 
+## 0.1.1
+
+### Patch Changes
+
+- Fix tracking, remove unknown author
+
 ## 0.1.0
 
 ### Minor Changes
