@@ -14,6 +14,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import { useConfiguration } from "../context/ConfigurationProvider";
 import Shimmer from "../components/Shimmer";
 import { useTracker } from "../context/TrackerProvider";
+import { Code } from "bright";
 
 const Results = ({
   shouldShow,
@@ -24,6 +25,8 @@ const Results = ({
   submitSearch,
   searchInputRef,
   lastSearchValue,
+  isStreamActive,
+  setStopStream,
 }: {
   shouldShow: boolean;
   chatResponse: string;
@@ -33,6 +36,8 @@ const Results = ({
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
   submitSearch: (_value: string) => void;
   searchInputRef: React.RefObject<HTMLInputElement>;
+  isStreamActive: boolean;
+  setStopStream: (_: boolean) => void;
 }) => {
   const tracker = useTracker();
   const configuration = useConfiguration();
@@ -50,13 +55,13 @@ const Results = ({
 
   return (
     <div className={shouldShow ? "tb-block" : "tb-hidden"}>
-      <div
+      <h3
         className={twMerge(
-          `tb-text-2xl tb-bg-white tb-pt-0 tb-px-10 tb-pb-6 ${getClassOverride(LAST_SEARCH_ID, configuration)}`,
+          `tb-text-2xl tb-font-normal tb-bg-white tb-pt-0 tb-px-10 tb-pb-6 ${getClassOverride(LAST_SEARCH_ID, configuration)}`,
         )}
       >
         {lastSearchValue}
-      </div>
+      </h3>
       <div
         ref={articlesRef}
         style={{ height: articlesHeight }}
@@ -127,12 +132,14 @@ const Results = ({
         }
         handleSubmit={(e: React.FormEvent) => {
           e.preventDefault();
-          if (searchTerm.length > 0) {
+          if (!isStreamActive && searchTerm.length > 0) {
             submitSearch(searchTerm);
           }
         }}
+        isStreamActive={isStreamActive}
         inputWrapClassNames="tb-sticky tb-bottom-6 tb-left-0 tb-bg-none"
         innerRef={searchInputRef}
+        stopStream={(stop: boolean) => setStopStream(stop)}
       />
     </div>
   );

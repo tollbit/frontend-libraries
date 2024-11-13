@@ -14,6 +14,7 @@ const NavButton = ({
   const configuration = useConfiguration();
   return (
     <button
+      aria-label={`Navigate ${direction}`}
       className={twMerge(
         `tb-h-14 tb-w-14 tb-m-1 tb-border-px tb-border-solid tb-border-[#595959] tb-rounded-md tb-shadow-md tb-bg-white tb-flex tb-items-center ${disabled ? "tb-bg-[#EAEAEA]" : ""} ${getClassOverride(NAV_BUTTON_ID, configuration)}`,
       )}

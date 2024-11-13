@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <main>
-      <div className="flex min-h-screen flex-col items-center justify-between m-24 relative">
+      <div className="flex min-h-screen flex-col items-center justify-between m-24 relative overflow-x-hidden">
         <img src="/bgr.png" className="my-0 mx-auto" />
         <div className="text-white">
           Subscribe\nNews\nReviews\nBest\nGuides\nDeals\nMore\nTRENDING:\niPhone
@@ -192,8 +192,18 @@ export default function Home() {
           type="text/javascript"
           dangerouslySetInnerHTML={{
             __html: `
-            MagicSearch({id: "search", publicKey: "pk_aggM6CCtLn6se2r2rC5BTu5k346bxGhgK5bf2JybgtYMvEwCFGuVsRWhGjV25gi8YWBLERYDM8Rr3utQjFnjkHogtXQgjUGShi", direction: "right", configuration: {showMobileFloatingButton: true}});
-          `,
+  MagicSearch({
+    shiftBody: false,
+    publicKey: "pk_verge_cm0wx5r52000708iad40lbr9z",
+    direction: "right",
+    configuration: {
+      host: "https://pre-api.tollbit.com",
+      showFloatingActionButton: {
+		    mobile: true,
+        desktop: true
+      }
+    }
+  })`,
           }}
         ></script>
       </div>

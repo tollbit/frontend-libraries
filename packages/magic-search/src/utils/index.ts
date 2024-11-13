@@ -8,8 +8,18 @@ export const getClassOverride = (
   return configuration?.classes?.[id] || "";
 };
 
-export const fetcher = async (path: string, key: string, body: object) =>
-  fetch(`https://api.tollbit.com${path}`, {
+export const fetcher = async ({
+  path,
+  key,
+  body,
+  host = "https://api.tollbit.com",
+}: {
+  path: string;
+  key: string;
+  body: object;
+  host?: string;
+}) =>
+  fetch(`${host}${path}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

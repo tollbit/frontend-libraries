@@ -6,16 +6,21 @@ import {
   SEARCH_INPUT_WRAP_ID,
 } from "../utils/constants";
 import { useConfiguration } from "../context/ConfigurationProvider";
+import StopIcon from "../icons/StopIcon";
 
 const SearchBar = ({
   innerRef,
   handleSubmit,
+  isStreamActive,
+  stopStream,
   value,
   inputClassNames = "",
   inputWrapClassNames = "",
   handleChange,
 }: {
   innerRef: React.RefObject<HTMLInputElement>;
+  isStreamActive: boolean;
+  stopStream?: (_: boolean) => void;
   value: string;
   inputClassNames?: string;
   inputWrapClassNames?: string;
@@ -36,11 +41,12 @@ const SearchBar = ({
       >
         <div
           className={twMerge(
-            `tb-flex tb-justify-between tb-items-center tb-rounded-[40px] tb-px-2 tb-py-3 tb-bg-white ${inputClassNames} ${getClassOverride(SEARCH_INPUT_CONTAINER_ID, configuration)}`,
+            `tb-flex tb-justify-between tb-items-center tb-rounded-[40px] tb-px-2 tb-py-3 tb-bg-white has-[:disabled]:bg-indigo-500 ${inputClassNames} ${getClassOverride(SEARCH_INPUT_CONTAINER_ID, configuration)}`,
           )}
         >
           <form onSubmit={handleSubmit} className="tb-w-full">
             <input
+              role="search"
               ref={innerRef}
               value={value}
               onChange={handleChange}
@@ -53,6 +59,14 @@ const SearchBar = ({
               }
             />
           </form>
+          {stopStream && isStreamActive && (
+            <button
+              aria-label="Stop summary response"
+              onClick={() => stopStream(true)}
+            >
+              <StopIcon height={40} width={40} />
+            </button>
+          )}
         </div>
       </div>
     </div>
