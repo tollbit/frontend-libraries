@@ -33,7 +33,5 @@
     "apps/*",
     "packages/*",
     "examples/**/*"
-  ],
-  "dependencies": {
-  }
+  ]
 }

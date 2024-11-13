@@ -111,11 +111,7 @@ const Results = ({
         )}
       >
         {chatResponse?.length > 0 ? (
-          // @TODO Can we do anything better here for streaming the response with embedded links? Maybe a markdown renderer
-          <div
-            className="tb-whitespace-pre-wrap"
-            dangerouslySetInnerHTML={{ __html: chatResponse }}
-          />
+          <Code lang="markup">{chatResponse}</Code>
         ) : (
           <div className="tb-flex tb-flex-col tb-gap-2">
             <Shimmer width={180} />
