@@ -14,7 +14,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import { useConfiguration } from "../context/ConfigurationProvider";
 import Shimmer from "../components/Shimmer";
 import { useTracker } from "../context/TrackerProvider";
-import { Code } from "bright";
+import Markdown from "react-markdown";
 
 const Results = ({
   shouldShow,
@@ -111,7 +111,9 @@ const Results = ({
         )}
       >
         {chatResponse?.length > 0 ? (
-          <Code lang="markup">{chatResponse}</Code>
+          <Markdown className="tb-whitespace-pre-wrap tb-space-y-2">
+            {chatResponse}
+          </Markdown>
         ) : (
           <div className="tb-flex tb-flex-col tb-gap-2">
             <Shimmer width={180} />

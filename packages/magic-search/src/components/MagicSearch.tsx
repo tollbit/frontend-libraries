@@ -44,7 +44,7 @@ const processMessage = (msg: string) => {
           if (!citationIndexMap[citation]) {
             citationIndexMap[citation] = citationIndex + 1;
           }
-          result += `<a class="magic-search-citation" href="${citation}" target="_blank">[${citationIndexMap[citation]}]</a>`;
+          result += `([${citationIndexMap[citation]}](${citation}))`;
           citationIndex++;
         });
         buffer = "";

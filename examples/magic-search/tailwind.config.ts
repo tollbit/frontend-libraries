@@ -11,6 +11,9 @@ const config: Config = {
       "**/*.js",
     ),
   ],
+  corePlugins: {
+    preflight: false,
+  },
   theme: {
     extend: {
       backgroundImage: {

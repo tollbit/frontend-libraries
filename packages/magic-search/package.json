@@ -1,6 +1,6 @@
 {
   "name": "@tollbit/magic-search",
-  "version": "0.1.1-beta.1",
+  "version": "0.1.1-beta.3",
   "description": "Scripts to create the TollBit Magic Search experience for any publisher",
   "author": "Luke Reisch <lucas@tollbit.com>",
   "license": "MIT",
@@ -58,6 +58,7 @@
     "plausible-tracker": "^0.3.9",
     "react": "18.3.1",
     "react-dom": "^18.3.1",
+    "react-markdown": "^9.0.1",
     "tailwind-merge": "^2.5.2"
   }
 }
