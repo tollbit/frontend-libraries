@@ -270,7 +270,7 @@ const MagicSearch = ({
   return (
     <div
       className={twMerge(
-        `tb-fixed tb-bg-[#F4F4F4] [transition:0.5s] w-screen sm:tb-w-[480px] tb-text-[#595959] tb-bottom-0 tb-z-[100]  tb-drop-shadow-lg`,
+        `tollbit tb-fixed tb-bg-[#F4F4F4] [transition:0.5s] w-screen sm:tb-w-[480px] tb-text-[#595959] tb-bottom-0 tb-z-[100]  tb-drop-shadow-lg`,
         direction === "left"
           ? `tb-left-0 ${showMagicSearch ? "tb-translate-x-0" : "-tb-translate-x-full"}`
           : `tb-right-0 ${showMagicSearch ? "tb-translate-x-0" : "tb-translate-x-full"}`,
