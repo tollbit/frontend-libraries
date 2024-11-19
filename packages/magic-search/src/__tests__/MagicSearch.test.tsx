@@ -16,7 +16,7 @@ const mockPrompts: any = [];
 
 beforeEach(() => {
   mockedUtils.mockImplementation(
-    (path: string, key: string, body: object): Promise<Response> => {
+    ({ path }: { path: string }): Promise<Response> => {
       if (path.includes("/content/v1/search/questions")) {
         // @ts-ignore
         return Promise.resolve({

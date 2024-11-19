@@ -17,6 +17,8 @@ const Home = ({
   searchTerm,
   setSearchTerm,
   submitSearch,
+  isStreamActive,
+  setStopStream,
 }: {
   prompts: any[];
   shouldShow: boolean;
@@ -24,6 +26,8 @@ const Home = ({
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
   submitSearch: (_value: string) => void;
+  isStreamActive: boolean;
+  setStopStream: (_: boolean) => void;
 }) => {
   const tracker = useTracker();
   const configuration = useConfiguration();
@@ -44,9 +48,13 @@ const Home = ({
         }
         handleSubmit={(e: React.FormEvent) => {
           e.preventDefault();
-          submitSearch(searchTerm);
+          if (!isStreamActive && searchTerm.length > 0) {
+            submitSearch(searchTerm);
+          }
         }}
+        isStreamActive={isStreamActive}
         innerRef={searchInputRef}
+        stopStream={(stop: boolean) => setStopStream(stop)}
       />
       <div
         className={`tb-h-full tb-px-5 tb-py-0 tb-mb-3 ${getClassOverride(SUGGESTIONS_ID, configuration)}`}

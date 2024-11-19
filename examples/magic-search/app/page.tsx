@@ -29,8 +29,9 @@ export default function Home() {
           type="text/javascript"
           dangerouslySetInnerHTML={{
             __html: `
-            MagicSearch({publicKey: "pk_time_cm0wx5efc000108ia34ty4g5s", direction: "right", configuration: {}})
-          `,
+  MagicSearch({shiftBody: false, publicKey: "pk_aggM6CCtLn6se2r2rC5BTu5k346bxGhgK5bf2JybgtYMvEwCFGuVsRWhGjV25gi8YWBLERYDM8Rr3utQjFnjkHogtXQgjUGShi", direction: "right", configuration: {showFloatingActionButton: {
+		mobile: true, desktop: true}
+	}})          `,
           }}
         ></script>
       </div>
