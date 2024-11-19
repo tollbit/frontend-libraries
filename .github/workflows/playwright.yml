@@ -19,7 +19,7 @@ jobs:
       - name: Run Magic Search library server
         run: cd packages/magic-search && npm run serve &
       - name: Run Playwright tests
-        run: cd ../../ npm run test:playwright
+        run: cd ../../ && npm run test:playwright
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
