@@ -1,8 +1,6 @@
 name: Playwright Tests
 on:
   pull_request:
-    paths:
-      - "packages/magic-search/**"
     branches-ignore:
       - main
 jobs:
