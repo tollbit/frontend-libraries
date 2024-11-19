@@ -1,5 +1,11 @@
 # @tollbit/magic-search
 
+## 0.2.0
+
+### Minor Changes
+
+- New features, CSS bug fix
+
 ## 0.1.1
 
 ### Patch Changes
