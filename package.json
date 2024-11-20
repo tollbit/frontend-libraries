@@ -10,6 +10,7 @@
     "changeset": "changeset",
     "type-check": "turbo type-check",
     "format:check": "turbo format:check",
+    "test:playwright": "turbo test:playwright",
     "version": "changeset version",
     "ci:publish": "changeset publish -r && changeset tag"
   },

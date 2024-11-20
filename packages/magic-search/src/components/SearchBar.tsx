@@ -6,13 +6,13 @@ import {
   SEARCH_INPUT_WRAP_ID,
 } from "../utils/constants";
 import { useConfiguration } from "../context/ConfigurationProvider";
-// import StopIcon from "../icons/StopIcon";
+import StopIcon from "../icons/StopIcon";
 
 const SearchBar = ({
   innerRef,
   handleSubmit,
-  // isStreamActive,
-  // stopStream,
+  isStreamActive,
+  stopStream,
   value,
   inputClassNames = "",
   inputWrapClassNames = "",
@@ -59,6 +59,14 @@ const SearchBar = ({
               }
             />
           </form>
+          {stopStream && isStreamActive && (
+            <button
+              aria-label="Stop summary response"
+              onClick={() => stopStream(true)}
+            >
+              <StopIcon height={40} width={40} />
+            </button>
+          )}
         </div>
       </div>
     </div>

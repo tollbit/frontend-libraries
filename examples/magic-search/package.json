@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:playwright": "wait-on http://localhost:9000 && playwright test"
   },
   "dependencies": {
     "@tollbit/magic-search": "*",

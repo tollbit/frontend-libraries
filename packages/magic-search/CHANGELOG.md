@@ -1,5 +1,11 @@
 # @tollbit/magic-search
 
+## 0.2.1
+
+### Patch Changes
+
+- Add stop button to prevent multiple streams from occuring
+
 ## 0.2.0
 
 ### Minor Changes

@@ -143,6 +143,7 @@ export default function Home() {
               publicKey: "pk_time_cm0wx5efc000108ia34ty4g5s",
               direction: "right", 
               configuration: {
+                host: "http://pre-api.tollbit.com",
                 copy: {
                   showMoreButton: "See more results",
                   suggestionsTitle: "Things you should know",
