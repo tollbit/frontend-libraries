@@ -295,6 +295,7 @@ const MagicSearch = ({
         >
           <button
             className={`tb-h-14 tb-w-14 tb-rounded-full tb-bg-white tb-shadow-md`}
+            aria-label="Close Magic Search"
             onClick={() => {
               tracker.trackEvent("close", { page });
               setShowMagicSearch(false);

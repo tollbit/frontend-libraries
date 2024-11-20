@@ -5,15 +5,15 @@ export default function StopIcon(props: React.SVGProps<SVGSVGElement>) {
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
+      fill="#D4D4D8"
+      stroke="#D4D4D8"
+      strokeWidth="1"
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
     >
-      <circle cx="12" cy="12" r="10" />
-      <rect x="9" y="9" width="6" height="6" rx="1" />
+      <circle cx="12" cy="12" r="10" stroke="inherit" />
+      <rect x="8" y="8" width="8" height="8" rx="1" fill="#fff" />
     </svg>
   );
 }

@@ -11,7 +11,7 @@ test("clicking the tab opens the drawer", async ({ page }) => {
   await page.getByRole("button").first().click();
   await expect(
     page.getByText("I can help you find what you're looking for"),
-  ).toBeHidden();
+  ).not.toBeInViewport();
 });
 
 test("drawer has a search bar that we can use", async ({ page }) => {
@@ -60,6 +60,10 @@ test("execute multiple searches", async ({ page }) => {
   ).toBeVisible();
   await page.getByRole("button", { name: "SEE MORE RESULTS" }).click();
   await expect(page.getByText("TOP RESULTS")).toBeVisible();
+  await page.getByRole("button", { name: "Stop summary response" }).click();
+  await expect(
+    page.getByRole("button", { name: "Stop summary response" }),
+  ).not.toBeVisible();
   await page.getByRole("search", { includeHidden: false }).click();
   await page.getByRole("search", { includeHidden: false }).fill("more pie");
   await page.getByRole("search", { includeHidden: false }).press("Enter");
