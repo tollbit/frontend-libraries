@@ -20,7 +20,7 @@ const Home = ({
   isStreamActive,
   setStopStream,
 }: {
-  prompts: any[];
+  prompts: string[] | null;
   shouldShow: boolean;
   searchInputRef: React.RefObject<HTMLInputElement>;
   searchTerm: string;
@@ -66,7 +66,7 @@ const Home = ({
         >
           {configuration?.copy?.suggestionsTitle || "THINGS YOU SHOULD KNOW"}
         </h3>
-        {prompts.length > 0 ? (
+        {prompts && prompts.length > 0 ? (
           prompts.map((prompt: any) => (
             <button
               className={twMerge(
