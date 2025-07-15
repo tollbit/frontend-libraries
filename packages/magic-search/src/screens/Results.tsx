@@ -57,7 +57,7 @@ const Results = ({
     <div className={shouldShow ? "tb-block" : "tb-hidden"}>
       <h3
         className={twMerge(
-          `tb-text-2xl tb-font-normal tb-bg-white tb-pt-0 tb-px-10 tb-pb-6 ${getClassOverride(LAST_SEARCH_ID, configuration)}`,
+          `tb-text-2xl tb-mt-0 tb-font-normal tb-bg-white tb-pt-6 tb-px-10 tb-pb-6 ${getClassOverride(LAST_SEARCH_ID, configuration)}`,
         )}
       >
         {lastSearchValue}

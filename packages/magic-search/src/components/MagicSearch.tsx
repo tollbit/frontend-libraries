@@ -82,14 +82,14 @@ const MagicSearch = ({
   const [messages, setMessages] = useState<Message[]>([]);
   const [articles, setArticles] = useState<{ [_key in number]: any[] }>({});
   const [showMagicSearch, setShowMagicSearch] = useState(false);
-  const [prompts, setPrompts] = useState([]);
+  const [prompts, setPrompts] = useState<null | string[]>([]);
   const [page, setPage] = useState(0);
   const [isStreamActive, setIsStreamActive] = useState(false);
   const stopStream = useRef(false);
   const setStopStream = (stop: boolean) => (stopStream.current = stop);
 
   useEffect(() => {
-    if (showMagicSearch && !prompts.length) {
+    if (showMagicSearch && prompts && !prompts.length) {
       fetcher({
         path: "/content/v1/search/questions",
         key: publicKey,
@@ -100,11 +100,14 @@ const MagicSearch = ({
       }).then((res: Response) => {
         if (!res.ok) {
           logger.error("Failed to fetch prompts", { status: res.status });
+          setPrompts(null);
           return;
         }
         res.json().then((data) => {
-          if (!data) {
+          if (!data || data?.length === 0) {
             logger.info("No prompts found");
+            setPrompts(null);
+            return;
           }
           setPrompts(data);
         });

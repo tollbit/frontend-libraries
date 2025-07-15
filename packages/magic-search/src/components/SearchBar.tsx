@@ -44,7 +44,7 @@ const SearchBar = ({
             `tb-flex tb-justify-between tb-items-center tb-rounded-[40px] tb-px-2 tb-py-3 tb-bg-white has-[:disabled]:bg-indigo-500 ${inputClassNames} ${getClassOverride(SEARCH_INPUT_CONTAINER_ID, configuration)}`,
           )}
         >
-          <form onSubmit={handleSubmit} className="tb-w-full">
+          <form onSubmit={handleSubmit} className="tb-w-full tb-m-0 ">
             <input
               role="search"
               ref={innerRef}

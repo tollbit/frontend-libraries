@@ -63,7 +63,7 @@ const Article = ({
     >
       <h3
         className={twMerge(
-          `tb-underline tb-block tb-mb-2 tb-font-semibold ${getClassOverride(ARTICLE_TITLE_ID, configuration)}`,
+          `tb-underline tb-block tb-mb-2 tb-font-semibold tb-text-lg ${getClassOverride(ARTICLE_TITLE_ID, configuration)}`,
         )}
       >
         {title}
