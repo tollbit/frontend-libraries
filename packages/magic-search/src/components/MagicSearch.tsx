@@ -109,7 +109,7 @@ const MagicSearch = ({
             setPrompts(null);
             return;
           }
-          setPrompts(data);
+          setPrompts(data as string[]);
         });
       });
     }
@@ -171,6 +171,7 @@ const MagicSearch = ({
         res.json().then((data) => {
           if (!data) {
             logger.info("No articles found", { query: lastSearchValue });
+            return;
           }
           setArticles((prevState) => ({
             ...prevState,
