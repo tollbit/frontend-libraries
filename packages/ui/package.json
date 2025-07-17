@@ -1,0 +1,38 @@
+{
+  "name": "@tollbit/ui",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    },
+    "./styles": "./dist/globals.css"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "build": "tsc && cp src/globals.css dist/",
+    "type-check": "tsc --noEmit",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@tollbit/typescript-config": "*",
+    "@turbo/gen": "^1.12.4",
+    "@types/node": "^20.11.24",
+    "@types/eslint": "^8.56.5",
+    "@types/react": "18.2.8",
+    "eslint": "^8.57.0",
+    "typescript": "^5.3.3",
+    "tailwindcss": "^3.4.12"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^2.5.2"
+  }
+}
