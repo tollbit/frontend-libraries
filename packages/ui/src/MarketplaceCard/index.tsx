@@ -5,8 +5,8 @@ import Heading from "../Heading";
 export default function MarketplaceCard({
   title,
   logo,
-  domain,
   subtitle,
+  fallbackLogo = "https://tollbit.com/icons/apple-touch-icon.png",
   url,
   chips,
   className,
@@ -29,9 +29,14 @@ export default function MarketplaceCard({
       <div className=" p-6 h-[280px] flex flex-col justify-between">
         <div className="flex justify-between gap-6">
           <img
-            src={logo || `${domain}/favicon.ico`}
+            src={logo}
             alt={title}
             className="w-8 h-8"
+            onError={(e) => {
+              if (fallbackLogo) {
+                e.currentTarget.src = fallbackLogo;
+              }
+            }}
           />
           <div className="flex flex-row flex-wrap justify-end gap-1">
             {chips.map((chip) => (
